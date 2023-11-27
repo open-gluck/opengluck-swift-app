@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>OPENGLUCK_DEFAULT_TOKEN</key>
+	<string>$(OPENGLUCK_DEFAULT_TOKEN)</string>
+	<key>OPENGLUCK_DEFAULT_URL</key>
+	<string>$(OPENGLUCK_DEFAULT_URL)</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+	<key>WKBackgroundModes</key>
+	<array>
+		<string>self-care</string>
+	</array>
+</dict>
+</plist>

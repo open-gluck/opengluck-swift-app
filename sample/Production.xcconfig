@@ -1,0 +1,5 @@
+#include "Config.xcconfig"
+
+// The app data URL, used to publish new versions of the app
+HTTPS_PROTOCOL = https:/
+OPENGLUCK_APPDATA_URL = $(HTTPS_PROTOCOL)/opengluck.com/appdata/lisbon.json

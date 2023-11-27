@@ -1,0 +1,23 @@
+// Change CDG to the first letter of your your first names, first letter of
+// your last name (and last letter on your last name if you have only one
+// firstname).
+// So if you are Charles de Gaulle, pick CDG, and if you are Elton
+// John, pick EJN.
+OPENGLUCK_TARGET_NAME = OpenGlück CDG
+
+// Set this to your development Team ID. That's the 10 letters code with digits
+// and letters that you can find on the Apple Developer console, in the
+// Membership details section https://developer.apple.com/account
+OPENGLUCK_DEVELOPMENT_TEAM = ABCDEFGH42
+
+// The unique identifier for your build.
+OPENGLUCK_BUNDLE_IDENTIFIER = io.github.open-gluck.building.$(OPENGLUCK_DEVELOPMENT_TEAM).ios
+
+// Enable support for the Contact Trick in the build
+// This will add a checkbox that the user can check to opt-in to using the
+// “Contacts” trick. This trick updates the profile photo of a contact whose
+// email is bg@calendar-trick.opengluck.com in real-time, and is propagated to
+// the watch almost instantly, which means we have near real-time reading.
+// Unfortunately, this also means we might show an outdated value, and clicking
+// on the contact will not run our app (it will open the Contacts application.)
+OPENGLUCK_CONTACT_TRICK = YES

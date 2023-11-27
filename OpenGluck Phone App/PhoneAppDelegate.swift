@@ -1,0 +1,217 @@
+import SwiftUI
+import BackgroundTasks
+import UserNotifications
+import WatchConnectivity
+import os
+import OG
+
+class PhoneAppDelegate: NSObject, UIApplicationDelegate, WCSessionDelegate, ObservableObject {
+#if OPENGLUCK_CONTACT_TRICK_IS_YES
+    @AppStorage(WKDataKeys.enableContactTrick.keyValue, store: OpenGluckManager.userDefaults) var enableContactTrick: Bool = false
+#endif
+
+    private static let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: PhoneAppDelegate.self)
+    )
+
+    let openGlückConnection = OpenGluckConnection()
+    private var deviceToken: String?
+
+    var notificationsGranted: Bool = false
+    override init() {
+        super.init()
+    }
+
+    var openglückUrl: String {
+        get {
+            return WKData.default.get(key: WKDataKeys.openglückUrl) as! String? ?? ""
+        }
+        set {
+            try? WKData.default.set(key: WKDataKeys.openglückUrl, value: newValue)
+            self.registerDeviceTokenWithOpenGluck()
+        }
+    }
+
+    var openglückToken: String {
+        get {
+            return WKData.default.get(key: WKDataKeys.openglückToken) as! String? ?? ""
+        }
+        set {
+            try? WKData.default.set(key: WKDataKeys.openglückToken, value: newValue)
+            self.registerDeviceTokenWithOpenGluck()
+        }
+    }
+
+    func scheduleBackgroundTask() {
+        let task = BGAppRefreshTaskRequest(identifier: Bundle.main.bundleIdentifier!)
+        try? BGTaskScheduler.shared.submit(task)
+        print("Done scheduling")
+    }
+
+    private func handleAppRefresh(task: BGAppRefreshTask) {
+        self.scheduleBackgroundTask()
+        
+        Task {
+            // as a last resort, try to update one last time
+            try? _ = await openGlückConnection.getCurrentData(becauseUpdateOf: "Background App Refresh")
+            
+#if OPENGLUCK_CONTACT_TRICK_IS_YES
+            openGlückConnection.contactsUpdater.checkIfUpToDate()
+#endif
+            task.setTaskCompleted(success: true)
+        }
+    }
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        guard ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != "1" else {
+            print("skip didFinishLaunchingWithOptions in preview")
+            return true
+        }
+
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self
+
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if let error = error {
+                print("Authorization for notification failed \(error)")
+            }
+            if granted {
+                self.notificationsGranted = true
+                DispatchQueue.main.async {
+                    application.registerForRemoteNotifications()
+                }
+            }
+        }
+
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: Bundle.main.bundleIdentifier!, using: nil) { (task) in
+            print("Running task!")
+            self.handleAppRefresh(task: task as! BGAppRefreshTask)
+        }
+
+        NotificationCenter.default.addObserver(forName:UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { (_) in
+            print("NotificationCenter.default.didBecomeActiveNotification")
+            OpenGluckEnvironment.enableAutoUpdate = true
+        }
+        NotificationCenter.default.addObserver(forName:UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { (_) in
+            print("NotificationCenter.default.addObserver")
+            OpenGluckEnvironment.enableAutoUpdate = false
+            self.scheduleBackgroundTask()
+        }
+
+        let session = WCSession.default
+        session.delegate = self
+        session.activate()
+        try? WKData.default.syncToOther(key: WKDataKeys.openglückUrl)
+        try? WKData.default.syncToOther(key: WKDataKeys.openglückToken)
+
+        self.registerDeviceTokenWithOpenGluck()
+
+#if OPENGLUCK_CONTACT_TRICK_IS_YES
+        if enableContactTrick {
+            Task {
+                try? await openGlückConnection.getCurrentData(becauseUpdateOf: "UIApplication.didBecomeActiveNotification", force: true)
+            }
+        }
+#endif
+        return true
+    }
+    
+    func registerDeviceTokenWithOpenGluck() {
+        if let deviceToken {
+            Task { try? await OpenGluckConnection.client?.register(deviceToken: deviceToken) }
+        }
+    }
+
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let deviceToken = deviceToken.reduce("") {$0 + String(format: "%02x", $1)}
+        try? WKData.default.set(key: WKDataKeys.phoneDeviceToken, value: deviceToken)
+        self.deviceToken = deviceToken
+        registerDeviceTokenWithOpenGluck()
+    }
+
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        try? WKData.default.flush()
+    }
+
+    func sessionDidBecomeInactive(_ session: WCSession) {
+    }
+
+    func sessionDidDeactivate(_ session: WCSession) {
+    }
+
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        WKData.default.didReceive(userInfo: message)
+    }
+
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+        WKData.default.didReceive(userInfo: message)
+        replyHandler([:])
+    }
+    
+    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+        WKData.default.didReceive(userInfo: userInfo)
+    }
+}
+
+// Conform to UNUserNotificationCenterDelegate to show local notification in foreground
+extension PhoneAppDelegate: UNUserNotificationCenterDelegate {
+    private func parseNotificationsUserInfo(userInfo: [AnyHashable:Any]) -> (Date?, Int?, Bool?, Episode?, Date?) {
+        print(userInfo.debugDescription)
+        let timestampStr: String? = userInfo["timestamp"] as? String
+        let timestamp: Date? = timestampStr != nil ? ISO8601DateFormatter().date(from: timestampStr!.replacingOccurrences(of: "\\.\\d+", with: "", options: .regularExpression)) : nil
+        let mgDl: Int? = userInfo["mgDl"] as? Int
+        if let mgDl, let aps = userInfo["aps"] as? [String:Any], let badge = aps["badge"] as? Int {
+            guard mgDl == badge else {
+                Self.logger.warning("Mismatch mgDl=\(mgDl), badge=\(badge)")
+                return (nil, nil, nil, nil, nil)
+            }
+        }
+        let hasRealTime: Bool? = userInfo["hasRealTime"] as? Bool
+
+        let episode: Episode?
+        let episodeTimestamp: Date?
+        if let currentEpisodeRecord = userInfo["currentEpisodeRecord"] as? [AnyHashable:Any], let episodeTimestampString = currentEpisodeRecord["timestamp"] as? String {
+            if let userInfoEpisode = currentEpisodeRecord["episode"] as? String {
+                episode = Episode(rawValue: userInfoEpisode)
+            } else {
+                episode = nil
+            }
+            episodeTimestamp = ISO8601DateFormatter().date(from: episodeTimestampString.replacingOccurrences(of: "\\.\\d+", with: "", options: .regularExpression))
+        } else {
+            episode = nil
+            episodeTimestamp = nil
+        }
+        return (timestamp, mgDl, hasRealTime, episode, episodeTimestamp)
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) async -> UIBackgroundFetchResult {
+        let (timestamp, mgDl, hasRealTime, episode, episodeTimestamp) = parseNotificationsUserInfo(userInfo: userInfo)
+        Self.logger.info("Received remote notification => timestamp=\(String(describing: timestamp)) mgDl=\(String(describing: mgDl)), userInfo=\(userInfo), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp))")
+#if OPENGLUCK_CONTACT_TRICK_IS_YES
+        await openGlückConnection.contactsUpdater.updateMgDl(mgDl: mgDl, timestamp: timestamp, hasCgmRealTimeData: hasRealTime, episode: episode, episodeTimestamp: episodeTimestamp, becauseUpdateOf: "didReceiveRemoteNotification")
+#endif
+        return .newData
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+        // showing notification with app active
+        let userInfo = notification.request.content.userInfo
+        let (timestamp, mgDl, hasRealTime, episode, episodeTimestamp) = parseNotificationsUserInfo(userInfo: userInfo)
+        Self.logger.info("Received user notification while app in foreground => timestamp=\(String(describing: timestamp)) mgDl=\(String(describing: mgDl)), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp)), userInfo=\(userInfo), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp))")
+#if OPENGLUCK_CONTACT_TRICK_IS_YES
+        await openGlückConnection.contactsUpdater.updateMgDl(mgDl: mgDl, timestamp: timestamp, hasCgmRealTimeData: hasRealTime, episode: episode, episodeTimestamp: episodeTimestamp, becauseUpdateOf: "userNotificationCenter.willPresent")
+#endif
+        return [.banner, .badge, .sound]
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        print("userNotificationCenter didReceive")
+    }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        print("applicationDidEnterBackground")
+        scheduleBackgroundTask()
+    }
+}
+
