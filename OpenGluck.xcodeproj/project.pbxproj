@@ -38,7 +38,7 @@
 		9D1EEE482AEF92D3009EA2AB /* OGUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9D1EEE472AEF92D3009EA2AB /* OGUI */; };
 		9D1EEE4A2AEF92DE009EA2AB /* OGUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9D1EEE492AEF92DE009EA2AB /* OGUI */; };
 		9D1EEE4C2AEF92E6009EA2AB /* OGUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9D1EEE4B2AEF92E6009EA2AB /* OGUI */; };
-		9D1EEE4E2AEF9F58009EA2AB /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1EEE4D2AEF9F58009EA2AB /* PreferencesView.swift */; };
+		9D1EEE4E2AEF9F58009EA2AB /* DisplayPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1EEE4D2AEF9F58009EA2AB /* DisplayPreferencesView.swift */; };
 		9D1EEE502AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1EEE4F2AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift */; };
 		9D1EEE512AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1EEE4F2AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift */; };
 		9D1EEE522AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1EEE4F2AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift */; };
@@ -261,7 +261,7 @@
 		9D1B2CB629DCBFBB004C6311 /* DebugWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DebugWidget.swift; path = OpenGluck/Widgets/DebugWidget.swift; sourceTree = SOURCE_ROOT; };
 		9D1B2CB829DCC163004C6311 /* ComplicationDebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationDebugView.swift; sourceTree = "<group>"; };
 		9D1B2CBA29DCC3DF004C6311 /* WidgetKinds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetKinds.swift; sourceTree = "<group>"; };
-		9D1EEE4D2AEF9F58009EA2AB /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PreferencesView.swift; path = "OpenGluck Phone App/PreferencesView.swift"; sourceTree = SOURCE_ROOT; };
+		9D1EEE4D2AEF9F58009EA2AB /* DisplayPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DisplayPreferencesView.swift; path = "OpenGluck Phone App/DisplayPreferencesView.swift"; sourceTree = SOURCE_ROOT; };
 		9D1EEE4F2AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OpenGluckThresholdsDelegate.swift; path = OpenGluck/OpenGluck/OpenGluckThresholdsDelegate.swift; sourceTree = SOURCE_ROOT; };
 		9D22687E2AF29B2700437FAC /* OG TV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OG TV.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D2268802AF29B2700437FAC /* OpenGluckTvApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGluckTvApp.swift; sourceTree = "<group>"; };
@@ -495,7 +495,7 @@
 				9D657A1329DABD9800791926 /* PhoneAppDelegate.swift */,
 				9D1B2CB829DCC163004C6311 /* ComplicationDebugView.swift */,
 				9D93A23F2A1A09E900F644B2 /* GlucoseNumbersView.swift */,
-				9D1EEE4D2AEF9F58009EA2AB /* PreferencesView.swift */,
+				9D1EEE4D2AEF9F58009EA2AB /* DisplayPreferencesView.swift */,
 			);
 			name = Phone;
 			path = "OpenGluck Phone App";
@@ -963,7 +963,7 @@
 				9D657A1E29DB1DE900791926 /* WKDefaults.swift in Sources */,
 				9DF375DF29D254990043CAA6 /* OpenGluckManager.swift in Sources */,
 				9DB44C7B29DE31A0005BB7F8 /* WKComplicationDebugView.swift in Sources */,
-				9D1EEE4E2AEF9F58009EA2AB /* PreferencesView.swift in Sources */,
+				9D1EEE4E2AEF9F58009EA2AB /* DisplayPreferencesView.swift in Sources */,
 				9DAD39282AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift in Sources */,
 				9D39BB0B2A043C180037AB00 /* WKDataKeys.swift in Sources */,
 				9D2DFED929D0EF8A00545193 /* PhoneAdvancedView.swift in Sources */,

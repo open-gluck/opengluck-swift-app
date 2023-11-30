@@ -14,6 +14,7 @@ class OpenGluckEnvironment: ObservableObject
     @Published var lastInsulinRecords: [OpenGluckInsulinRecord]? = nil
     @Published var lastLowRecords: [OpenGluckLowRecord]? = nil
     @Published var lastSuccessAt: Date? = nil
+    @Published var lastAttemptAt: Date? = nil
     
     init(currentGlucoseRecord: OpenGluckGlucoseRecord? = nil, lastHistoricGlucoseRecord: OpenGluckGlucoseRecord? = nil, lastGlucoseRecords: [OpenGluckGlucoseRecord]? = nil, lastInsulinRecords: [OpenGluckInsulinRecord]? = nil, lastLowRecords: [OpenGluckLowRecord]? = nil) {
         self.currentGlucoseRecord = currentGlucoseRecord
@@ -60,7 +61,7 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
                 }
             }
             if rerender.uuidString == "" { EmptyView() }
-            if !hasTimedOut && environment.currentGlucoseRecord == nil && OpenGluckConnection.client != nil {
+            if !hasTimedOut && environment.lastAttemptAt == nil && environment.currentGlucoseRecord == nil && OpenGluckConnection.client != nil {
                 VStack {
                     Spacer()
                     ProgressView()
@@ -157,7 +158,10 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
         log("refresh()")
         Task {
             guard !refreshing else { return }
-            guard OpenGluckManager.openglückUrl != nil && OpenGluckManager.openglückToken != nil else { return }
+            guard OpenGluckManager.openglückUrl != nil && OpenGluckManager.openglückToken != nil else {
+                hasTimedOut = true
+                return
+            }
             defer { Task { @MainActor in self.refreshing = false } }
             refreshStep = "Refreshing…"
             refreshing = true
@@ -217,12 +221,13 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
                     environment.cgmHasRealTimeData = currentData.hasCgmRealTimeData
                     environment.currentGlucoseRecord = currentData.currentGlucoseRecord
                     environment.lastHistoricGlucoseRecord = currentData.lastHistoricGlucoseRecord
+                    environment.lastSuccessAt = Date()
                     log("Now at revision \(String(describing: environment.revision)), with \(String(describing: environment.lastGlucoseRecords?.count)) glucose records")
                 }
             } else {
                 log("openGlückConnection.getCurrentData() returned nil")
             }
-            environment.lastSuccessAt = Date()
+            environment.lastAttemptAt = Date()
             hasTimedOut = false
             log("Refresh complete")
         }

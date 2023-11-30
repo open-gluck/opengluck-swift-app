@@ -12,6 +12,7 @@ class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate {
     let contactsUpdater = ContactUpdater()
     @AppStorage(WKDataKeys.enableContactTrick.keyValue, store: OpenGluckManager.userDefaults) var enableContactTrick: Bool = false
     #endif
+    @AppStorage(WKDataKeys.enableUpdateBadgeCount.keyValue, store: OpenGluckManager.userDefaults) var enableUpdateBadgeCount: Bool = false
     let thresholdsDelegate = OpenGluckThreholdsDelegate()
 
     init() {
@@ -58,7 +59,9 @@ class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate {
         }
         if let mgDl: Int = currentData.currentGlucoseRecord?.mgDl {
 #if os(iOS)
-            try await UNUserNotificationCenter.current().setBadgeCount(mgDl)
+            if enableUpdateBadgeCount {
+                try await UNUserNotificationCenter.current().setBadgeCount(mgDl)
+            }
 #endif
         }
 #if !os(tvOS)

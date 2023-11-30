@@ -88,9 +88,11 @@ struct PhoneAdvancedView: View {
     @State var openglückToken: String = ""
     @AppStorage(WKDataKeys.phoneDeviceToken.keyValue, store: OpenGluckManager.userDefaults) var phoneDeviceToken: String = ""
     @AppStorage(WKDataKeys.watchDeviceToken.keyValue, store: OpenGluckManager.userDefaults) var watchDeviceToken: String = ""
+    @AppStorage(WKDataKeys.enableUpdateBadgeCount.keyValue, store: OpenGluckManager.userDefaults) var enableUpdateBadgeCount: Bool = false
 #if OPENGLUCK_CONTACT_TRICK_IS_YES
     @EnvironmentObject var openGlückConnection: OpenGluckConnection
     @AppStorage(WKDataKeys.enableContactTrick.keyValue, store: OpenGluckManager.userDefaults) var enableContactTrick: Bool = false
+    @AppStorage(WKDataKeys.enableContactTrickDebug.keyValue, store: OpenGluckManager.userDefaults) var enableContactTrickDebug: Bool = false
 #endif
 
     @State var isUrlOk: Bool = true
@@ -136,7 +138,8 @@ struct PhoneAdvancedView: View {
                         if newValue {
                             Task {
                                 // this will re-sync the contact
-                                try? await openGlückConnection.getCurrentData(becauseUpdateOf: "PhoneAdvancedView")
+                                openGlückConnection.contactsUpdater.checkIfUpToDate()
+                                let _ = try? await openGlückConnection.getCurrentData(becauseUpdateOf: "PhoneAdvancedView", force: true)
                             }
                         }
                     }))
@@ -150,11 +153,44 @@ struct PhoneAdvancedView: View {
                         ContactsPermissionGrantStatus()
                         ContactsFoundStatus()
                     }
+                    VStack(alignment: .leading) {
+                        Text("Having issues? You might enable Debug Mode.\n\nThis will make the app update the first name of the contact with debug infos. We still need to update the last name with internal data regardless of this setting.")
+                    }
+                    .font(.caption)
+                    Toggle("Enable Debug Mode", isOn: .init(get: {
+                        enableContactTrickDebug
+                    }, set: { newValue in
+                        enableContactTrickDebug = newValue
+                        if newValue {
+                            Task {
+                                // this will re-sync the contact
+                                try? await openGlückConnection.getCurrentData(becauseUpdateOf: "PhoneAdvancedView", force: true)
+                            }
+                        }
+                    }))
                 }
                 #endif
                 
-                NavigationLink("Preferences") {
-                    PreferencesView()
+                Section("Application Badge") {
+                    VStack(alignment: .leading) {
+                        Text("Checking this will update the badge count to the latest known blood glucose.")
+                    }
+                    .font(.caption)
+                    Toggle("Update Badge Count", isOn: .init(get: {
+                        enableUpdateBadgeCount
+                    }, set: { newValue in
+                        enableUpdateBadgeCount = newValue
+                        if newValue {
+                            Task {
+                                // this will update the badge count
+                                let _ = try? await openGlückConnection.getCurrentData(becauseUpdateOf: "PhoneAdvancedView", force: true)
+                            }
+                        }
+                    }))
+                }
+                
+                NavigationLink("Display") {
+                    DisplayPreferencesView()
                 }
                 
                 Section("App Version") {

@@ -27,7 +27,7 @@ fileprivate struct GlucoseSlider: View {
     }
 }
 
-struct PreferencesView: View {
+struct DisplayPreferencesView: View {
     @AppStorage(OpenGluckThreholdsDelegateValues.normalLow.rawValue, store: OpenGluckManager.userDefaults) var appStorageThresholdsNormalLow: String = ""
     @AppStorage(OpenGluckThreholdsDelegateValues.normalHigh.rawValue, store: OpenGluckManager.userDefaults) var appStorageThresholdsNormalHigh: String = ""
     @AppStorage(OpenGluckThreholdsDelegateValues.low.rawValue, store: OpenGluckManager.userDefaults) var appStorageThresholdsLow: String = ""
@@ -117,6 +117,6 @@ struct PreferencesView: View {
 
 #Preview {
     NavigationStack {
-        PreferencesView()
+        DisplayPreferencesView()
     }
 }

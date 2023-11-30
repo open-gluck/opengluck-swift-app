@@ -8,10 +8,10 @@ import OG
 
 class ContactUpdater
 {
-    // this is a debug feature, that you can use to force the contact to be updated
-    let FORCE_UPDATE_CONTACT = false;
+    let FORCE_UPDATE_CONTACT = false; // this is a debug feature, that you can use to force the contact to be updated
     var granted: Bool? = nil
     static let email = "bg@calendar-trick.opengluck.com"
+    @AppStorage(WKDataKeys.enableContactTrickDebug.keyValue, store: OpenGluckManager.userDefaults) var enableContactTrickDebug: Bool = false
     
     let store: CNContactStore = CNContactStore()
     
@@ -31,7 +31,7 @@ class ContactUpdater
     var lastUpdate: Date? {
         return Self.getUpdate(forTimestamp: WKDefaults.shared.currentMeasurementTimestamp, episodeTimestamp: WKDefaults.shared.currentMeasurementEpisodeTimestamp)
     }
-        
+    
     struct UpdaterStatus: Codable {
         // this is serialized as the contact last name
         let mgDl: Int?
@@ -66,7 +66,7 @@ class ContactUpdater
             self.hasRealTime = try container.decodeIfPresent(Bool.self, forKey: ContactUpdater.UpdaterStatus.CodingKeys.hasRealTime)
             self.episode = try container.decodeIfPresent(Episode.self, forKey: ContactUpdater.UpdaterStatus.CodingKeys.episode)
         }
-    
+        
         
         func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
@@ -76,7 +76,7 @@ class ContactUpdater
             try container.encode(episodeTimestamp, forKey: ContactUpdater.UpdaterStatus.CodingKeys.episodeTimestamp)
             try container.encode(hasRealTime, forKey: ContactUpdater.UpdaterStatus.CodingKeys.hasRealTime)
         }
-         
+        
         init(mgDl: Int?, timestamp: Date?, episode: Episode?, episodeTimestamp: Date?, hasRealTime: Bool?) {
             self.mgDl = mgDl
             self.timestamp = timestamp
@@ -119,9 +119,9 @@ class ContactUpdater
             guard lastUpdate == nil || thisUpdate > lastUpdate! else {
                 return ShouldUpdateStatus.skipNotLater(lastUpdate: lastUpdate)
             }
-             //   print("Skip update earlier than last update, last=\(String(describing: lastTimestamp)), this=\(String(describing: timestamp))")
-             //   await log("skipped: not later than previous update at \(String(describing: lastTimestamp))")
-             //   return
+            //   print("Skip update earlier than last update, last=\(String(describing: lastTimestamp)), this=\(String(describing: timestamp))")
+            //   await log("skipped: not later than previous update at \(String(describing: lastTimestamp))")
+            //   return
             //}
             let lastMgDl = WKDefaults.shared.currentMeasurementMgDl
             let lastEpisode = WKDefaults.shared.currentMeasurementEpisode
@@ -139,7 +139,7 @@ class ContactUpdater
                     return ShouldUpdateStatus.skipSameMeasurementEpisode(lastMgDl: nil, lastEpisode: lastEpisode)
                 }
             }
-
+            
             print("==> before update; mgDl=\(String(describing: mgDl)), timestamp=\(String(describing: timestamp)), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp))")
             if let mgDl, let timestamp {
                 WKDefaults.shared.currentMeasurementMgDl = mgDl
@@ -284,7 +284,9 @@ class ContactUpdater
                 print("Got updater status: \(String(describing: updaterStatus)), freshDuration=\(freshDuration)")
                 if let updaterStatus, -updaterStatus.updatedAt.timeIntervalSinceNow > freshDuration {
                     print("Found stale record, last update was \(-updaterStatus.updatedAt.timeIntervalSinceNow) seconds ago")
-                    mutableContact.givenName = "OpenGlück Stale at \(Date().description)"
+                    if enableContactTrickDebug {
+                        mutableContact.givenName = "OpenGlück Stale at \(Date().description)"
+                    }
                     mutableContact.imageData = NumberImageView.getImage(timestamp: nil, forMgDl: nil, hasCgmRealTimeData: nil, episode: .disconnected, episodeTimestamp: Date()).pngData()
                     if let hasRealTime = updaterStatus.hasRealTime, hasRealTime {
                         UNUserNotificationCenter.current().setBadgeCount(0)
@@ -292,8 +294,9 @@ class ContactUpdater
                 } else {
                     // not stale
                     print("Found fresh record")
-                    return
-                    //mutableContact.givenName = "OpenGlück Still fresh at \(Date().description)"
+                    if enableContactTrickDebug {
+                        mutableContact.givenName = "OpenGlück Still fresh at \(Date().description)"
+                    }
                 }
                 let saveRequest = CNSaveRequest()
                 saveRequest.update(mutableContact)
@@ -306,15 +309,29 @@ class ContactUpdater
             }
         } catch {
             print("Caught error: \(error)")
-        }    }
+        }
+    }
+    
+    func requestAccess() async {
+        guard granted == nil else {
+            return
+        }
+        return await withCheckedContinuation { continunation in
+            store.requestAccess(for: .contacts, completionHandler: { granted, error in
+                print("Contacts granted \(granted), error=\(error.debugDescription)")
+                self.granted = granted
+                continunation.resume()
+            })
+        }
+    }
     
     func checkIfUpToDate() {
-        store.requestAccess(for: .contacts, completionHandler: { granted, error in
-            print("Contacts granted \(granted), error=\(error.debugDescription)")
-            self.granted = granted
-            guard granted else { return }
+        guard enableContactTrickDebug else { return }
+        Task {
+            await requestAccess()
+            guard granted == true else { return }
             self.updateContactIfStale()
-        })
+        }
     }
 }
 #endif

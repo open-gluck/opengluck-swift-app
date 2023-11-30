@@ -17,9 +17,13 @@ enum WKDataKeys: String {
     case currentMeasurementEpisodeTimestamp
     case currentMeasurementHasRealTime
     
+    case enableUpdateBadgeCount
     case showDataInMmolL
     
+    #if OPENGLUCK_CONTACT_TRICK_IS_YES
     case enableContactTrick
+    case enableContactTrickDebug
+    #endif
     
     static func from(keyValue: String) -> WKDataKeys? {
         let rawValue = String(keyValue.dropFirst("WKData.".count))

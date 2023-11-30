@@ -110,7 +110,8 @@ class PhoneAppDelegate: NSObject, UIApplicationDelegate, WCSessionDelegate, Obse
 #if OPENGLUCK_CONTACT_TRICK_IS_YES
         if enableContactTrick {
             Task {
-                try? await openGlückConnection.getCurrentData(becauseUpdateOf: "UIApplication.didBecomeActiveNotification", force: true)
+                await openGlückConnection.contactsUpdater.requestAccess()
+                let _ = try? await openGlückConnection.getCurrentData(becauseUpdateOf: "UIApplication.didBecomeActiveNotification", force: true)
             }
         }
 #endif
