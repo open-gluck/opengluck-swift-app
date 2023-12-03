@@ -8,6 +8,10 @@
 	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>OPENGLUCK_APPDATA_EXPIRE_AT</key>
+	<string>$(OPENGLUCK_APPDATA_EXPIRE_AT)</string>
+	<key>OPENGLUCK_APPDATA_EXPIRE_MESSAGE</key>
+	<string>$(OPENGLUCK_APPDATA_EXPIRE_MESSAGE)</string>
 	<key>OPENGLUCK_APPDATA_URL</key>
 	<string>$(OPENGLUCK_APPDATA_URL)</string>
 	<key>OPENGLUCK_DEFAULT_TOKEN</key>

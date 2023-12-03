@@ -54,13 +54,30 @@ fileprivate actor AppDataAutoFetcher {
     
     @AppStorage("AppDataAutoFetch.cachedContext") var cachedAppDataContextData: Foundation.Data = Foundation.Data()
     private var preventRefreshUntil: Date? = nil
-    
+
+    private static let dateFormatter: ISO8601DateFormatter = ISO8601DateFormatter()
+    private static let jsonEncoder: JSONEncoder = JSONEncoder()
+
     func read() -> Foundation.Data? {
-        return {
+        return { () -> Foundation.Data? in
             if let preventRefreshUntil, Date() < preventRefreshUntil {
                 return nil
             }
+            
             guard let infoDictionary: [String: Any] = Bundle.main.infoDictionary else { return nil }
+
+            // check if build expired
+            if let appDataExpireAt: String = infoDictionary["OPENGLUCK_APPDATA_EXPIRE_AT"] as? String, !appDataExpireAt.isEmpty,
+               let appDataExpireMessage: String = infoDictionary["OPENGLUCK_APPDATA_EXPIRE_MESSAGE"] as? String, !appDataExpireMessage.isEmpty {
+                let expireAt: Date = Self.dateFormatter.date(from: appDataExpireAt)!
+                if Date() > expireAt {
+                    let message = AppDataContext(redirect: AppDataContext.Redirect(title: "App Expired", message: appDataExpireMessage, button: "Close", url: "https://www.opengluck.com"))
+                    return try! Self.jsonEncoder.encode(message)
+                    
+                }
+            }
+
+            // check remote data
             if let appDataUrl: String = infoDictionary["OPENGLUCK_APPDATA_URL"] as? String, !appDataUrl.isEmpty {
                 preventRefreshUntil = Date().addingTimeInterval(3600) // do not refresh for at least one hour
                 if let appDataContextData = try? AppDataContext.read(fromURL: URL(string: appDataUrl)!) {

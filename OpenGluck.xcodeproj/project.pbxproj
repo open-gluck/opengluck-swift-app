@@ -1226,6 +1226,8 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OPENGLUCK_APPDATA_EXPIRE_AT = "2024-06-01T00:00:00Z";
+				OPENGLUCK_APPDATA_EXPIRE_MESSAGE = "This version of OpenGlück has expired. Please update to the latest version to continue using it.";
 				OTHER_SWIFT_FLAGS = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1285,6 +1287,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OPENGLUCK_APPDATA_EXPIRE_AT = "2024-06-01T00:00:00Z";
+				OPENGLUCK_APPDATA_EXPIRE_MESSAGE = "This version of OpenGlück has expired. Please update to the latest version to continue using it.";
 				OTHER_SWIFT_FLAGS = "";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -1384,7 +1388,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Phone App/OpenGluck-Phone-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "$(OPENGLUCK_TARGET_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "OpenGlück";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Update contacts with glucose information.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1425,7 +1430,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Phone App/OpenGluck-Phone-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "$(OPENGLUCK_TARGET_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "OpenGlück";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Update contacts with glucose information.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
