@@ -6,41 +6,6 @@ fileprivate struct CurrentGlucoseViewUI {
     static let cornerRadius = 10.0
 }
 
-fileprivate struct GridItem<Content: View>: View {
-    let title: String
-    @ViewBuilder let content: () -> Content
-    
-    #if os(watchOS) || os(tvOS)
-    let secondarySystemGroupedBackground: Color = Color(red: 28/256, green: 28/256, blue: 30/256)
-    #else
-    let secondarySystemGroupedBackground: Color = Color(uiColor: .secondarySystemGroupedBackground)
-    #endif
-    
-    var body: some View {
-        #if os(watchOS)
-        VStack {
-            content()
-        }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-        #else
-        VStack {
-            HStack {
-                Text(title)
-                    .font(.headline)
-                    .padding()
-            }
-            .foregroundStyle(Color(uiColor: .lightGray))
-            Spacer()
-            content()
-            Spacer()
-        }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(secondarySystemGroupedBackground)
-            .clipShape(RoundedRectangle(cornerRadius: CurrentGlucoseViewUI.cornerRadius))
-        #endif
-    }
-}
-
 struct CurrentGlucoseView: View {
     @EnvironmentObject var openGlückEnvironment: OpenGluckEnvironment
     
@@ -116,7 +81,7 @@ struct CurrentGlucoseView: View {
                 GridRow {
                     Grid {
                         GridRow {
-                            GridItem(title: "Trend") {
+                            Brick(title: "Trend") {
                                 if let lastHistoricGlucoseRecord = openGlückEnvironment.lastHistoricGlucoseRecord {
                                     HStack(spacing: 0) {
                                         Spacer()
@@ -149,12 +114,12 @@ struct CurrentGlucoseView: View {
                                     }
                                 }
                             }
-                            GridItem(title: "Current") {
+                            Brick(title: "Current") {
                                 current
                             }
                         }
                     }
-                    .frame(maxHeight: 150)
+                    .frame(maxHeight: BrickUI.smallHeight)
                 }
             }
         }

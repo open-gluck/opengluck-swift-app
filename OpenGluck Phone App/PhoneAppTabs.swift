@@ -44,6 +44,7 @@ struct PhoneAppTabs: View {
             CheckConnectionHasClient {
                 TimelineView(.everyMinute) { context in
                     CurrentGlucoseView(now: context.date)
+                    AddInsulinBrick()
                 }
             }
                 .tag(Tabs.graph)
@@ -52,9 +53,7 @@ struct PhoneAppTabs: View {
                     Text("Home")
                 }
             CheckConnectionHasClient {
-                List {
-                    LastRecordsView()
-                }
+                LastRecordsView()
             }
                 .tag(Tabs.records)
                 .tabItem {

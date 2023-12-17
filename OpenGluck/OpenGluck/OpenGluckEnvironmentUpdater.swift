@@ -34,6 +34,11 @@ class OpenGluckEnvironment: ObservableObject
     }
 }
 
+extension Notification.Name {
+    static let refreshOpenGlück = Notification.Name("OpenGluckEnvironmentUpdater.refreshOpenGlück")
+}
+
+
 struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
     @ViewBuilder
     let content: () -> Content
@@ -90,7 +95,6 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
         if runRefresh {
             refresh()
         }
-
     }
         
     var body: some View {
@@ -118,6 +122,10 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
             }
             .onAppear {
                 refreshUnlessStartedRecently()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: Notification.Name.refreshOpenGlück)) { _ in
+                print("Notification.Name.refreshOpenGlück")
+                refresh()
             }
 #if os(iOS)
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in

@@ -7,12 +7,14 @@ struct PhoneContentView: View {
         AppDataAutoFetch {
             OpenGluckEnvironmentUpdater {
                 VStack {
+                    SheetStatusView()
                     //WKDataDebugView()
                     PhoneAppTabs()
                 }
             }
         }
         .environmentObject(appDelegate.openGlückConnection)
+        .environmentObject(appDelegate.sheetStatusOptions)
         .padding()
     }
 }

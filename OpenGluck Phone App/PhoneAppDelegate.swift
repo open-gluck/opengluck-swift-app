@@ -16,6 +16,7 @@ class PhoneAppDelegate: NSObject, UIApplicationDelegate, WCSessionDelegate, Obse
     )
 
     let openGlückConnection = OpenGluckConnection()
+    let sheetStatusOptions: SheetStatusViewOptions = SheetStatusViewOptions()
     private var deviceToken: String?
 
     var notificationsGranted: Bool = false
