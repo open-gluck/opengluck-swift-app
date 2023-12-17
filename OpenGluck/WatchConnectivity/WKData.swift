@@ -98,8 +98,7 @@ class WKData: ObservableObject {
         }
         #endif
 
-        while messagesQueue.count > 0 {
-            let message = messagesQueue.removeFirst()
+        while let message = messagesQueue.popLast() {
             if message.mode == .sendMessage && !session.isReachable {
                 if let errorHandler = message.errorHandler {
                     print("WKData.flush() Live messages cannot be delivered as the other part is not reachable")
