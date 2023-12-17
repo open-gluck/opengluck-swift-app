@@ -15,38 +15,34 @@ struct AddInsulinBrick: View {
         ]
         _ = try await client.upload(insulinRecords: insulinRecords)
     }
-
+    
     @State var label: String = "Add"
     var body: some View {
-        Grid {
-            GridRow {
-                Brick(title: "Insulin", systemImage: "cross.vial") {
-                    HoldButton(label: "Add")
-                    .contextMenu(ContextMenu(menuItems: {
-                        ForEach(1...16, id: \.self) { n in
-                            Button("\(n) IU") {
-                                sheetStatusOptions.state = SheetStatusViewState.inProgress
-                                sheetStatusOptions.status = "\(n) IU"
-                                sheetStatusOptions.subStatus1 = "Launching Task…"
-                                Task {
-                                    defer { sheetStatusOptions.state = SheetStatusViewState.complete }
-                                    sheetStatusOptions.subStatus1 = "Adding…"
-                                    do {
-                                        try await quickAddInsulin(units: n)
-                                        sheetStatusOptions.subStatus1 = "Done!"
-                                        NotificationCenter.default.post(name: Notification.Name.refreshOpenGlück, object: nil)
-                                    } catch {
-                                        sheetStatusOptions.pushError(message: error.localizedDescription)
-                                    }
+        Brick(title: "Insulin", systemImage: "cross.vial") {
+            HoldButton(label: "Add Insulin")
+                .contextMenu(ContextMenu(menuItems: {
+                    ForEach(1...16, id: \.self) { n in
+                        Button("\(n) IU") {
+                            sheetStatusOptions.state = SheetStatusViewState.inProgress
+                            sheetStatusOptions.status = "\(n) IU"
+                            sheetStatusOptions.subStatus1 = "Launching Task…"
+                            Task {
+                                defer { sheetStatusOptions.state = SheetStatusViewState.complete }
+                                sheetStatusOptions.subStatus1 = "Adding…"
+                                do {
+                                    try await quickAddInsulin(units: n)
+                                    sheetStatusOptions.subStatus1 = "Done!"
+                                    NotificationCenter.default.post(name: Notification.Name.refreshOpenGlück, object: nil)
+                                } catch {
+                                    sheetStatusOptions.pushError(message: error.localizedDescription)
                                 }
                             }
                         }
-                        
-                    }))
-                }
-                .frame(maxHeight: BrickUI.smallHeight)
-            }
+                    }
+                    
+                }))
         }
+        .frame(maxHeight: BrickUI.smallHeight)
     }
 }
 

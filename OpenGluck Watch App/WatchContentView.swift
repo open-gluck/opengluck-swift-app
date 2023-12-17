@@ -7,6 +7,7 @@ struct WatchContentView: View {
     
     @AppStorage(WKDataKeys.openglückUrl.keyValue, store: OpenGluckManager.userDefaults) var openglückUrl: String = ""
     @AppStorage(WKDataKeys.openglückToken.keyValue, store: OpenGluckManager.userDefaults) var openglückToken: String = ""
+    @State var graphGeometry: CGSize?
     
     var body: some View {
         TimelineView(.everyMinute) { context in
@@ -15,7 +16,7 @@ struct WatchContentView: View {
                     //WKDataDebugView()
                     //WKComplicationDebugView()
                     Group {
-                        CurrentGlucoseView(now: context.date)
+                        CurrentGlucoseView(now: context.date, graphGeometry: $graphGeometry)
                             .padding(.bottom, 10)
                             // LATER improve use watchOS 10
                             .frame(minHeight: 190)

@@ -183,6 +183,8 @@
 		9DB44C7B29DE31A0005BB7F8 /* WKComplicationDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB44C7A29DE31A0005BB7F8 /* WKComplicationDebugView.swift */; };
 		9DB44C7C29DE31C0005BB7F8 /* WKComplicationDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB44C7A29DE31A0005BB7F8 /* WKComplicationDebugView.swift */; };
 		9DC4DF3E2B2F443500BAF7C5 /* SheetStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */; };
+		9DC4DF402B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF3F2B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift */; };
+		9DC4DF422B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF412B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift */; };
 		9DCAE26729CCED0F005973F8 /* OpenGluckCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCAE26629CCED0F005973F8 /* OpenGluckCredentials.swift */; };
 		9DCAE26829CCED0F005973F8 /* OpenGluckCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCAE26629CCED0F005973F8 /* OpenGluckCredentials.swift */; };
 		9DD650472B14AB6D00C6A417 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9DD650462B14AB6D00C6A417 /* Config.xcconfig */; };
@@ -353,6 +355,8 @@
 		9DB44C7929DE278A005BB7F8 /* OpenGluck Watch Widget Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "OpenGluck Watch Widget Extension.entitlements"; path = "OpenGluck Watch Extension/OpenGluck Watch Widget Extension.entitlements"; sourceTree = SOURCE_ROOT; };
 		9DB44C7A29DE31A0005BB7F8 /* WKComplicationDebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKComplicationDebugView.swift; sourceTree = "<group>"; };
 		9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetStatusView.swift; sourceTree = "<group>"; };
+		9DC4DF3F2B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseTrendBrick.swift; sourceTree = "<group>"; };
+		9DC4DF412B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentGlucoseBrick.swift; sourceTree = "<group>"; };
 		9DCAE26629CCED0F005973F8 /* OpenGluckCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGluckCredentials.swift; sourceTree = "<group>"; };
 		9DCAE26929CD0944005973F8 /* WatchUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchUpdater.swift; sourceTree = "<group>"; };
 		9DD650462B14AB6D00C6A417 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
@@ -429,6 +433,8 @@
 			children = (
 				9D1F6EB02B27404D0070D7A3 /* AddInsulinBrick.swift */,
 				9D1F6EB22B27417D0070D7A3 /* Brick.swift */,
+				9DC4DF3F2B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift */,
+				9DC4DF412B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift */,
 			);
 			path = Bricks;
 			sourceTree = "<group>";
@@ -1032,8 +1038,10 @@
 				9D39BB0B2A043C180037AB00 /* WKDataKeys.swift in Sources */,
 				9D2DFED929D0EF8A00545193 /* PhoneAdvancedView.swift in Sources */,
 				9D192C8E29C8EFF00047E40E /* NumberImageView.swift in Sources */,
+				9DC4DF422B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift in Sources */,
 				9D1F6EB12B27404D0070D7A3 /* AddInsulinBrick.swift in Sources */,
 				9D1B2CB929DCC163004C6311 /* ComplicationDebugView.swift in Sources */,
+				9DC4DF402B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

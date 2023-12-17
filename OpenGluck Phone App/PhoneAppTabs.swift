@@ -38,13 +38,27 @@ struct PhoneAppTabs: View {
     @AppStorage(WKDataKeys.enableContactTrick.keyValue, store: OpenGluckManager.userDefaults) var enableContactTrick: Bool = false
 #endif
     @State var currentTab: Tabs = .graph
+    @State var graphGeometry: CGSize?
 
     var body: some View {
         TabView(selection: $currentTab) {
             CheckConnectionHasClient {
                 TimelineView(.everyMinute) { context in
-                    CurrentGlucoseView(now: context.date)
-                    AddInsulinBrick()
+                    Grid {
+                        GridRow {
+                            Color.clear
+                                .gridCellUnsizedAxes([.vertical, .horizontal])
+                            AddInsulinBrick()
+                        }
+                        GridRow {
+                            CurrentGlucoseView(now: context.date, mode: .graphBrick, graphGeometry: $graphGeometry)
+                                .gridCellColumns(2)
+                        }
+                        GridRow {
+                            GlucoseTrendBrick(graphGeometry: graphGeometry)
+                            CurrentGlucoseBrick(now: context.date)
+                        }
+                    }
                 }
             }
                 .tag(Tabs.graph)
