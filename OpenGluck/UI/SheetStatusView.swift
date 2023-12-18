@@ -49,7 +49,11 @@ struct SheetStatusView: View {
         .onReceive(options.$errors, perform: { errors in
             self.errors = errors
         })
-        .sheet(isPresented: .constant(errors.count > 0)) {
+        .sheet(isPresented: .init(get: { errors.count > 0 }, set: { newValue in
+#if os(watchOS)
+            if(!newValue) { errors = [] }
+#endif
+        })) {
             GeometryReader(content: { geometry in
                 ScrollView {
                     ForEach(errors.indices, id: \.self) { i in
@@ -68,7 +72,11 @@ struct SheetStatusView: View {
                             if i < errors.count - 1 {
                                 Rectangle()
                                     .frame(width: geometry.size.width, height: 1)
+                                #if os(watchOS)
+                                    .foregroundColor(Color.black)
+                                #else
                                     .foregroundColor(Color(uiColor: .systemBackground))
+                                #endif
                             }
                         }
                     }
@@ -87,7 +95,9 @@ struct SheetStatusView: View {
                         Image(systemName: "plus.circle.fill")
                             .scaleEffect(scaling ? 0.9 : 1)
                             .font(.system(size: 40))
+#if !os(watchOS)
                             .foregroundColor(Color(uiColor: .secondaryLabel))
+#endif
                             .onAppear {
                                 //LATER re-introduce animation, if they work
                                 //withAnimation(.spring().repeatForever()) {
@@ -97,9 +107,14 @@ struct SheetStatusView: View {
                         Text(status)
                         Text(subStatus1)
                             .font(.subheadline)
+                        #if !os(watchOS)
                         Text(subStatus2)
                             .font(.subheadline)
+                        #endif
                     }
+#if os(watchOS)
+                    .offset(x: 0, y: -20)
+#endif
                     .tag(1)
                     .contentShape(Rectangle()).gesture(DragGesture())
                     Image(systemName: "checkmark.circle.fill")
@@ -109,11 +124,18 @@ struct SheetStatusView: View {
                         .tag(2)
                         .contentShape(Rectangle()).gesture(DragGesture())
                 }
-                
+#if os(watchOS)
+                .tabViewStyle(.page)
+#else
                 .tabViewStyle(.page(indexDisplayMode: .never))
+#endif
                 Spacer()
             }
+#if os(watchOS)
+            .background(page == 1 ? Color(.black) : .green)
+#else
             .background(page == 1 ? Color(.systemBackground) : .green)
+#endif
             .presentationDetents([.height(200)])
             .presentationDragIndicator(.hidden)
         }

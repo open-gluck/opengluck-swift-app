@@ -16,6 +16,7 @@ struct CurrentGlucoseView: View {
     }
     
     var mode: Mode = .graph
+    var showBackground: Bool = true
     @Binding var graphGeometry: CGSize?
     
     @ViewBuilder var graph: some View {
@@ -40,7 +41,9 @@ struct CurrentGlucoseView: View {
                     lowRecords: .constant(lastLowRecords.filter {
                         -$0.timestamp.timeIntervalSinceNow < GlucoseGraph.maxLookbehindInterval
                         
-                    }))
+                    }),
+                    showBackground: showBackground
+                )
             }
         }
     }

@@ -228,6 +228,7 @@ struct GlucoseGraph: View {
     @Binding var insulinRecords: [OpenGluckInsulinRecord]
     @Binding var lowRecords: [OpenGluckLowRecord]
     @State var style: Style = .normal
+    var showBackground: Bool = true
     
     @Environment(\.colorScheme) var colorScheme
     
@@ -237,7 +238,25 @@ struct GlucoseGraph: View {
     static let alternateTextPlacementForInsulinNearInterval: TimeInterval = 45 * 60
     
     static let nowColor = Color(red: 0.6, green: 0.6, blue: 0.6)
-
+    
+    struct Background: View {
+#if os(iOS)
+        static let systemGray4 = Color(cgColor: UIColor.systemGray4.resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark)).cgColor)
+        static let systemGray6 = Color(cgColor: UIColor.systemGray6.resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark)).cgColor)
+#else
+        static let systemGray4 = Color(red: 28/256, green: 28/256, blue: 30/256)
+        static let systemGray6 = Color(red: 58/256, green: 58/256, blue: 60/256)
+#endif
+        static let gradient: LinearGradient = .linearGradient(colors: [
+            Self.systemGray6,
+            Self.systemGray4
+        ], startPoint: .bottom, endPoint: .top)
+        var body: some View {
+            Rectangle()
+                .foregroundStyle(Self.gradient)
+        }
+    }
+    
     struct Impl: View {
 #if !os(tvOS)
         @Environment(\.widgetRenderingMode) var widgetRenderingMode
@@ -252,6 +271,7 @@ struct GlucoseGraph: View {
         let lowRecords: [OpenGluckLowRecord]
         let style: GlucoseGraph.Style
         let colorScheme: ColorScheme
+        let showBackground: Bool
         
         var annotateAtMgDl: Int {
             switch style {
@@ -885,11 +905,9 @@ struct GlucoseGraph: View {
             .chartBackground { _ in
                 switch widgetRenderingMode {
                 case .fullColor:
-                    Rectangle()
-                        .foregroundStyle(.linearGradient(colors: [
-                            systemGray6,
-                            systemGray4
-                        ], startPoint: .bottom, endPoint: .top))
+                    if showBackground {
+                        Background()
+                    }
                 default:
                     EmptyView()
                 }
@@ -930,7 +948,8 @@ struct GlucoseGraph: View {
                 insulinRecords: filteredInsulinRecords(forDate: context.date),
                 lowRecords: filteredLowRecords(forDate: context.date),
                 style: style,
-                colorScheme: colorScheme
+                colorScheme: colorScheme,
+                showBackground: showBackground
             )
         }
     }

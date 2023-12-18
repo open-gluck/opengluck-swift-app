@@ -196,6 +196,8 @@
 		9DD650492B14AB6D00C6A417 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9DD650462B14AB6D00C6A417 /* Config.xcconfig */; };
 		9DD6504A2B14AB6D00C6A417 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9DD650462B14AB6D00C6A417 /* Config.xcconfig */; };
 		9DD6504B2B14AB6D00C6A417 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9DD650462B14AB6D00C6A417 /* Config.xcconfig */; };
+		9DD99DEA2B30F5A9003194B7 /* DigiPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD99DE82B30F4A0003194B7 /* DigiPadView.swift */; };
+		9DD99DEB2B30F98F003194B7 /* SheetStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */; };
 		9DDA74DB2A4391BD00451DF6 /* CurrentGlucoseLargeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDA74DA2A4391BD00451DF6 /* CurrentGlucoseLargeWidget.swift */; };
 		9DDA74DC2A4391BD00451DF6 /* CurrentGlucoseLargeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDA74DA2A4391BD00451DF6 /* CurrentGlucoseLargeWidget.swift */; };
 		9DDD579D2A0AE1930063F704 /* OG in Frameworks */ = {isa = PBXBuildFile; productRef = 9DDD579C2A0AE1930063F704 /* OG */; };
@@ -366,6 +368,7 @@
 		9DCAE26629CCED0F005973F8 /* OpenGluckCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGluckCredentials.swift; sourceTree = "<group>"; };
 		9DCAE26929CD0944005973F8 /* WatchUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchUpdater.swift; sourceTree = "<group>"; };
 		9DD650462B14AB6D00C6A417 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		9DD99DE82B30F4A0003194B7 /* DigiPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigiPadView.swift; sourceTree = "<group>"; };
 		9DDA74DA2A4391BD00451DF6 /* CurrentGlucoseLargeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentGlucoseLargeWidget.swift; sourceTree = "<group>"; };
 		9DF375DA29D254360043CAA6 /* GlucoseRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseRecordView.swift; sourceTree = "<group>"; };
 		9DF375DE29D254990043CAA6 /* OpenGluckManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGluckManager.swift; sourceTree = "<group>"; };
@@ -559,6 +562,7 @@
 		9D50EBBB29C79E2400CF69E6 /* Watch */ = {
 			isa = PBXGroup;
 			children = (
+				9DD99DE72B30F48C003194B7 /* UI */,
 				9D027CF32AF41EED00B46980 /* OpenGluck-Watch-Info.plist */,
 				9DABAE8B29D8E1EA00315030 /* OpenGluck Watch.entitlements */,
 				9D50EBBC29C79E2400CF69E6 /* OpenGluckWatchApp.swift */,
@@ -728,6 +732,14 @@
 				9DA7CCAE2B290DB00006EC91 /* SnackGram.swift */,
 				9DA7CCB42B29118D0006EC91 /* HoldButton.swift */,
 				9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		9DD99DE72B30F48C003194B7 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				9DD99DE82B30F4A0003194B7 /* DigiPadView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1060,11 +1072,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D027CF62AF59A2A00B46980 /* OpenGluckWatchApp.swift in Sources */,
+				9DD99DEA2B30F5A9003194B7 /* DigiPadView.swift in Sources */,
 				9D332E2A29D6130B002613F6 /* WKData.swift in Sources */,
 				9D50EBF129C7BC8E00CF69E6 /* WatchExtension.intentdefinition in Sources */,
 				9D657A1F29DB1DE900791926 /* WKDefaults.swift in Sources */,
 				9D2F2FAC2A3075140025A3D3 /* TimestampView.swift in Sources */,
 				9D1EEE522AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */,
+				9DD99DEB2B30F98F003194B7 /* SheetStatusView.swift in Sources */,
 				9D50EBBF29C79E2400CF69E6 /* WatchContentView.swift in Sources */,
 				9D1F6EB42B2741DD0070D7A3 /* Brick.swift in Sources */,
 				9DAD39252AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */,
