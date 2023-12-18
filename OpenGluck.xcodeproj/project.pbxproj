@@ -43,6 +43,12 @@
 		9D1EEE512AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1EEE4F2AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift */; };
 		9D1EEE522AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1EEE4F2AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift */; };
 		9D1EEE532AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1EEE4F2AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift */; };
+		9D1F6EB12B27404D0070D7A3 /* AddInsulinBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1F6EB02B27404D0070D7A3 /* AddInsulinBrick.swift */; };
+		9D1F6EB32B27417D0070D7A3 /* Brick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1F6EB22B27417D0070D7A3 /* Brick.swift */; };
+		9D1F6EB42B2741DD0070D7A3 /* Brick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1F6EB22B27417D0070D7A3 /* Brick.swift */; };
+		9D1F6EB52B2741DD0070D7A3 /* Brick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1F6EB22B27417D0070D7A3 /* Brick.swift */; };
+		9D1F6EB62B2741DE0070D7A3 /* Brick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1F6EB22B27417D0070D7A3 /* Brick.swift */; };
+		9D1F6EB72B2741DE0070D7A3 /* Brick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1F6EB22B27417D0070D7A3 /* Brick.swift */; };
 		9D2268812AF29B2700437FAC /* OpenGluckTvApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2268802AF29B2700437FAC /* OpenGluckTvApp.swift */; };
 		9D2268832AF29B2700437FAC /* TvContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2268822AF29B2700437FAC /* TvContentView.swift */; };
 		9D2268852AF29B2800437FAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D2268842AF29B2800437FAC /* Assets.xcassets */; };
@@ -149,6 +155,15 @@
 		9DA6CF6A29E34F2A0075CC4C /* PhoneWidgetTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA6CF6929E34F2A0075CC4C /* PhoneWidgetTarget.swift */; };
 		9DA6CF6B29E34F440075CC4C /* NumberImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D192C8D29C8EFF00047E40E /* NumberImageView.swift */; };
 		9DA6CF6E29E3575E0075CC4C /* CurrentBloodGlucoseTimestampWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA6CF6C29E355720075CC4C /* CurrentBloodGlucoseTimestampWidget.swift */; };
+		9DA7CCA82B290AB80006EC91 /* InsulinRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7CCA72B290AB80006EC91 /* InsulinRecordView.swift */; };
+		9DA7CCAA2B290B070006EC91 /* InsulinUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7CCA92B290B070006EC91 /* InsulinUnit.swift */; };
+		9DA7CCAD2B290D570006EC91 /* LowRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7CCAC2B290D570006EC91 /* LowRecordView.swift */; };
+		9DA7CCAF2B290DB00006EC91 /* SnackGram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7CCAE2B290DB00006EC91 /* SnackGram.swift */; };
+		9DA7CCB02B290F520006EC91 /* LowRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7CCAC2B290D570006EC91 /* LowRecordView.swift */; };
+		9DA7CCB12B290F530006EC91 /* InsulinRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7CCA72B290AB80006EC91 /* InsulinRecordView.swift */; };
+		9DA7CCB22B290F580006EC91 /* InsulinUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7CCA92B290B070006EC91 /* InsulinUnit.swift */; };
+		9DA7CCB32B290F5B0006EC91 /* SnackGram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7CCAE2B290DB00006EC91 /* SnackGram.swift */; };
+		9DA7CCB52B29118D0006EC91 /* HoldButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7CCB42B29118D0006EC91 /* HoldButton.swift */; };
 		9DAD39232AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAD39212AF5AD4600C1304F /* OpenGluckConnection.swift */; };
 		9DAD39242AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAD39212AF5AD4600C1304F /* OpenGluckConnection.swift */; };
 		9DAD39252AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAD39212AF5AD4600C1304F /* OpenGluckConnection.swift */; };
@@ -167,6 +182,13 @@
 		9DB1DD352B07CD3E007ED12B /* BloodGlucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB1DD302B07CD3E007ED12B /* BloodGlucose.swift */; };
 		9DB44C7B29DE31A0005BB7F8 /* WKComplicationDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB44C7A29DE31A0005BB7F8 /* WKComplicationDebugView.swift */; };
 		9DB44C7C29DE31C0005BB7F8 /* WKComplicationDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB44C7A29DE31A0005BB7F8 /* WKComplicationDebugView.swift */; };
+		9DC4DF3E2B2F443500BAF7C5 /* SheetStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */; };
+		9DC4DF402B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF3F2B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift */; };
+		9DC4DF422B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF412B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift */; };
+		9DC4DF442B2F6B8700BAF7C5 /* GlucoseTrend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF432B2F6B8700BAF7C5 /* GlucoseTrend.swift */; };
+		9DC4DF462B2F6B8700BAF7C5 /* GlucoseTrend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF432B2F6B8700BAF7C5 /* GlucoseTrend.swift */; };
+		9DC4DF4A2B2F6C2F00BAF7C5 /* CurrentGlucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF492B2F6C2F00BAF7C5 /* CurrentGlucose.swift */; };
+		9DC4DF4C2B2F6C2F00BAF7C5 /* CurrentGlucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF492B2F6C2F00BAF7C5 /* CurrentGlucose.swift */; };
 		9DCAE26729CCED0F005973F8 /* OpenGluckCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCAE26629CCED0F005973F8 /* OpenGluckCredentials.swift */; };
 		9DCAE26829CCED0F005973F8 /* OpenGluckCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCAE26629CCED0F005973F8 /* OpenGluckCredentials.swift */; };
 		9DD650472B14AB6D00C6A417 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9DD650462B14AB6D00C6A417 /* Config.xcconfig */; };
@@ -263,6 +285,8 @@
 		9D1B2CBA29DCC3DF004C6311 /* WidgetKinds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetKinds.swift; sourceTree = "<group>"; };
 		9D1EEE4D2AEF9F58009EA2AB /* DisplayPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DisplayPreferencesView.swift; path = "OpenGluck Phone App/DisplayPreferencesView.swift"; sourceTree = SOURCE_ROOT; };
 		9D1EEE4F2AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OpenGluckThresholdsDelegate.swift; path = OpenGluck/OpenGluck/OpenGluckThresholdsDelegate.swift; sourceTree = SOURCE_ROOT; };
+		9D1F6EB02B27404D0070D7A3 /* AddInsulinBrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInsulinBrick.swift; sourceTree = "<group>"; };
+		9D1F6EB22B27417D0070D7A3 /* Brick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brick.swift; sourceTree = "<group>"; };
 		9D22687E2AF29B2700437FAC /* OG TV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OG TV.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D2268802AF29B2700437FAC /* OpenGluckTvApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGluckTvApp.swift; sourceTree = "<group>"; };
 		9D2268822AF29B2700437FAC /* TvContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvContentView.swift; sourceTree = "<group>"; };
@@ -323,12 +347,22 @@
 		9D93A23F2A1A09E900F644B2 /* GlucoseNumbersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseNumbersView.swift; sourceTree = "<group>"; };
 		9DA6CF6929E34F2A0075CC4C /* PhoneWidgetTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneWidgetTarget.swift; sourceTree = "<group>"; };
 		9DA6CF6C29E355720075CC4C /* CurrentBloodGlucoseTimestampWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentBloodGlucoseTimestampWidget.swift; sourceTree = "<group>"; };
+		9DA7CCA72B290AB80006EC91 /* InsulinRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinRecordView.swift; sourceTree = "<group>"; };
+		9DA7CCA92B290B070006EC91 /* InsulinUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinUnit.swift; sourceTree = "<group>"; };
+		9DA7CCAC2B290D570006EC91 /* LowRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LowRecordView.swift; sourceTree = "<group>"; };
+		9DA7CCAE2B290DB00006EC91 /* SnackGram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackGram.swift; sourceTree = "<group>"; };
+		9DA7CCB42B29118D0006EC91 /* HoldButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldButton.swift; sourceTree = "<group>"; };
 		9DABAE8B29D8E1EA00315030 /* OpenGluck Watch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "OpenGluck Watch.entitlements"; sourceTree = "<group>"; };
 		9DAD39212AF5AD4600C1304F /* OpenGluckConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenGluckConnection.swift; sourceTree = "<group>"; };
 		9DAD39222AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenGluckEnvironmentUpdater.swift; sourceTree = "<group>"; };
 		9DB1DD302B07CD3E007ED12B /* BloodGlucose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodGlucose.swift; sourceTree = "<group>"; };
 		9DB44C7929DE278A005BB7F8 /* OpenGluck Watch Widget Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "OpenGluck Watch Widget Extension.entitlements"; path = "OpenGluck Watch Extension/OpenGluck Watch Widget Extension.entitlements"; sourceTree = SOURCE_ROOT; };
 		9DB44C7A29DE31A0005BB7F8 /* WKComplicationDebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKComplicationDebugView.swift; sourceTree = "<group>"; };
+		9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetStatusView.swift; sourceTree = "<group>"; };
+		9DC4DF3F2B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseTrendBrick.swift; sourceTree = "<group>"; };
+		9DC4DF412B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentGlucoseBrick.swift; sourceTree = "<group>"; };
+		9DC4DF432B2F6B8700BAF7C5 /* GlucoseTrend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseTrend.swift; sourceTree = "<group>"; };
+		9DC4DF492B2F6C2F00BAF7C5 /* CurrentGlucose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentGlucose.swift; sourceTree = "<group>"; };
 		9DCAE26629CCED0F005973F8 /* OpenGluckCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGluckCredentials.swift; sourceTree = "<group>"; };
 		9DCAE26929CD0944005973F8 /* WatchUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchUpdater.swift; sourceTree = "<group>"; };
 		9DD650462B14AB6D00C6A417 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
@@ -400,6 +434,17 @@
 			path = Widgets;
 			sourceTree = "<group>";
 		};
+		9D1F6EAF2B2740390070D7A3 /* Bricks */ = {
+			isa = PBXGroup;
+			children = (
+				9D1F6EB02B27404D0070D7A3 /* AddInsulinBrick.swift */,
+				9D1F6EB22B27417D0070D7A3 /* Brick.swift */,
+				9DC4DF3F2B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift */,
+				9DC4DF412B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift */,
+			);
+			path = Bricks;
+			sourceTree = "<group>";
+		};
 		9D22687F2AF29B2700437FAC /* TV */ = {
 			isa = PBXGroup;
 			children = (
@@ -446,6 +491,8 @@
 		9D2F2FA82A3074F60025A3D3 /* Records */ = {
 			isa = PBXGroup;
 			children = (
+				9DA7CCAB2B290D4C0006EC91 /* Low */,
+				9DA7CCA62B290A9E0006EC91 /* Insulin */,
 				9D786CBD29CE34FE008F9270 /* Glucose */,
 				9D2F2FA92A3075140025A3D3 /* TimestampView.swift */,
 			);
@@ -564,6 +611,7 @@
 				9D657A1729DAEF4600791926 /* ContactUpdater */,
 				9D2F2FA82A3074F60025A3D3 /* Records */,
 				9DF375DD29D2548A0043CAA6 /* Utils */,
+				9D1F6EAF2B2740390070D7A3 /* Bricks */,
 				9D8AD5EC2A3B1046006FEAE0 /* Widgets */,
 				9D0B4BB02AFFF21000D2C773 /* AppData.swift */,
 				9D0B4BB62B002F4700D2C773 /* Media.xcassets */,
@@ -604,6 +652,8 @@
 				9DF375DA29D254360043CAA6 /* GlucoseRecordView.swift */,
 				9D924D352A3F33A600B477AF /* CurrentDataGauge.swift */,
 				9D924D3A2A3F3A0200B477AF /* CurrentDataColors.swift */,
+				9DC4DF432B2F6B8700BAF7C5 /* GlucoseTrend.swift */,
+				9DC4DF492B2F6C2F00BAF7C5 /* CurrentGlucose.swift */,
 			);
 			path = Glucose;
 			sourceTree = "<group>";
@@ -654,10 +704,30 @@
 			path = OpenGluck;
 			sourceTree = "<group>";
 		};
+		9DA7CCA62B290A9E0006EC91 /* Insulin */ = {
+			isa = PBXGroup;
+			children = (
+				9DA7CCA72B290AB80006EC91 /* InsulinRecordView.swift */,
+			);
+			path = Insulin;
+			sourceTree = "<group>";
+		};
+		9DA7CCAB2B290D4C0006EC91 /* Low */ = {
+			isa = PBXGroup;
+			children = (
+				9DA7CCAC2B290D570006EC91 /* LowRecordView.swift */,
+			);
+			path = Low;
+			sourceTree = "<group>";
+		};
 		9DB1DD2F2B07CD0A007ED12B /* UI */ = {
 			isa = PBXGroup;
 			children = (
 				9DB1DD302B07CD3E007ED12B /* BloodGlucose.swift */,
+				9DA7CCA92B290B070006EC91 /* InsulinUnit.swift */,
+				9DA7CCAE2B290DB00006EC91 /* SnackGram.swift */,
+				9DA7CCB42B29118D0006EC91 /* HoldButton.swift */,
+				9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -925,6 +995,7 @@
 				9D2268982AF29D7B00437FAC /* WKDataKeys.swift in Sources */,
 				9D2268A42AF2B4FD00437FAC /* CurrentDataColors.swift in Sources */,
 				9D0B4BB52AFFF21000D2C773 /* AppData.swift in Sources */,
+				9D1F6EB72B2741DE0070D7A3 /* Brick.swift in Sources */,
 				9D2268912AF29CD600437FAC /* CurrentGlucoseView.swift in Sources */,
 				9DB1DD352B07CD3E007ED12B /* BloodGlucose.swift in Sources */,
 				9D2268972AF29D4500437FAC /* OpenGluckManager.swift in Sources */,
@@ -941,34 +1012,46 @@
 				9DF375E229D256740043CAA6 /* LastRecordsView.swift in Sources */,
 				9D0B4BB12AFFF21000D2C773 /* AppData.swift in Sources */,
 				9D93A2402A1A09E900F644B2 /* GlucoseNumbersView.swift in Sources */,
+				9D1F6EB32B27417D0070D7A3 /* Brick.swift in Sources */,
 				9D50EBAD29C79E2300CF69E6 /* PhoneContentView.swift in Sources */,
 				9D50EBD129C7A7A300CF69E6 /* HTTPSClient.swift in Sources */,
 				9D192C8C29C8EAD00047E40E /* PhoneContactUpdater.swift in Sources */,
 				9D786CBF29CE3542008F9270 /* GlucoseGraph.swift in Sources */,
 				9D1EEE502AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */,
 				9D50EBDC29C7AB7800CF69E6 /* GlucoseView.swift in Sources */,
+				9DC4DF4A2B2F6C2F00BAF7C5 /* CurrentGlucose.swift in Sources */,
 				9D924D362A3F33A600B477AF /* CurrentDataGauge.swift in Sources */,
 				9D2F2FAA2A3075140025A3D3 /* TimestampView.swift in Sources */,
 				9DAD39232AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */,
 				9D332E2929D6130B002613F6 /* WKData.swift in Sources */,
 				9D657A1429DABD9800791926 /* PhoneAppDelegate.swift in Sources */,
+				9DA7CCAA2B290B070006EC91 /* InsulinUnit.swift in Sources */,
 				9D50EBAB29C79E2300CF69E6 /* OpenGluckPhoneApp.swift in Sources */,
 				9D50EBD429C7A7F200CF69E6 /* CurrentGlucoseView.swift in Sources */,
 				9D2DFED729D0EF1000545193 /* PhoneAppTabs.swift in Sources */,
 				9DCAE26729CCED0F005973F8 /* OpenGluckCredentials.swift in Sources */,
 				9D8AD5FB2A3CB058006FEAE0 /* WidgetKinds.swift in Sources */,
+				9DC4DF3E2B2F443500BAF7C5 /* SheetStatusView.swift in Sources */,
 				9DB1DD312B07CD3E007ED12B /* BloodGlucose.swift in Sources */,
 				9D657A2229DB614F00791926 /* WKDataDebugView.swift in Sources */,
 				9D27872829E20CB3006B647F /* PhoneAppTarget.swift in Sources */,
+				9DA7CCAD2B290D570006EC91 /* LowRecordView.swift in Sources */,
+				9DC4DF442B2F6B8700BAF7C5 /* GlucoseTrend.swift in Sources */,
 				9D657A1E29DB1DE900791926 /* WKDefaults.swift in Sources */,
+				9DA7CCA82B290AB80006EC91 /* InsulinRecordView.swift in Sources */,
 				9DF375DF29D254990043CAA6 /* OpenGluckManager.swift in Sources */,
+				9DA7CCB52B29118D0006EC91 /* HoldButton.swift in Sources */,
 				9DB44C7B29DE31A0005BB7F8 /* WKComplicationDebugView.swift in Sources */,
+				9DA7CCAF2B290DB00006EC91 /* SnackGram.swift in Sources */,
 				9D1EEE4E2AEF9F58009EA2AB /* DisplayPreferencesView.swift in Sources */,
 				9DAD39282AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift in Sources */,
 				9D39BB0B2A043C180037AB00 /* WKDataKeys.swift in Sources */,
 				9D2DFED929D0EF8A00545193 /* PhoneAdvancedView.swift in Sources */,
 				9D192C8E29C8EFF00047E40E /* NumberImageView.swift in Sources */,
+				9DC4DF422B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift in Sources */,
+				9D1F6EB12B27404D0070D7A3 /* AddInsulinBrick.swift in Sources */,
 				9D1B2CB929DCC163004C6311 /* ComplicationDebugView.swift in Sources */,
+				9DC4DF402B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -983,20 +1066,27 @@
 				9D2F2FAC2A3075140025A3D3 /* TimestampView.swift in Sources */,
 				9D1EEE522AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */,
 				9D50EBBF29C79E2400CF69E6 /* WatchContentView.swift in Sources */,
+				9D1F6EB42B2741DD0070D7A3 /* Brick.swift in Sources */,
 				9DAD39252AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */,
 				9D50EBD229C7A7A300CF69E6 /* HTTPSClient.swift in Sources */,
+				9DC4DF462B2F6B8700BAF7C5 /* GlucoseTrend.swift in Sources */,
 				9D8AD5FF2A3DE432006FEAE0 /* NumberImageView.swift in Sources */,
 				9D786CC029CE3542008F9270 /* GlucoseGraph.swift in Sources */,
 				9D50EBDB29C7A86D00CF69E6 /* GlucoseView.swift in Sources */,
+				9DA7CCB32B290F5B0006EC91 /* SnackGram.swift in Sources */,
 				9D27872A29E20CD6006B647F /* WatchAppTarget.swift in Sources */,
+				9DA7CCB22B290F580006EC91 /* InsulinUnit.swift in Sources */,
 				9D924D382A3F33A600B477AF /* CurrentDataGauge.swift in Sources */,
 				9D1B2CBB29DCC3DF004C6311 /* WidgetKinds.swift in Sources */,
+				9DA7CCB12B290F530006EC91 /* InsulinRecordView.swift in Sources */,
 				9D657A2329DB614F00791926 /* WKDataDebugView.swift in Sources */,
 				9DF375E329D256740043CAA6 /* LastRecordsView.swift in Sources */,
 				9DAD392A2AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift in Sources */,
 				9D657A2629DB680200791926 /* WatchAppDelegate.swift in Sources */,
+				9DA7CCB02B290F520006EC91 /* LowRecordView.swift in Sources */,
 				9D657A1A29DAF00B00791926 /* WatchUpdater.swift in Sources */,
 				9D50EBD529C7A7F200CF69E6 /* CurrentGlucoseView.swift in Sources */,
+				9DC4DF4C2B2F6C2F00BAF7C5 /* CurrentGlucose.swift in Sources */,
 				9D924D3D2A3F3A0200B477AF /* CurrentDataColors.swift in Sources */,
 				9DF375DC29D254360043CAA6 /* GlucoseRecordView.swift in Sources */,
 				9DB44C7C29DE31C0005BB7F8 /* WKComplicationDebugView.swift in Sources */,
@@ -1016,6 +1106,7 @@
 				9D8AD5F92A3CAE52006FEAE0 /* CurrentGlucoseWidget.swift in Sources */,
 				9DAD39262AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */,
 				9D1B2CB729DCBFBB004C6311 /* DebugWidget.swift in Sources */,
+				9D1F6EB62B2741DE0070D7A3 /* Brick.swift in Sources */,
 				9D1EEE532AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */,
 				9D924D432A41DA9700B477AF /* GraphWidget.swift in Sources */,
 				9D27872C29E20CF1006B647F /* WatchComplicationTarget.swift in Sources */,
@@ -1061,6 +1152,7 @@
 				9DB1DD322B07CD3E007ED12B /* BloodGlucose.swift in Sources */,
 				9D924D442A41DC5200B477AF /* GlucoseGraph.swift in Sources */,
 				9DA6CF6629E34EBF0075CC4C /* PhoneContactUpdater.swift in Sources */,
+				9D1F6EB52B2741DD0070D7A3 /* Brick.swift in Sources */,
 				9D8AD5F22A3C5CA0006FEAE0 /* WidgetPreviewEnvironment.swift in Sources */,
 				9D8C669029E33B2A00EB40E4 /* OpenGluckManager.swift in Sources */,
 				9D924D422A41DA9700B477AF /* GraphWidget.swift in Sources */,
