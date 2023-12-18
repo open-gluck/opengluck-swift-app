@@ -67,7 +67,9 @@ struct PhoneAppTabs: View {
                     Text("Home")
                 }
             CheckConnectionHasClient {
-                LastRecordsView()
+                List {
+                    LastRecordsView()
+                }
             }
                 .tag(Tabs.records)
                 .tabItem {

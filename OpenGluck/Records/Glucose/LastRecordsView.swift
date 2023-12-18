@@ -100,30 +100,28 @@ struct LastRecordsView: View {
     #endif
 
     var body: some View {
-        List {
-            ForEach(Array(records), id: \.id) { record in
-                switch record {
-                case .glucose(_, glucoseRecord: let glucoseRecord):
-                    GlucoseRecordView(glucoseRecord: .constant(glucoseRecord))
-                        .deleteDisabled(true)
-                case .insulin(_, insulinRecord: let insulinRecord):
-                    InsulinRecordView(insulinRecord: .constant(insulinRecord))
-                case .low(_, lowRecord: let lowRecord):
-                    LowRecordView(lowRecord: .constant(lowRecord))
-                        .deleteDisabled(true)
-                }
+        ForEach(Array(records), id: \.id) { record in
+            switch record {
+            case .glucose(_, glucoseRecord: let glucoseRecord):
+                GlucoseRecordView(glucoseRecord: .constant(glucoseRecord))
+                    .deleteDisabled(true)
+            case .insulin(_, insulinRecord: let insulinRecord):
+                InsulinRecordView(insulinRecord: .constant(insulinRecord))
+            case .low(_, lowRecord: let lowRecord):
+                LowRecordView(lowRecord: .constant(lowRecord))
+                    .deleteDisabled(true)
             }
-#if os(iOS)
-            .onDelete(perform: { indexSet in
-                let recordsToDelete: [Record] = indexSet.map { records[$0] }
-                recordsToDelete.forEach { record in
-                    hiddenIds.insert(record.id)
-                    deleteRecord(record)
-                }
-            })
-#endif
         }
-        .task(id: UUID()) {
+#if os(iOS)
+        .onDelete(perform: { indexSet in
+            let recordsToDelete: [Record] = indexSet.map { records[$0] }
+            recordsToDelete.forEach { record in
+                hiddenIds.insert(record.id)
+                deleteRecord(record)
+            }
+        })
+#endif
+        .onReceive(openGlückUpdater.$revision) { _ in
             withAnimation {
                 update()
             }
@@ -134,9 +132,7 @@ struct LastRecordsView: View {
 struct LastRecordsView_Previews: PreviewProvider {
     static var previews: some View {
         OpenGluckEnvironmentUpdater {
-            List {
-                LastRecordsView()
-            }
+            LastRecordsView()
         }
             .environmentObject(OpenGluckConnection())
     }

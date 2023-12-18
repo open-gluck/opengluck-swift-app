@@ -10,20 +10,25 @@ struct WatchContentView: View {
     @State var graphGeometry: CGSize?
     
     var body: some View {
-        TimelineView(.everyMinute) { context in
-            OpenGluckEnvironmentUpdater {
-                ScrollView {
-                    //WKDataDebugView()
-                    //WKComplicationDebugView()
-                    Group {
-                        CurrentGlucoseView(now: context.date, graphGeometry: $graphGeometry)
-                            .padding(.bottom, 10)
-                            // LATER improve use watchOS 10
-                            .frame(minHeight: 190)
+        OpenGluckEnvironmentUpdater {
+            List {
+                TimelineView(.everyMinute) { context in
+                    Grid {
+                        GridRow {
+                            CurrentGlucoseView(now: context.date, mode: .graph, graphGeometry: $graphGeometry)
+                                .frame(height: 120)
+                                .gridCellColumns(2)
+                        }
+                        GridRow {
+                            GlucoseTrend(graphGeometry: graphGeometry)
+                            CurrentGlucose(now: context.date)
+                        }
+                        .padding(.all)
                     }
-                    LastRecordsView()
-                        .padding(.vertical)
                 }
+                .padding(.horizontal, -15)
+                .listItemTint(.clear)
+                LastRecordsView()
             }
         }
     }
