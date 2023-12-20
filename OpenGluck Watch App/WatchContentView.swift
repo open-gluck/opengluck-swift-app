@@ -6,48 +6,18 @@ import OG
 struct WatchContentView: View {
     @EnvironmentObject var appDelegate: WatchAppDelegate
     @StateObject var sheetStatusOptions: SheetStatusViewOptions = SheetStatusViewOptions()
-    @EnvironmentObject var openGlückConnection: OpenGluckConnection
 
     @AppStorage(WKDataKeys.openglückUrl.keyValue, store: OpenGluckManager.userDefaults) var openglückUrl: String = ""
     @AppStorage(WKDataKeys.openglückToken.keyValue, store: OpenGluckManager.userDefaults) var openglückToken: String = ""
     @State var graphGeometry: CGSize?
     @State var pageNumber: Int = 0
     
-    @State var showAddInsulin: Bool = false
-    @State var unitsString: String = ""
+    @StateObject var addInsulinButtonData: AddInsulinButtonData = AddInsulinButtonData()
+    @StateObject var addLowButtonData: AddLowButtonData = AddLowButtonData()
     
     private enum Page: Int {
         case graph = 0
         case records = 1
-    }
-    
-    private func uploadInsulinToOpenGlück(units: Int) async throws {
-        guard let client = openGlückConnection.getClient() else {
-            fatalError("No client")
-        }
-        let insulinRecords: [OpenGluckInsulinRecord] = [
-            OpenGluckInsulinRecord(id: UUID(), timestamp: Date(), units: units, deleted: false)
-        ]
-        _ = try await client.upload(insulinRecords: insulinRecords)
-    }
-
-    private func addInsulin(units: Double) {
-        let unitsString: String = abs(units - round(units)) < .ulpOfOne ? "\(Int(round(units)))" : "\(round(units * 10) / 10)"
-        sheetStatusOptions.state = SheetStatusViewState.inProgress
-        sheetStatusOptions.status = "\(unitsString) IU"
-        sheetStatusOptions.subStatus1 = "Preparing…"
-        sheetStatusOptions.state = .inProgress
-        Task {
-            defer { sheetStatusOptions.state = SheetStatusViewState.complete }
-            sheetStatusOptions.subStatus1 = "Adding…"
-            do {
-                try await uploadInsulinToOpenGlück(units: Int(round(units)))
-                sheetStatusOptions.subStatus1 = "Done!"
-                NotificationCenter.default.post(name: Notification.Name.refreshOpenGlück, object: nil)
-            } catch {
-                sheetStatusOptions.pushError(message: error.localizedDescription)
-            }
-        }
     }
     
     var body: some View {
@@ -55,20 +25,8 @@ struct WatchContentView: View {
             SheetStatusView()
             
             ZStack {
-                DigiTextView(placeholder: "",
-                             text: $unitsString,
-                             presentingModal: $showAddInsulin, onClose: {
-                    pageNumber = Page.graph.rawValue
-                }, onConfirm: {
-                    Task {
-                        pageNumber = Page.graph.rawValue
-                        await Task.yield()
-                        if let units = Double(unitsString) {
-                            addInsulin(units: units)
-                        }
-                    }
-                })
-                .opacity(0)
+                AddInsulinButton.Interface(addInsulinButtonData: addInsulinButtonData)
+                AddLowButton.Interface(addLowButtonData: addLowButtonData)
                 
                 OpenGluckEnvironmentUpdater {
                     NavigationStack {
@@ -88,15 +46,14 @@ struct WatchContentView: View {
                         }
                         .tabViewStyle(.verticalPage)
                         .toolbar {
+                            ToolbarItem(placement: .topBarLeading) {
+                                if pageNumber == Page.graph.rawValue {
+                                    AddLowButton(addLowButtonData: addLowButtonData)
+                                }
+                            }
                             ToolbarItem(placement: .topBarTrailing) {
                                 if pageNumber == Page.graph.rawValue {
-                                    Button {
-                                        unitsString = ""
-                                        showAddInsulin = true
-                                    } label: {
-                                        Image(systemName:"cross.vial")
-                                            .foregroundColor(.white)
-                                    }
+                                    AddInsulinButton(addInsulinButtonData: addInsulinButtonData)
                                 }
                             }
                             ToolbarItemGroup(placement: .bottomBar) {

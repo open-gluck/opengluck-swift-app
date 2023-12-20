@@ -8,6 +8,9 @@ struct LastRecordsView: View {
     @EnvironmentObject var appDelegate: PhoneAppDelegate
     private var sheetStatusOptions: SheetStatusViewOptions { appDelegate.sheetStatusOptions }
     #endif
+    #if os(watchOS)
+    @EnvironmentObject var sheetStatusOptions: SheetStatusViewOptions
+    #endif
 
     enum Record: Hashable, Identifiable {
         case glucose(id: UUID, glucoseRecord: OpenGluckGlucoseRecord)
@@ -62,7 +65,6 @@ struct LastRecordsView: View {
             .filter { !hiddenIds.contains($0.id) }
     }
     
-    #if os(iOS)
     private func deleteRecord(_ record: Record) {
         sheetStatusOptions.state = SheetStatusViewState.inProgress
         sheetStatusOptions.status = "Deleting…"
@@ -74,7 +76,7 @@ struct LastRecordsView: View {
             do {
                 switch record {
                 case .glucose(glucoseRecord: _): fatalError("Don't know how to delete glucose record")
-                case .low(lowRecord: _): fatalError("Don't know how to delete low record")
+                case .low(_, lowRecord: let lowRecord): try await deleteLowRecord(lowRecord)
                 case .insulin(_, insulinRecord: let insulinRecord): try await deleteInsulinRecord(insulinRecord)
                 }
                 
@@ -87,8 +89,17 @@ struct LastRecordsView: View {
         }
     }
     
+    private func deleteLowRecord(_ lowRecord: OpenGluckLowRecord) async throws {
+        guard let client = openGlückConnection.getClient() else {
+            fatalError("No client")
+        }
+        let lowRecords: [OpenGluckLowRecord] = [
+            OpenGluckLowRecord(id: lowRecord.id, timestamp: lowRecord.timestamp, sugarInGrams: lowRecord.sugarInGrams, deleted: true)
+        ]
+        _ = try await client.upload(lowRecords: lowRecords)
+    }
+
     private func deleteInsulinRecord(_ insulinRecord: OpenGluckInsulinRecord) async throws {
-        print("TODO delete \(insulinRecord.units)")
         guard let client = openGlückConnection.getClient() else {
             fatalError("No client")
         }
@@ -97,7 +108,6 @@ struct LastRecordsView: View {
         ]
         _ = try await client.upload(insulinRecords: insulinRecords)
     }
-    #endif
 
     var body: some View {
         ForEach(Array(records), id: \.id) { record in
@@ -109,10 +119,8 @@ struct LastRecordsView: View {
                 InsulinRecordView(insulinRecord: .constant(insulinRecord))
             case .low(_, lowRecord: let lowRecord):
                 LowRecordView(lowRecord: .constant(lowRecord))
-                    .deleteDisabled(true)
             }
         }
-#if os(iOS)
         .onDelete(perform: { indexSet in
             let recordsToDelete: [Record] = indexSet.map { records[$0] }
             recordsToDelete.forEach { record in
@@ -120,7 +128,6 @@ struct LastRecordsView: View {
                 deleteRecord(record)
             }
         })
-#endif
         .onReceive(openGlückUpdater.$revision) { _ in
             withAnimation {
                 update()
@@ -132,7 +139,9 @@ struct LastRecordsView: View {
 struct LastRecordsView_Previews: PreviewProvider {
     static var previews: some View {
         OpenGluckEnvironmentUpdater {
-            LastRecordsView()
+            List {
+                LastRecordsView()
+            }
         }
             .environmentObject(OpenGluckConnection())
     }

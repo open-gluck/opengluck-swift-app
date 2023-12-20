@@ -76,6 +76,8 @@
 		9D2F2FAB2A3075140025A3D3 /* TimestampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2F2FA92A3075140025A3D3 /* TimestampView.swift */; };
 		9D2F2FAC2A3075140025A3D3 /* TimestampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2F2FA92A3075140025A3D3 /* TimestampView.swift */; };
 		9D2F2FAD2A3075140025A3D3 /* TimestampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2F2FA92A3075140025A3D3 /* TimestampView.swift */; };
+		9D3322EB2B338DB2005ECD6E /* AddInsulinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3322EA2B338DB2005ECD6E /* AddInsulinButton.swift */; };
+		9D3322ED2B338F81005ECD6E /* AddLowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3322EC2B338F81005ECD6E /* AddLowButton.swift */; };
 		9D332E2929D6130B002613F6 /* WKData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D332E2829D6130B002613F6 /* WKData.swift */; };
 		9D332E2A29D6130B002613F6 /* WKData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D332E2829D6130B002613F6 /* WKData.swift */; };
 		9D332E2B29D6130B002613F6 /* WKData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D332E2829D6130B002613F6 /* WKData.swift */; };
@@ -304,6 +306,8 @@
 		9D2DFED629D0EF1000545193 /* PhoneAppTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAppTabs.swift; sourceTree = "<group>"; };
 		9D2DFED829D0EF8A00545193 /* PhoneAdvancedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAdvancedView.swift; sourceTree = "<group>"; };
 		9D2F2FA92A3075140025A3D3 /* TimestampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampView.swift; sourceTree = "<group>"; };
+		9D3322EA2B338DB2005ECD6E /* AddInsulinButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInsulinButton.swift; sourceTree = "<group>"; };
+		9D3322EC2B338F81005ECD6E /* AddLowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLowButton.swift; sourceTree = "<group>"; };
 		9D332E2829D6130B002613F6 /* WKData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKData.swift; sourceTree = "<group>"; };
 		9D39BB0A2A043C180037AB00 /* WKDataKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKDataKeys.swift; sourceTree = "<group>"; };
 		9D3BE9F229C87E5700B49643 /* OpenGluck Phone.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "OpenGluck Phone.entitlements"; sourceTree = "<group>"; };
@@ -565,6 +569,8 @@
 				9DD99DE72B30F48C003194B7 /* UI */,
 				9D027CF32AF41EED00B46980 /* OpenGluck-Watch-Info.plist */,
 				9DABAE8B29D8E1EA00315030 /* OpenGluck Watch.entitlements */,
+				9D3322EA2B338DB2005ECD6E /* AddInsulinButton.swift */,
+				9D3322EC2B338F81005ECD6E /* AddLowButton.swift */,
 				9D50EBBC29C79E2400CF69E6 /* OpenGluckWatchApp.swift */,
 				9D657A2429DB680200791926 /* WatchAppDelegate.swift */,
 				9D50EBBE29C79E2400CF69E6 /* WatchContentView.swift */,
@@ -1089,6 +1095,7 @@
 				9D50EBDB29C7A86D00CF69E6 /* GlucoseView.swift in Sources */,
 				9DA7CCB32B290F5B0006EC91 /* SnackGram.swift in Sources */,
 				9D27872A29E20CD6006B647F /* WatchAppTarget.swift in Sources */,
+				9D3322ED2B338F81005ECD6E /* AddLowButton.swift in Sources */,
 				9DA7CCB22B290F580006EC91 /* InsulinUnit.swift in Sources */,
 				9D924D382A3F33A600B477AF /* CurrentDataGauge.swift in Sources */,
 				9D1B2CBB29DCC3DF004C6311 /* WidgetKinds.swift in Sources */,
@@ -1097,6 +1104,7 @@
 				9DF375E329D256740043CAA6 /* LastRecordsView.swift in Sources */,
 				9DAD392A2AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift in Sources */,
 				9D657A2629DB680200791926 /* WatchAppDelegate.swift in Sources */,
+				9D3322EB2B338DB2005ECD6E /* AddInsulinButton.swift in Sources */,
 				9DA7CCB02B290F520006EC91 /* LowRecordView.swift in Sources */,
 				9D657A1A29DAF00B00791926 /* WatchUpdater.swift in Sources */,
 				9D50EBD529C7A7F200CF69E6 /* CurrentGlucoseView.swift in Sources */,
