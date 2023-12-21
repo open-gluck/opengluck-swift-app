@@ -19,9 +19,13 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 public struct DigitButtonModifier: ViewModifier {
+    let transparent: Bool
+    init(transparent: Bool = false) {
+        self.transparent = transparent
+    }
     public func body(content: Content) -> some View {
         return content
-            .buttonStyle(DigitPadStyle())
+            .buttonStyle(DigitPadStyle(transparent: transparent))
         
     }
 }
@@ -35,6 +39,9 @@ public extension Button {
     func digitKeyFrame() -> some View {
         self.modifier(DigitButtonModifier())
     }
+    func digitKeyTransparentFrame() -> some View {
+        self.modifier(DigitButtonModifier(transparent: true))
+    }
 }
 
 @available(watchOS 6.0, *)
@@ -43,18 +50,24 @@ public extension Button {
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 public struct DigitPadStyle: ButtonStyle {
+    let transparent: Bool
+    init(transparent: Bool) {
+        self.transparent = transparent
+    }
     public func makeBody(configuration: Configuration) -> some View {
         GeometryReader(content: { geometry in
-            configuration.isPressed ?
-            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(Color.gray.opacity(0.7))
-                .frame(width: geometry.size.width, height: geometry.size.height)
-                .scaleEffect(1.5)
-            :
-            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(Color.gray.opacity(0.5))
-                .frame(width:  geometry.size.width, height:  geometry.size.height)
-                .scaleEffect(1)
+            if !transparent {
+                configuration.isPressed ?
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .fill(Color.gray.opacity(0.7))
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .scaleEffect(1.5)
+                :
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .fill(Color.gray.opacity(0.5))
+                    .frame(width:  geometry.size.width, height:  geometry.size.height)
+                    .scaleEffect(1)
+            }
             
             configuration.label
                 .background(
@@ -100,15 +113,15 @@ public enum KeyboardStyle {
 #if DEBUG && os(watchOS)
 struct EnteredTextKeys_Previews: PreviewProvider {
     static var previews: some View {
-        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers)
+        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers, confirmLabel: "Add", labelMacro: "%")
         Group {
-            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal)
-            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal)
+            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%")
+            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%")
                 .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
         }
-        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal).previewDevice("Apple Watch Series 6 - 40mm")
-        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers).previewDevice("Apple Watch Series 3 - 38mm")
-        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal).previewDevice("Apple Watch Series 3 - 42mm")
+        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%").previewDevice("Apple Watch Series 6 - 40mm")
+        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers, confirmLabel: "Add", labelMacro: "%").previewDevice("Apple Watch Series 3 - 38mm")
+        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%").previewDevice("Apple Watch Series 3 - 42mm")
     }
 }
 #endif
@@ -132,17 +145,21 @@ public struct DigiTextView: View {
     private var locale: Locale
     var style: KeyboardStyle
     var placeholder: String
+    let confirmLabel: String
+    let labelMacro: String
     @Binding public var text: String
     let onClose: () -> Void
     let onConfirm: () -> Void
     @Binding public var presentingModal: Bool
     
     var align: TextViewAlignment
-    public init( placeholder: String, text: Binding<String>, presentingModal: Binding<Bool>, alignment: TextViewAlignment = .center,style: KeyboardStyle = .numbers, locale: Locale = .current, onClose: @escaping () -> Void = {}, onConfirm: @escaping () -> Void = {}) {
+    public init( placeholder: String, text: Binding<String>, confirmLabel: String, labelMacro: String, presentingModal: Binding<Bool>, alignment: TextViewAlignment = .center,style: KeyboardStyle = .numbers, locale: Locale = .current, onClose: @escaping () -> Void = {}, onConfirm: @escaping () -> Void = {}) {
         _text = text
         _presentingModal = presentingModal
         self.align = alignment
         self.placeholder = placeholder
+        self.confirmLabel = confirmLabel
+        self.labelMacro = labelMacro
         self.style = style
         self.locale = locale
         self.onClose = onClose
@@ -163,7 +180,7 @@ public struct DigiTextView: View {
             }
         }.buttonStyle(TextViewStyle(alignment: align))
             .sheet(isPresented: $presentingModal, content: {
-                EnteredText(text: $text, presentedAsModal: $presentingModal, style: self.style, locale: locale, onClose: onClose, onConfirm: onConfirm)
+                EnteredText(text: $text, presentedAsModal: $presentingModal, style: self.style, confirmLabel: confirmLabel, placeholder: placeholder, labelMacro: labelMacro, locale: locale, onClose: onClose, onConfirm: onConfirm)
             })
     }
 }
@@ -176,16 +193,22 @@ public struct EnteredText: View {
     @Binding var text:String
     @Binding var presentedAsModal: Bool
     var style: KeyboardStyle
+    let confirmLabel: String
+    let placeholder: String
+    let labelMacro: String
     var watchOSDimensions: CGRect?
     private var locale: Locale
     let onClose: () -> Void
     let onConfirm: () -> Void
 
     public init(text: Binding<String>, presentedAsModal:
-                Binding<Bool>, style: KeyboardStyle, locale: Locale = .current, onClose: @escaping () -> Void = {}, onConfirm: @escaping () -> Void = {}){
+                Binding<Bool>, style: KeyboardStyle, confirmLabel: String, placeholder: String = "", labelMacro: String, locale: Locale = .current, onClose: @escaping () -> Void = {}, onConfirm: @escaping () -> Void = {}){
         _text = text
         _presentedAsModal = presentedAsModal
         self.style = style
+        self.confirmLabel = confirmLabel
+        self.placeholder = placeholder
+        self.labelMacro = labelMacro
         self.locale = locale
         let device = WKInterfaceDevice.current()
         watchOSDimensions = device.screenBounds
@@ -203,7 +226,7 @@ public struct EnteredText: View {
                         .foregroundColor(.clear
                         )
                 })
-                Text(text)
+                Text(text.isEmpty ? placeholder : labelMacro.replacingOccurrences(of: "%", with: text))
                     .font(.title2)
                     .frame(height: watchOSDimensions!.height * 0.15, alignment: .trailing)
             }
@@ -220,7 +243,7 @@ public struct EnteredText: View {
                     presentedAsModal = false
                     onClose()
                 } label: {
-                    Label("Done", systemImage: "xmark")
+                    Image(systemName: "xmark")
                 }
             }
             ToolbarItem(placement: .confirmationAction){
@@ -228,11 +251,15 @@ public struct EnteredText: View {
                     presentedAsModal = false
                     onConfirm()
                 } label: {
-                    Text("Add")
+                    Text(confirmLabel)
                 }
+                .padding()
+                .foregroundColor(.blue)
+                .buttonStyle(PlainButtonStyle())
+                .background(Color.secondary)
+                .clipShape(Capsule())
             }
         })
-        
     }
 }
 @available(watchOS 6.0, *)
@@ -326,7 +353,7 @@ public struct DigetPadView: View {
                     }) {
                         Text(decimalSeparator)
                     }
-                    .digitKeyFrame()
+                    .digitKeyTransparentFrame()
                 } else {
                     Spacer()
                         .padding(1)
@@ -343,12 +370,14 @@ public struct DigetPadView: View {
                         text.remove(at: last)
                     }
                 }) {
-                    Image(systemName: "delete.left")
+                    Image(systemName: "delete.left.fill")
+                        .foregroundColor(.red)
                 }
-                .digitKeyFrame()
+                .digitKeyTransparentFrame()
             }
         }
         .font(.title2)
+        .padding(.bottom)
     }
 }
 
@@ -389,22 +418,22 @@ struct TextViewStyle: ButtonStyle {
 #if DEBUG && os(watchOS)
 struct EnteredText_Previews: PreviewProvider {
     static var previews: some View {
-        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers)
+        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers, confirmLabel: "Add", labelMacro: "%")
         Group {
-            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal)
-            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal)
+            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%")
+            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%")
                 .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
-            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal)
+            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%")
                 .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
                 .accessibilityElement(children: /*@START_MENU_TOKEN@*/.contain/*@END_MENU_TOKEN@*/)
             
         }
-        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal).previewDevice("Apple Watch Series 6 - 40mm")
+        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%").previewDevice("Apple Watch Series 6 - 40mm")
         Group {
-            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers).previewDevice("Apple Watch Series 3 - 38mm")
-            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers).environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge).previewDevice("Apple Watch Series 3 - 38mm")
+            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers, confirmLabel: "Add", labelMacro: "%").previewDevice("Apple Watch Series 3 - 38mm")
+            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers, confirmLabel: "Add", labelMacro: "%").environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge).previewDevice("Apple Watch Series 3 - 38mm")
         }
-        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal).previewDevice("Apple Watch Series 3 - 42mm")
+        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%").previewDevice("Apple Watch Series 3 - 42mm")
     }
 }
 
@@ -412,7 +441,7 @@ struct Content_View_Previews: PreviewProvider {
     static var previews: some View{
         ScrollView {
             ForEach(0 ..< 4) { item in
-                DigiTextView(placeholder: "Placeholder", text: .constant(""), presentingModal: .constant(false), alignment: .leading)
+                DigiTextView(placeholder: "Placeholder", text: .constant(""), confirmLabel: "Add", labelMacro: "%", presentingModal: .constant(false), alignment: .leading)
             }
             Button(action: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/{}/*@END_MENU_TOKEN@*/) {
                 /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Content@*/Text("Button")/*@END_MENU_TOKEN@*/

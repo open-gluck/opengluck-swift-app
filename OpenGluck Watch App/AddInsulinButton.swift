@@ -26,12 +26,22 @@ struct AddInsulinButton: View {
 
         private func addInsulin(units: Double) {
             let unitsString: String = abs(units - round(units)) < .ulpOfOne ? "\(Int(round(units)))" : "\(round(units * 10) / 10)"
-            sheetStatusOptions.state = SheetStatusViewState.inProgress
-            sheetStatusOptions.status = "\(unitsString) IU"
-            sheetStatusOptions.subStatus1 = "Preparing…"
-            sheetStatusOptions.state = .inProgress
+            let statusTask = Task {
+                do {
+                    try await Task.sleep(for: .seconds(1))
+                } catch {
+                    return
+                }
+                sheetStatusOptions.state = SheetStatusViewState.inProgress
+                sheetStatusOptions.status = "\(unitsString) IU"
+                sheetStatusOptions.subStatus1 = "Preparing…"
+                sheetStatusOptions.state = .inProgress
+            }
             Task {
-                defer { sheetStatusOptions.state = SheetStatusViewState.complete }
+                defer {
+                    statusTask.cancel()
+                    sheetStatusOptions.state = SheetStatusViewState.complete
+                }
                 sheetStatusOptions.subStatus1 = "Adding…"
                 do {
                     try await uploadInsulinToOpenGlück(units: Int(round(units)))
@@ -46,6 +56,8 @@ struct AddInsulinButton: View {
         var body: some View {
             DigiTextView(placeholder: "",
                          text: $addInsulinButtonData.unitsString,
+                         confirmLabel: "Add Insulin",
+                         labelMacro: "% IU",
                          presentingModal: $addInsulinButtonData.showAddInsulin, onClose: {
             }, onConfirm: {
                 Task {
@@ -55,7 +67,8 @@ struct AddInsulinButton: View {
                     }
                 }
             })
-            .opacity(0)        }
+            .opacity(0)
+        }
     }
     
     var body: some View {

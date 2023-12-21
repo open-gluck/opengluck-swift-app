@@ -26,12 +26,22 @@ struct AddLowButton: View {
 
         private func addLow(sugarInGrams: Double) {
             let sugarInGramsString: String = abs(sugarInGrams - round(sugarInGrams)) < .ulpOfOne ? "\(Int(round(sugarInGrams)))" : "\(round(sugarInGrams * 10) / 10)"
-            sheetStatusOptions.state = SheetStatusViewState.inProgress
-            sheetStatusOptions.status = "\(sugarInGramsString)g"
-            sheetStatusOptions.subStatus1 = "Preparing…"
-            sheetStatusOptions.state = .inProgress
+            let statusTask = Task {
+                do {
+                    try await Task.sleep(for: .seconds(1))
+                } catch {
+                    return
+                }
+                sheetStatusOptions.state = SheetStatusViewState.inProgress
+                sheetStatusOptions.status = "\(sugarInGramsString)g"
+                sheetStatusOptions.subStatus1 = "Preparing…"
+                sheetStatusOptions.state = .inProgress
+            }
             Task {
-                defer { sheetStatusOptions.state = SheetStatusViewState.complete }
+                defer {
+                    statusTask.cancel()
+                    sheetStatusOptions.state = SheetStatusViewState.complete
+                }
                 sheetStatusOptions.subStatus1 = "Adding…"
                 do {
                     try await uploadLowToOpenGlück(sugarInGrams: sugarInGrams)
@@ -45,7 +55,9 @@ struct AddLowButton: View {
         
         var body: some View {
             DigiTextView(placeholder: "",
-                         text: $addLowButtonData.sugarInGramsString,
+                         text: $addLowButtonData.sugarInGramsString, 
+                         confirmLabel: "Add Sugar",
+                         labelMacro: "%g",
                          presentingModal: $addLowButtonData.showAddLow,
                          style: .decimal,
                          onClose: {

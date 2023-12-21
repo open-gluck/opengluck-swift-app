@@ -47,23 +47,33 @@ struct WatchContentView: View {
                         .tabViewStyle(.verticalPage)
                         .toolbar {
                             ToolbarItem(placement: .topBarLeading) {
-                                if pageNumber == Page.graph.rawValue {
-                                    AddLowButton(addLowButtonData: addLowButtonData)
-                                }
-                            }
-                            ToolbarItem(placement: .topBarTrailing) {
-                                if pageNumber == Page.graph.rawValue {
-                                    AddInsulinButton(addInsulinButtonData: addInsulinButtonData)
-                                }
-                            }
-                            ToolbarItemGroup(placement: .bottomBar) {
-                                if pageNumber == Page.graph.rawValue {
-                                    GlucoseTrend(graphGeometry: graphGeometry)
-                                        .frame(width: 100)
-                                    TimelineView(.everyMinute) { context in
-                                        CurrentGlucose(now: context.date)
+                                HStack {
+                                    if pageNumber == Page.graph.rawValue {
+                                        AddLowButton(addLowButtonData: addLowButtonData)
                                     }
                                 }
+                                .animation(.easeInOut, value: pageNumber)
+                            }
+                            ToolbarItem(placement: .topBarTrailing) {
+                                HStack {
+                                    if pageNumber == Page.graph.rawValue {
+                                        AddInsulinButton(addInsulinButtonData: addInsulinButtonData)
+                                    }
+                                }
+                                .animation(.easeInOut, value: pageNumber)
+                            }
+                            ToolbarItemGroup(placement: .bottomBar) {
+                                HStack {
+                                    if pageNumber == Page.graph.rawValue {
+                                        GlucoseTrend(graphGeometry: graphGeometry)
+                                            .frame(width: 100)
+                                        Spacer()
+                                        TimelineView(.everyMinute) { context in
+                                            CurrentGlucose(now: context.date)
+                                        }
+                                    }
+                                }
+                                .animation(.easeInOut, value: pageNumber)
                             }
                         }
                     }
