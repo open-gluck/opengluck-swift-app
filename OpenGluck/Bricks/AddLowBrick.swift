@@ -1,36 +1,36 @@
 import SwiftUI
 import OG
 
-struct AddInsulinBrick: View {
+struct AddLowBrick: View {
     @EnvironmentObject var appDelegate: PhoneAppDelegate
     @EnvironmentObject var openGlückConnection: OpenGluckConnection
     private var sheetStatusOptions: SheetStatusViewOptions { appDelegate.sheetStatusOptions }
     
-    private func quickAddInsulin(units: Int) async throws {
+    private func quickAddLow(sugarInGrams: Double) async throws {
         guard let client = openGlückConnection.getClient() else {
             fatalError("No client")
         }
-        let insulinRecords: [OpenGluckInsulinRecord] = [
-            OpenGluckInsulinRecord(id: UUID(), timestamp: Date(), units: units, deleted: false)
+        let lowRecords: [OpenGluckLowRecord] = [
+            OpenGluckLowRecord(id: UUID(), timestamp: Date(), sugarInGrams: sugarInGrams, deleted: false)
         ]
-        _ = try await client.upload(insulinRecords: insulinRecords)
+        _ = try await client.upload(lowRecords: lowRecords)
     }
     
     @State var label: String = "Add"
     var body: some View {
         Brick(title: nil, systemImage: nil) {
-            HoldButton(label: "Record Insulin", systemImage: "cross.vial")
+            HoldButton(label: "Record Sugar", systemImage: "takeoutbag.and.cup.and.straw")
                 .contextMenu(ContextMenu(menuItems: {
-                    ForEach(1...16, id: \.self) { n in
-                        Button("\(n) IU") {
+                    ForEach(Array(stride(from: 10.0, through: 30.0, by: 5)), id: \.self) { g in
+                        Button("\(Int(round(g)))g") {
                             sheetStatusOptions.state = SheetStatusViewState.inProgress
-                            sheetStatusOptions.status = "\(n) IU"
+                            sheetStatusOptions.status = "\(g)g"
                             sheetStatusOptions.subStatus1 = "Launching Task…"
                             Task {
                                 defer { sheetStatusOptions.state = SheetStatusViewState.complete }
                                 sheetStatusOptions.subStatus1 = "Adding…"
                                 do {
-                                    try await quickAddInsulin(units: n)
+                                    try await quickAddLow(sugarInGrams: g)
                                     sheetStatusOptions.subStatus1 = "Done!"
                                     NotificationCenter.default.post(name: Notification.Name.refreshOpenGlück, object: nil)
                                 } catch {
@@ -41,12 +41,13 @@ struct AddInsulinBrick: View {
                     }
                     
                 }))
+                .frame(width: .infinity)
         }
         .frame(maxHeight: BrickUI.extraSmallHeight)
     }
 }
 
-#Preview("AddInsulinBrick") {
-    AddInsulinBrick()
+#Preview("AddLowBrick") {
+    AddLowBrick()
         .preferredColorScheme(.dark)
 }

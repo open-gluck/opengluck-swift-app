@@ -46,8 +46,7 @@ struct PhoneAppTabs: View {
                 TimelineView(.everyMinute) { context in
                     Grid {
                         GridRow {
-                            Color.clear
-                                .gridCellUnsizedAxes([.vertical, .horizontal])
+                            AddLowBrick()
                             AddInsulinBrick()
                         }
                         GridRow {

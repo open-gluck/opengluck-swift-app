@@ -2,11 +2,12 @@ import SwiftUI
 
 struct BrickUI {
     static let cornerRadius = 10.0
+    static let extraSmallHeight: Double = 50.0
     static let smallHeight: Double = 150.0
 }
 
 struct Brick<Content: View>: View {
-    let title: String
+    let title: String?
     let systemImage: String?
     @ViewBuilder let content: () -> Content
     
@@ -16,7 +17,7 @@ struct Brick<Content: View>: View {
     let secondarySystemGroupedBackground: Color = Color(uiColor: .secondarySystemGroupedBackground)
 #endif
     
-    init(title: String, systemImage: String? = nil, @ViewBuilder content: @escaping () -> Content) {
+    init(title: String?, systemImage: String? = nil, @ViewBuilder content: @escaping () -> Content) {
         self.title = title
         self.systemImage = systemImage
         self.content = content
@@ -29,26 +30,34 @@ struct Brick<Content: View>: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
 #else
-        VStack {
-            HStack {
-                if let systemImage {
-                    Label(title, systemImage: systemImage)
-                        .font(.headline)
-                        .padding()
-                } else {
-                    Text(title)
-                        .font(.headline)
-                        .padding()
+        if let title {
+            VStack {
+                HStack {
+                    if let systemImage {
+                        Label(title, systemImage: systemImage)
+                            .font(.headline)
+                            .padding()
+                    } else {
+                        Text(title)
+                            .font(.headline)
+                            .padding()
+                    }
                 }
+                .foregroundStyle(Color(uiColor: .lightGray))
+                Spacer()
+                content()
+                Spacer()
             }
-            .foregroundStyle(Color(uiColor: .lightGray))
-            Spacer()
-            content()
-            Spacer()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(secondarySystemGroupedBackground)
+            .clipShape(RoundedRectangle(cornerRadius: BrickUI.cornerRadius))
+        } else {
+            VStack {
+                content()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .clipShape(RoundedRectangle(cornerRadius: BrickUI.cornerRadius))
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(secondarySystemGroupedBackground)
-        .clipShape(RoundedRectangle(cornerRadius: BrickUI.cornerRadius))
 #endif
     }
 }

@@ -2,26 +2,37 @@ import SwiftUI
 
 struct HoldButton: View {
     let label: String
+    let systemImage: String?
     @State var pleaseHold: Bool = false
     @State var task: Task<Void,Error>? = nil
+    
+    init(label: String, systemImage: String? = nil) {
+        self.label = label
+        self.systemImage = systemImage
+    }
     
     private var labelLabel: String {
         pleaseHold ? "Tap & Hold" : label
     }
     
     private var labelSystemImage: String {
-        pleaseHold ? "hand.tap.fill" : "hand.tap"
+        pleaseHold ? "hand.tap.fill" : (systemImage ?? "hand.tap")
     }
     
     var body: some View {
-        VStack {
-            Label(labelLabel, systemImage: labelSystemImage)
-                .contentTransition(.numericText())
-                .padding()
-                .foregroundStyle(Color(uiColor: .lightGray))
-                .background(Color(uiColor: .systemFill))
-                .clipShape(Capsule())
+        HStack {
+            Spacer()
+            GeometryReader { geom in
+                Label(labelLabel, systemImage: labelSystemImage)
+                    .frame(width: geom.size.width, height: geom.size.height)
+                    .contentTransition(.numericText())
+                    .foregroundStyle(Color(uiColor: .lightGray))
+                    .background(Color(uiColor: .systemFill))
+                    .clipShape(Capsule())
+            }
+            Spacer()
         }
+        .frame(width: .infinity)
         .onTapGesture {
             withAnimation {
                 pleaseHold = true
@@ -36,6 +47,4 @@ struct HoldButton: View {
             }
         }
     }
-    
-    
 }

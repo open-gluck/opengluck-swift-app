@@ -71,6 +71,8 @@ struct WatchContentView: View {
                                         TimelineView(.everyMinute) { context in
                                             CurrentGlucose(now: context.date)
                                         }
+                                    } else {
+                                        Text("pn=\(pageNumber)")
                                     }
                                 }
                                 .animation(.easeInOut, value: pageNumber)
