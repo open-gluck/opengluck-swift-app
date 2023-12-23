@@ -167,17 +167,7 @@ public struct DigiTextView: View {
     }
     
     public var body: some View {
-        Button(action: {
-            presentingModal.toggle()
-        }) {
-            if text != ""{
-                Text(text)
-            }
-            else{
-                Text(placeholder)
-                    .lineLimit(1)
-                    .opacity(0.5)
-            }
+        ZStack {
         }.buttonStyle(TextViewStyle(alignment: align))
             .sheet(isPresented: $presentingModal, content: {
                 EnteredText(text: $text, presentedAsModal: $presentingModal, style: self.style, confirmLabel: confirmLabel, placeholder: placeholder, labelMacro: labelMacro, locale: locale, onClose: onClose, onConfirm: onConfirm)
@@ -217,23 +207,11 @@ public struct EnteredText: View {
     }
     public var body: some View{
         VStack(alignment: .trailing) {
-            Button(action:{
-                presentedAsModal.toggle()
-            }){
-                ZStack(content: {
-                    Text("1")
-                        .font(.title2)
-                        .foregroundColor(.clear
-                        )
-                })
-                Text(text.isEmpty ? placeholder : labelMacro.replacingOccurrences(of: "%", with: text))
-                    .font(.title2)
-                    .frame(height: watchOSDimensions!.height * 0.15, alignment: .trailing)
-            }
-            .buttonStyle(PlainButtonStyle())
-            .multilineTextAlignment(.trailing)
-            .lineLimit(1)
-            
+            Text(text.isEmpty ? placeholder : labelMacro.replacingOccurrences(of: "%", with: text))
+                .foregroundColor(text.isEmpty ? Color.gray : nil)
+                .font(.title2)
+                .frame(height: watchOSDimensions!.height * 0.15, alignment: .trailing)
+
             DigetPadView(text: $text, style: style, locale: locale)
                 .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
         }

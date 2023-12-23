@@ -2,18 +2,19 @@ import SwiftUI
 import OG
 
 class AddInsulinButtonData: ObservableObject {
-    @Published var showAddInsulin: Bool = false
-    @Published var unitsString: String = ""
+    @Published var unitsString: String = "1"
 }
 
 struct AddInsulinButton: View {
     @ObservedObject var addInsulinButtonData: AddInsulinButtonData
+    @Binding var isShown: Bool
 
     struct Interface: View {
         @EnvironmentObject var openGlückConnection: OpenGluckConnection
         @EnvironmentObject var sheetStatusOptions: SheetStatusViewOptions
         @ObservedObject var addInsulinButtonData: AddInsulinButtonData
-        
+        @Binding var isShown: Bool
+
         private func uploadInsulinToOpenGlück(units: Int) async throws {
             guard let client = openGlückConnection.getClient() else {
                 fatalError("No client")
@@ -54,11 +55,11 @@ struct AddInsulinButton: View {
         }
         
         var body: some View {
-            DigiTextView(placeholder: "",
+            DigiTextView(placeholder: "0 IU",
                          text: $addInsulinButtonData.unitsString,
                          confirmLabel: "Add Insulin",
                          labelMacro: "% IU",
-                         presentingModal: $addInsulinButtonData.showAddInsulin, onClose: {
+                         presentingModal: $isShown, onClose: {
             }, onConfirm: {
                 Task {
                     await Task.yield()
@@ -67,14 +68,13 @@ struct AddInsulinButton: View {
                     }
                 }
             })
-            .opacity(0)
         }
     }
     
     var body: some View {
         Button {
             addInsulinButtonData.unitsString = ""
-            addInsulinButtonData.showAddInsulin = true
+            isShown = true
         } label: {
             Image(systemName:"cross.vial")
                 .foregroundColor(.white)

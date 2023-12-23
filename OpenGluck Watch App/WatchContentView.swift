@@ -11,7 +11,9 @@ struct WatchContentView: View {
     @AppStorage(WKDataKeys.openglückToken.keyValue, store: OpenGluckManager.userDefaults) var openglückToken: String = ""
     @State var graphGeometry: CGSize?
     @State var pageNumber: Int = 0
-    
+    @State var isLowSheetShown: Bool = false
+    @State var isInsulinSheetShown: Bool = false
+
     @StateObject var addInsulinButtonData: AddInsulinButtonData = AddInsulinButtonData()
     @StateObject var addLowButtonData: AddLowButtonData = AddLowButtonData()
     
@@ -20,27 +22,31 @@ struct WatchContentView: View {
         case records = 1
     }
     
+    private var isAnySheetShown: Bool { isLowSheetShown || isInsulinSheetShown }
+    
     var body: some View {
         VStack {
             SheetStatusView()
             
             ZStack {
-                AddInsulinButton.Interface(addInsulinButtonData: addInsulinButtonData)
-                AddLowButton.Interface(addLowButtonData: addLowButtonData)
+                AddInsulinButton.Interface(addInsulinButtonData: addInsulinButtonData, isShown: $isInsulinSheetShown)
+                AddLowButton.Interface(addLowButtonData: addLowButtonData, isShown: $isLowSheetShown)
                 
                 OpenGluckEnvironmentUpdater {
                     NavigationStack {
                         TabView(selection: $pageNumber) {
-                            CheckConnectionHasClient {
-                                TimelineView(.everyMinute) { context in
-                                    CurrentGlucoseView(now: context.date, mode: .graph, showBackground: false, graphGeometry: $graphGeometry)
+                            if !isAnySheetShown {
+                                CheckConnectionHasClient {
+                                    TimelineView(.everyMinute) { context in
+                                        CurrentGlucoseView(now: context.date, mode: .graph, showBackground: false, graphGeometry: $graphGeometry)
+                                    }
+                                    .padding(.trailing)
+                                    .padding(.bottom, 15)
+                                    .containerBackground(GlucoseGraph.Background.gradient, for: .tabView)
                                 }
-                                .padding(.trailing)
-                                .padding(.bottom, 15)
-                                .containerBackground(GlucoseGraph.Background.gradient, for: .tabView)
+                                .tag(Page.graph.rawValue)
                             }
-                            .tag(Page.graph.rawValue)
-                            
+
                             CheckConnectionHasClient {
                                 List {
                                     LastRecordsView()
@@ -53,7 +59,7 @@ struct WatchContentView: View {
                             ToolbarItem(placement: .topBarLeading) {
                                 HStack {
                                     if pageNumber == Page.graph.rawValue {
-                                        AddLowButton(addLowButtonData: addLowButtonData)
+                                        AddLowButton(addLowButtonData: addLowButtonData, isShown: $isLowSheetShown)
                                     }
                                 }
                                 .animation(.easeInOut, value: pageNumber)
@@ -61,13 +67,13 @@ struct WatchContentView: View {
                             ToolbarItem(placement: .topBarTrailing) {
                                 HStack {
                                     if pageNumber == Page.graph.rawValue {
-                                        AddInsulinButton(addInsulinButtonData: addInsulinButtonData)
+                                        AddInsulinButton(addInsulinButtonData: addInsulinButtonData, isShown: $isInsulinSheetShown)
                                     }
                                 }
                                 .animation(.easeInOut, value: pageNumber)
                             }
                             ToolbarItemGroup(placement: .bottomBar) {
-                                Group {
+                                ZStack {
                                     if pageNumber == Page.graph.rawValue {
                                         CheckConnectionHasClient {
                                             HStack {

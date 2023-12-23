@@ -2,18 +2,19 @@ import SwiftUI
 import OG
 
 class AddLowButtonData: ObservableObject {
-    @Published var showAddLow: Bool = false
     @Published var sugarInGramsString: String = ""
 }
 
 struct AddLowButton: View {
     @ObservedObject var addLowButtonData: AddLowButtonData
+    @Binding var isShown: Bool
 
     struct Interface: View {
         @EnvironmentObject var openGlückConnection: OpenGluckConnection
         @EnvironmentObject var sheetStatusOptions: SheetStatusViewOptions
         @ObservedObject var addLowButtonData: AddLowButtonData
-        
+        @Binding var isShown: Bool
+
         private func uploadLowToOpenGlück(sugarInGrams: Double) async throws {
             guard let client = openGlückConnection.getClient() else {
                 fatalError("No client")
@@ -54,11 +55,11 @@ struct AddLowButton: View {
         }
         
         var body: some View {
-            DigiTextView(placeholder: "",
-                         text: $addLowButtonData.sugarInGramsString, 
+            DigiTextView(placeholder: "0g",
+                         text: $addLowButtonData.sugarInGramsString,
                          confirmLabel: "Add Sugar",
                          labelMacro: "%g",
-                         presentingModal: $addLowButtonData.showAddLow,
+                         presentingModal: $isShown,
                          style: .decimal,
                          onClose: {
             }, onConfirm: {
@@ -69,13 +70,13 @@ struct AddLowButton: View {
                     }
                 }
             })
-            .opacity(0)        }
+        }
     }
     
     var body: some View {
         Button {
             addLowButtonData.sugarInGramsString = ""
-            addLowButtonData.showAddLow = true
+            isShown = true
         } label: {
             Image(systemName:"takeoutbag.and.cup.and.straw")
                 .foregroundColor(.white)
