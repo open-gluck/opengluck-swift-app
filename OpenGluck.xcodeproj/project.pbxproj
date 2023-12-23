@@ -117,6 +117,8 @@
 		9D657A2329DB614F00791926 /* WKDataDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D657A2129DB614F00791926 /* WKDataDebugView.swift */; };
 		9D657A2629DB680200791926 /* WatchAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D657A2429DB680200791926 /* WatchAppDelegate.swift */; };
 		9D6D72062B36180D00F89F4C /* AddLowBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D72052B36180D00F89F4C /* AddLowBrick.swift */; };
+		9D6D72082B36DA4500F89F4C /* CheckConnectionHasClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D72072B36DA4500F89F4C /* CheckConnectionHasClient.swift */; };
+		9D6D72092B36DA5000F89F4C /* CheckConnectionHasClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D72072B36DA4500F89F4C /* CheckConnectionHasClient.swift */; };
 		9D786CBF29CE3542008F9270 /* GlucoseGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D786CBE29CE3542008F9270 /* GlucoseGraph.swift */; };
 		9D786CC029CE3542008F9270 /* GlucoseGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D786CBE29CE3542008F9270 /* GlucoseGraph.swift */; };
 		9D8AD5EB2A39C14D006FEAE0 /* TimelineDebugWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8AD5EA2A39C14D006FEAE0 /* TimelineDebugWidget.swift */; };
@@ -337,6 +339,7 @@
 		9D657A2129DB614F00791926 /* WKDataDebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKDataDebugView.swift; sourceTree = "<group>"; };
 		9D657A2429DB680200791926 /* WatchAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAppDelegate.swift; sourceTree = "<group>"; };
 		9D6D72052B36180D00F89F4C /* AddLowBrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLowBrick.swift; sourceTree = "<group>"; };
+		9D6D72072B36DA4500F89F4C /* CheckConnectionHasClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckConnectionHasClient.swift; sourceTree = "<group>"; };
 		9D786CBE29CE3542008F9270 /* GlucoseGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseGraph.swift; sourceTree = "<group>"; };
 		9D8AD5EA2A39C14D006FEAE0 /* TimelineDebugWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineDebugWidget.swift; sourceTree = "<group>"; };
 		9D8AD5ED2A3B1054006FEAE0 /* WidgetPreviewEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetPreviewEnvironment.swift; sourceTree = "<group>"; };
@@ -741,6 +744,7 @@
 				9DA7CCAE2B290DB00006EC91 /* SnackGram.swift */,
 				9DA7CCB42B29118D0006EC91 /* HoldButton.swift */,
 				9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */,
+				9D6D72072B36DA4500F89F4C /* CheckConnectionHasClient.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1058,6 +1062,7 @@
 				9D657A2229DB614F00791926 /* WKDataDebugView.swift in Sources */,
 				9D27872829E20CB3006B647F /* PhoneAppTarget.swift in Sources */,
 				9DA7CCAD2B290D570006EC91 /* LowRecordView.swift in Sources */,
+				9D6D72082B36DA4500F89F4C /* CheckConnectionHasClient.swift in Sources */,
 				9DC4DF442B2F6B8700BAF7C5 /* GlucoseTrend.swift in Sources */,
 				9D657A1E29DB1DE900791926 /* WKDefaults.swift in Sources */,
 				9DA7CCA82B290AB80006EC91 /* InsulinRecordView.swift in Sources */,
@@ -1099,6 +1104,7 @@
 				9D50EBDB29C7A86D00CF69E6 /* GlucoseView.swift in Sources */,
 				9DA7CCB32B290F5B0006EC91 /* SnackGram.swift in Sources */,
 				9D27872A29E20CD6006B647F /* WatchAppTarget.swift in Sources */,
+				9D6D72092B36DA5000F89F4C /* CheckConnectionHasClient.swift in Sources */,
 				9D3322ED2B338F81005ECD6E /* AddLowButton.swift in Sources */,
 				9DA7CCB22B290F580006EC91 /* InsulinUnit.swift in Sources */,
 				9D924D382A3F33A600B477AF /* CurrentDataGauge.swift in Sources */,

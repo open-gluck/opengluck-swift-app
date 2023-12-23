@@ -1,31 +1,6 @@
 import Foundation
 import SwiftUI
 
-@MainActor
-fileprivate struct CheckConnectionHasClient<C: View>: View {
-    let content: () -> C
-    
-    @State var hasCompletedSetup: Bool = false
-    @EnvironmentObject var environment: OpenGluckEnvironment
-
-    var body: some View {
-        Group {
-            if !hasCompletedSetup {
-                ContentUnavailableView("Unknown Server URL/Token", systemImage: "exclamationmark.magnifyingglass", description: Text("Please configure a connection in the More tab."))
-            } else if environment.lastAttemptAt == nil {
-                ContentUnavailableView("Still Loading…", systemImage: "network.slash", description: Text("\nLoading data from OpenGlück server takes a while…\n\nCheck your network and configuration."))
-            } else if environment.lastAttemptAt != nil && environment.lastSuccessAt == nil {
-                ContentUnavailableView("Could Not Connect To Server", systemImage: "network.slash", description: Text("\nConnection to server failed.\n\nCheck your network and configuration."))
-            } else {
-                content()
-            }
-        }
-        .onAppear {
-            hasCompletedSetup = OpenGluckConnection.client != nil
-        }
-    }
-}
-
 struct PhoneAppTabs: View {
     enum Tabs {
         case graph

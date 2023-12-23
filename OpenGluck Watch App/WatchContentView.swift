@@ -31,16 +31,20 @@ struct WatchContentView: View {
                 OpenGluckEnvironmentUpdater {
                     NavigationStack {
                         TabView(selection: $pageNumber) {
-                            TimelineView(.everyMinute) { context in
-                                CurrentGlucoseView(now: context.date, mode: .graph, showBackground: false, graphGeometry: $graphGeometry)
+                            CheckConnectionHasClient {
+                                TimelineView(.everyMinute) { context in
+                                    CurrentGlucoseView(now: context.date, mode: .graph, showBackground: false, graphGeometry: $graphGeometry)
+                                }
+                                .padding(.trailing)
+                                .padding(.bottom, 15)
+                                .containerBackground(GlucoseGraph.Background.gradient, for: .tabView)
                             }
-                            .padding(.trailing)
-                            .padding(.bottom, 15)
-                            .containerBackground(GlucoseGraph.Background.gradient, for: .tabView)
                             .tag(Page.graph.rawValue)
                             
-                            List {
-                                LastRecordsView()
+                            CheckConnectionHasClient {
+                                List {
+                                    LastRecordsView()
+                                }
                             }
                             .tag(Page.records.rawValue)
                         }
@@ -63,16 +67,24 @@ struct WatchContentView: View {
                                 .animation(.easeInOut, value: pageNumber)
                             }
                             ToolbarItemGroup(placement: .bottomBar) {
-                                HStack {
+                                Group {
                                     if pageNumber == Page.graph.rawValue {
-                                        GlucoseTrend(graphGeometry: graphGeometry)
-                                            .frame(width: 100)
-                                        Spacer()
-                                        TimelineView(.everyMinute) { context in
-                                            CurrentGlucose(now: context.date)
+                                        CheckConnectionHasClient {
+                                            HStack {
+                                                GlucoseTrend(graphGeometry: graphGeometry)
+                                                    .frame(width: 100)
+                                                Spacer()
+                                                TimelineView(.everyMinute) { context in
+                                                    CurrentGlucose(now: context.date)
+                                                }
+                                            }
+                                        } setupContent: {
+                                            Image(systemName: CheckConnectionHasClientDefaultSetupContent.systemImage)
+                                        } timeoutContent: {
+                                            Image(systemName: CheckConnectionHasClientDefaultTimeoutContent.systemImage)
+                                        } exceptionContent: {
+                                            Image(systemName: CheckConnectionHasClientDefaultExceptionContent.systemImage)
                                         }
-                                    } else {
-                                        Text("pn=\(pageNumber)")
                                     }
                                 }
                                 .animation(.easeInOut, value: pageNumber)
