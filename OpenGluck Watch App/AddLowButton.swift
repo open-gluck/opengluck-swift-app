@@ -3,17 +3,16 @@ import OG
 
 class AddLowButtonData: ObservableObject {
     @Published var sugarInGramsString: String = ""
+    @Published var isShown: Bool = false
 }
 
 struct AddLowButton: View {
     @ObservedObject var addLowButtonData: AddLowButtonData
-    @Binding var isShown: Bool
 
     struct Interface: View {
         @EnvironmentObject var openGlückConnection: OpenGluckConnection
         @EnvironmentObject var sheetStatusOptions: SheetStatusViewOptions
         @ObservedObject var addLowButtonData: AddLowButtonData
-        @Binding var isShown: Bool
 
         private func uploadLowToOpenGlück(sugarInGrams: Double) async throws {
             guard let client = openGlückConnection.getClient() else {
@@ -59,7 +58,7 @@ struct AddLowButton: View {
                          text: $addLowButtonData.sugarInGramsString,
                          confirmLabel: "Add Sugar",
                          labelMacro: "%g",
-                         presentingModal: $isShown,
+                         presentingModal: $addLowButtonData.isShown,
                          style: .decimal,
                          onClose: {
             }, onConfirm: {
@@ -76,7 +75,7 @@ struct AddLowButton: View {
     var body: some View {
         Button {
             addLowButtonData.sugarInGramsString = ""
-            isShown = true
+            addLowButtonData.isShown = true
         } label: {
             Image(systemName:"takeoutbag.and.cup.and.straw")
                 .foregroundColor(.white)

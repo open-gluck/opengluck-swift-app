@@ -3,17 +3,16 @@ import OG
 
 class AddInsulinButtonData: ObservableObject {
     @Published var unitsString: String = "1"
+    @Published var isShown: Bool = false
 }
 
 struct AddInsulinButton: View {
     @ObservedObject var addInsulinButtonData: AddInsulinButtonData
-    @Binding var isShown: Bool
 
     struct Interface: View {
         @EnvironmentObject var openGlückConnection: OpenGluckConnection
         @EnvironmentObject var sheetStatusOptions: SheetStatusViewOptions
         @ObservedObject var addInsulinButtonData: AddInsulinButtonData
-        @Binding var isShown: Bool
 
         private func uploadInsulinToOpenGlück(units: Int) async throws {
             guard let client = openGlückConnection.getClient() else {
@@ -59,7 +58,7 @@ struct AddInsulinButton: View {
                          text: $addInsulinButtonData.unitsString,
                          confirmLabel: "Add Insulin",
                          labelMacro: "% IU",
-                         presentingModal: $isShown, onClose: {
+                         presentingModal: $addInsulinButtonData.isShown, onClose: {
             }, onConfirm: {
                 Task {
                     await Task.yield()
@@ -74,7 +73,7 @@ struct AddInsulinButton: View {
     var body: some View {
         Button {
             addInsulinButtonData.unitsString = ""
-            isShown = true
+            addInsulinButtonData.isShown = true
         } label: {
             Image(systemName:"cross.vial")
                 .foregroundColor(.white)
