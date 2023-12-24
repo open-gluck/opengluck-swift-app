@@ -32,6 +32,7 @@ struct WatchContentView: View {
                     NavigationStack {
                         TabView(selection: $pageNumber) {
                             ZStack {
+                                Color.clear
                                 CheckConnectionHasClient {
                                     TimelineView(.everyMinute) { context in
                                         CurrentGlucoseView(now: context.date, mode: .graph, showBackground: false, graphGeometry: $graphGeometry)
