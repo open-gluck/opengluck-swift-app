@@ -52,7 +52,7 @@ struct WatchContentView: View {
                                             CurrentGlucose(now: context.date)
                                         }
                                     }
-                                    .frame(maxWidth: 165)
+                                    .frame(maxWidth: 162)
                                 } setupContent: {
                                     Image(systemName: CheckConnectionHasClientDefaultSetupContent.systemImage)
                                 } timeoutContent: {
