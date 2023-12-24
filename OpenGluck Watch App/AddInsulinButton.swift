@@ -2,7 +2,7 @@ import SwiftUI
 import OG
 
 class AddInsulinButtonData: ObservableObject {
-    @Published var unitsString: String = "1"
+    @Published var unitsString: String = ""
     @Published var isShown: Bool = false
 }
 
