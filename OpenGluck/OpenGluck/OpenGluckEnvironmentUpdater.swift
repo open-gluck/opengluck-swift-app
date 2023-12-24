@@ -7,6 +7,7 @@ class OpenGluckEnvironment: ObservableObject
 {
     static var enableAutoUpdate: Bool = true
     @Published var revision: Int64? = nil
+    @Published var hasTimedOut: Bool = false
     @Published var currentGlucoseRecord: OpenGluckGlucoseRecord? = nil
     @Published var lastHistoricGlucoseRecord: OpenGluckGlucoseRecord? = nil
     @Published var lastGlucoseRecords: [OpenGluckGlucoseRecord]? = nil
@@ -32,6 +33,10 @@ class OpenGluckEnvironment: ObservableObject
         self.lastLowRecords = nil
         self.revision = nil
     }
+    
+    var hasException: Bool {
+        lastAttemptAt != nil && lastSuccessAt == nil
+    }
 }
 
 extension Notification.Name {
@@ -39,12 +44,15 @@ extension Notification.Name {
 }
 
 
+@MainActor
 struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
+    private let debugSimulateTimeouts: Bool = false
+
     @ViewBuilder
     let content: () -> Content
     
     @EnvironmentObject var openGlückConnection: OpenGluckConnection
-    @State @ObservedObject var environment: OpenGluckEnvironment = OpenGluckEnvironment()
+    @StateObject var environment: OpenGluckEnvironment = OpenGluckEnvironment()
     @State var rerender = UUID()
     let debugMode: Bool = false // if true, enable additional logging, useful when debugging previews
     
@@ -66,7 +74,7 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
                 }
             }
             if rerender.uuidString == "" { EmptyView() }
-            if !hasTimedOut && environment.lastAttemptAt == nil && environment.currentGlucoseRecord == nil && OpenGluckConnection.client != nil {
+            if !environment.hasTimedOut && environment.lastAttemptAt == nil && environment.currentGlucoseRecord == nil && OpenGluckConnection.client != nil {
                 VStack {
                     Spacer()
                     ProgressView()
@@ -100,16 +108,6 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
     var body: some View {
         ZStack {
             bodyContent
-            /*
-             LATER DEPRECATE this looks like it doesn't work this way
-            TimelineView(.periodic(from: Date(), by: Self.refreshInterval)) { _ in
-                VStack {
-                    if OpenGluckEnvironment.enableAutoUpdate {
-                        let _ = refreshUnlessStartedRecently()
-                    }
-                }
-            }
-             */
         }
             .environmentObject(environment)
             .onReceive(timer) { _ in
@@ -148,7 +146,6 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
     }
     
     @State var refreshing: Bool = false
-    @State var hasTimedOut: Bool = false
     @State var lastRefreshStartedAt: Date? = nil
     private func setRefreshing(refreshing: Bool) {
         self.refreshing = refreshing
@@ -166,8 +163,8 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
         log("refresh()")
         Task {
             guard !refreshing else { return }
-            guard OpenGluckManager.openglückUrl != nil && OpenGluckManager.openglückToken != nil else {
-                hasTimedOut = true
+            guard !debugSimulateTimeouts && OpenGluckManager.openglückUrl != nil && OpenGluckManager.openglückToken != nil else {
+                environment.hasTimedOut = true
                 return
             }
             defer { Task { @MainActor in self.refreshing = false } }
@@ -183,7 +180,7 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
                 } catch {
                     return
                 }
-                hasTimedOut = true
+                environment.hasTimedOut = true
             }
             
             defer { timeoutTask.cancel() }
@@ -236,7 +233,7 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
                 log("openGlückConnection.getCurrentData() returned nil")
             }
             environment.lastAttemptAt = Date()
-            hasTimedOut = false
+            environment.hasTimedOut = false
             log("Refresh complete")
         }
     }

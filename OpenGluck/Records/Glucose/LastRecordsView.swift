@@ -4,11 +4,14 @@ import OG
 struct LastRecordsView: View {
     @EnvironmentObject var openGlückUpdater: OpenGluckEnvironment
     @EnvironmentObject var openGlückConnection: OpenGluckConnection
-    #if os(iOS)
+#if os(iOS)
     @EnvironmentObject var appDelegate: PhoneAppDelegate
     private var sheetStatusOptions: SheetStatusViewOptions { appDelegate.sheetStatusOptions }
-    #endif
-
+#endif
+#if os(watchOS)
+    @EnvironmentObject var sheetStatusOptions: SheetStatusViewOptions
+#endif
+    
     enum Record: Hashable, Identifiable {
         case glucose(id: UUID, glucoseRecord: OpenGluckGlucoseRecord)
         case insulin(id: UUID, insulinRecord: OpenGluckInsulinRecord)
@@ -62,7 +65,6 @@ struct LastRecordsView: View {
             .filter { !hiddenIds.contains($0.id) }
     }
     
-    #if os(iOS)
     private func deleteRecord(_ record: Record) {
         sheetStatusOptions.state = SheetStatusViewState.inProgress
         sheetStatusOptions.status = "Deleting…"
@@ -70,11 +72,11 @@ struct LastRecordsView: View {
         Task {
             sheetStatusOptions.subStatus1 = "Deleting…"
             defer { sheetStatusOptions.state = SheetStatusViewState.complete }
-
+            
             do {
                 switch record {
                 case .glucose(glucoseRecord: _): fatalError("Don't know how to delete glucose record")
-                case .low(lowRecord: _): fatalError("Don't know how to delete low record")
+                case .low(_, lowRecord: let lowRecord): try await deleteLowRecord(lowRecord)
                 case .insulin(_, insulinRecord: let insulinRecord): try await deleteInsulinRecord(insulinRecord)
                 }
                 
@@ -87,8 +89,17 @@ struct LastRecordsView: View {
         }
     }
     
+    private func deleteLowRecord(_ lowRecord: OpenGluckLowRecord) async throws {
+        guard let client = openGlückConnection.getClient() else {
+            fatalError("No client")
+        }
+        let lowRecords: [OpenGluckLowRecord] = [
+            OpenGluckLowRecord(id: lowRecord.id, timestamp: lowRecord.timestamp, sugarInGrams: lowRecord.sugarInGrams, deleted: true)
+        ]
+        _ = try await client.upload(lowRecords: lowRecords)
+    }
+    
     private func deleteInsulinRecord(_ insulinRecord: OpenGluckInsulinRecord) async throws {
-        print("TODO delete \(insulinRecord.units)")
         guard let client = openGlückConnection.getClient() else {
             fatalError("No client")
         }
@@ -97,30 +108,36 @@ struct LastRecordsView: View {
         ]
         _ = try await client.upload(insulinRecords: insulinRecords)
     }
-    #endif
-
+    
     var body: some View {
-        ForEach(Array(records), id: \.id) { record in
-            switch record {
-            case .glucose(_, glucoseRecord: let glucoseRecord):
-                GlucoseRecordView(glucoseRecord: .constant(glucoseRecord))
-                    .deleteDisabled(true)
-            case .insulin(_, insulinRecord: let insulinRecord):
-                InsulinRecordView(insulinRecord: .constant(insulinRecord))
-            case .low(_, lowRecord: let lowRecord):
-                LowRecordView(lowRecord: .constant(lowRecord))
-                    .deleteDisabled(true)
+        Group {
+            if records.count > 0 {
+                ForEach(Array(records), id: \.id) { record in
+                    switch record {
+                    case .glucose(_, glucoseRecord: let glucoseRecord):
+                        GlucoseRecordView(glucoseRecord: .constant(glucoseRecord))
+                            .deleteDisabled(true)
+                    case .insulin(_, insulinRecord: let insulinRecord):
+                        InsulinRecordView(insulinRecord: .constant(insulinRecord))
+                    case .low(_, lowRecord: let lowRecord):
+                        LowRecordView(lowRecord: .constant(lowRecord))
+                    }
+                }
+                .onDelete(perform: { indexSet in
+                    let recordsToDelete: [Record] = indexSet.map { records[$0] }
+                    recordsToDelete.forEach { record in
+                        hiddenIds.insert(record.id)
+                        deleteRecord(record)
+                    }
+                })
+            } else {
+                HStack {
+                    Spacer()
+                    ContentUnavailableView("No Records.", systemImage: "magnifyingglass")
+                    Spacer()
+                }
             }
         }
-#if os(iOS)
-        .onDelete(perform: { indexSet in
-            let recordsToDelete: [Record] = indexSet.map { records[$0] }
-            recordsToDelete.forEach { record in
-                hiddenIds.insert(record.id)
-                deleteRecord(record)
-            }
-        })
-#endif
         .onReceive(openGlückUpdater.$revision) { _ in
             withAnimation {
                 update()
@@ -132,8 +149,10 @@ struct LastRecordsView: View {
 struct LastRecordsView_Previews: PreviewProvider {
     static var previews: some View {
         OpenGluckEnvironmentUpdater {
-            LastRecordsView()
+            List {
+                LastRecordsView()
+            }
         }
-            .environmentObject(OpenGluckConnection())
+        .environmentObject(OpenGluckConnection())
     }
 }

@@ -39,6 +39,5 @@ struct GlucoseTrend: View {
             }
         }
         .frame(maxHeight: BrickUI.smallHeight)
-
     }
 }

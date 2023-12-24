@@ -16,10 +16,13 @@ struct CurrentGlucoseView: View {
     }
     
     var mode: Mode = .graph
+    var showBackground: Bool = true
     @Binding var graphGeometry: CGSize?
     
     @ViewBuilder var graph: some View {
-        if let lastGlucoseRecords = openGlückEnvironment.lastGlucoseRecords, let lastInsulinRecords = openGlückEnvironment.lastInsulinRecords, let lastLowRecords = openGlückEnvironment.lastLowRecords {
+        if openGlückEnvironment.hasTimedOut {
+            ContentUnavailableView("Still Loading…", systemImage: "network.slash", description: Text("\nLoading data from OpenGlück server takes a while…\n\nCheck your network and configuration."))
+        } else if let lastGlucoseRecords = openGlückEnvironment.lastGlucoseRecords, let lastInsulinRecords = openGlückEnvironment.lastInsulinRecords, let lastLowRecords = openGlückEnvironment.lastLowRecords {
             GeometryReader { reader in
                 let _ = Task {
                     self.graphGeometry = reader.size
@@ -40,7 +43,9 @@ struct CurrentGlucoseView: View {
                     lowRecords: .constant(lastLowRecords.filter {
                         -$0.timestamp.timeIntervalSinceNow < GlucoseGraph.maxLookbehindInterval
                         
-                    }))
+                    }),
+                    showBackground: showBackground
+                )
             }
         }
     }
@@ -64,7 +69,7 @@ struct CurrentGlucoseView_Previews: PreviewProvider {
         OpenGluckEnvironmentUpdater {
             Grid {
                 GridRow {
-                    CurrentGlucoseView(now: Date(), mode: .graphBrick, graphGeometry: .constant(CGSize(width: 0, height: 0)))
+                    CurrentGlucoseView(now: Date(), mode: .graphBrick, showBackground: false, graphGeometry: .constant(CGSize(width: 0, height: 0)))
                         .gridCellColumns(2)
                 }
             }

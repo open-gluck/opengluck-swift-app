@@ -169,7 +169,8 @@ struct GraphWidget: Widget {
                                 insulinRecords: lastData.insulinRecords ?? [],
                                 lowRecords: lastData.lowRecords ?? [],
                                 style: style,
-                                colorScheme: .dark
+                                colorScheme: .dark,
+                                showBackground: true
                             )
                         }
                     } else {
