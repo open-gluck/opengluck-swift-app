@@ -83,14 +83,32 @@ watchOS app is running, or maybe restart both your watch and iPhone and start
 by running the watchOS app. Please note that only the initial setup is painful,
 once you're good, you're good.
 
+# Siri
+
+You can use Siri to record insulin units, or sugar, using phrases as such:
+
+- *Hey Siri, OpenGlück 6 units*;
+- *Hey Siri, OpenGlück 10 grams*.
+
+You can also omit the quantity (Siri will ask you for a value), or create your own custom phrases using a shortcut (see below).
+
+# Shortcuts
+
+The OpenGlück app integrates with the Shortcuts app, allowing you to create more custom actions and trigger phrases.
+
+For example, you can use this to create two custom phrases, *log insulin* and *log sugar*:
+
+![Shortcuts](docs/shortcuts.png)
+
+
 # Deeplinks
 
 You can use the following deep-links to open the OpenGlück app in a desired
 state:
 
-- [opengluck://records](opengluck://records) open the Records tab
-- [opengluck://add-low](opengluck://add-low) interactively add sugar
-- [opengluck://add-insulin](opengluck://add-insulin) interactively add insulin
+- [`opengluck://records`](opengluck://records): open the Records tab
+- [`opengluck://add-low`](opengluck://add-low): interactively add sugar
+- [`opengluck://add-insulin`](opengluck://add-insulin): interactively add insulin
 
 # Developer Info
 
