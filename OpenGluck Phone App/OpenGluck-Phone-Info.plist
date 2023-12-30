@@ -6,6 +6,38 @@
 	<array>
 		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLName</key>
+			<string>$(OPENGLUCK_BUNDLE_IDENTIFIER)</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>opengluck</string>
+			</array>
+		</dict>
+	</array>
+	<key>INAlternativeAppNames</key>
+	<array>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>OpenGlück</string>
+			<key>INAlternativeAppNamePronunciationHint</key>
+			<string>open gluck</string>
+		</dict>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>Glück</string>
+			<key>INAlternativeAppNamePronunciationHint</key>
+			<string>gluck</string>
+		</dict>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>OG</string>
+		</dict>
+	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>OPENGLUCK_APPDATA_EXPIRE_AT</key>
@@ -18,6 +50,25 @@
 	<string>$(OPENGLUCK_DEFAULT_TOKEN)</string>
 	<key>OPENGLUCK_DEFAULT_URL</key>
 	<string>$(OPENGLUCK_DEFAULT_URL)</string>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconSymbolName</key>
+			<string>takeoutbag.and.cup.and.straw</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Record Sugar…</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>add-low</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconSymbolName</key>
+			<string>cross.vial</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Record Insulin…</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>add-insulin</string>
+		</dict>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

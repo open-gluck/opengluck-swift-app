@@ -17,7 +17,11 @@ struct OpenGluckPhoneApp: App {
             VStack {
                 PhoneContentView()
                     .preferredColorScheme(.dark)
+                    .onOpenURL { url in
+                        appDelegate.navigationData.deeplink(toURL: url)
+                    }
             }
+            .environmentObject(appDelegate.navigationData)
             .onAppear {
                 WidgetCenter.shared.reloadAllTimelines()
             }

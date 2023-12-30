@@ -1,6 +1,60 @@
 import SwiftUI
 import OG
 
+fileprivate struct AddInsulinCustomView: View {
+    @Environment(\.dismiss) private var dismiss
+    @State var unitsString: String = ""
+    @State var isAdding: Bool = false
+    @FocusState var isFocused: Bool
+    let add: (Int) async -> Void
+    
+    private var isValid: Bool {
+        Int(unitsString) != nil
+    }
+    
+    var body: some View {
+        VStack {
+            HStack {
+                LabeledContent("Insulin:") {
+                    TextField("", text: $unitsString)
+                        .multilineTextAlignment(.trailing)
+                        .focused($isFocused)
+                        .keyboardType(.numberPad)
+                        .task {
+                            isFocused = true
+                        }
+                        .toolbar {
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("Add") {
+                                    Task {
+                                        guard let units: Int = Int(unitsString) else {
+                                            return
+                                        }
+                                        isAdding = true
+                                        defer { isAdding = false }
+                                        await add(units)
+                                        dismiss()
+                                    }
+                                }
+                                .disabled(!isValid)
+                            }
+                        }
+                }
+                Text("IU")
+            }
+            Spacer()
+        }
+        .disabled(isAdding)
+    }
+}
+
+#Preview("AddInsulinCustomView") {
+    NavigationStack {
+        AddInsulinCustomView(add: { _ in })
+    }
+}
+
+
 struct AddInsulinBrick: View {
     @EnvironmentObject var appDelegate: PhoneAppDelegate
     @EnvironmentObject var openGlückConnection: OpenGluckConnection
@@ -16,26 +70,35 @@ struct AddInsulinBrick: View {
         _ = try await client.upload(insulinRecords: insulinRecords)
     }
     
+    fileprivate func interactiveAdd(units: Int) async {
+        sheetStatusOptions.state = SheetStatusViewState.inProgress
+        sheetStatusOptions.status = "\(units) IU"
+        sheetStatusOptions.subStatus1 = "Launching Task…"
+        defer { sheetStatusOptions.state = SheetStatusViewState.complete }
+        sheetStatusOptions.subStatus1 = "Adding…"
+        do {
+            try await quickAddInsulin(units: units)
+            sheetStatusOptions.subStatus1 = "Done!"
+            NotificationCenter.default.post(name: Notification.Name.refreshOpenGlück, object: nil)
+        } catch {
+            sheetStatusOptions.pushError(message: error.localizedDescription)
+        }
+    }
+    
     @State var label: String = "Add"
     var body: some View {
         Brick(title: nil, systemImage: nil) {
             HoldButton(label: "Record Insulin", systemImage: "cross.vial")
+                .navigationDestination(for: PhoneNavigationData.PathAddInsulin.self) { _ in
+                    AddInsulinCustomView(add: { await interactiveAdd(units: $0) })
+                }
                 .contextMenu(ContextMenu(menuItems: {
+                    NavigationLink("Custom…", value: PhoneNavigationData.PathAddInsulin())
+                    Divider()
                     ForEach(1...16, id: \.self) { n in
                         Button("\(n) IU") {
-                            sheetStatusOptions.state = SheetStatusViewState.inProgress
-                            sheetStatusOptions.status = "\(n) IU"
-                            sheetStatusOptions.subStatus1 = "Launching Task…"
                             Task {
-                                defer { sheetStatusOptions.state = SheetStatusViewState.complete }
-                                sheetStatusOptions.subStatus1 = "Adding…"
-                                do {
-                                    try await quickAddInsulin(units: n)
-                                    sheetStatusOptions.subStatus1 = "Done!"
-                                    NotificationCenter.default.post(name: Notification.Name.refreshOpenGlück, object: nil)
-                                } catch {
-                                    sheetStatusOptions.pushError(message: error.localizedDescription)
-                                }
+                                await interactiveAdd(units: n)
                             }
                         }
                     }
