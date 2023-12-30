@@ -83,6 +83,15 @@ watchOS app is running, or maybe restart both your watch and iPhone and start
 by running the watchOS app. Please note that only the initial setup is painful,
 once you're good, you're good.
 
+# Deeplinks
+
+You can use the following deep-links to open the OpenGlück app in a desired
+state:
+
+- [opengluck://records](opengluck://records) open the Records tab
+- [opengluck://add-low](opengluck://add-low) interactively add sugar
+- [opengluck://add-insulin](opengluck://add-insulin) interactively add insulin
+
 # Developer Info
 
 If you're a developer and interested in joining in the OpenGlück ecosystem,
