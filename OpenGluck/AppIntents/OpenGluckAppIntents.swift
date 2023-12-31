@@ -133,7 +133,7 @@ struct AddLowAppIntent: AppIntent {
     }
 }
 
-struct DeleteLastInsulinAppIntent: AppIntent {
+struct DeleteLastInsulinAppIntent: ForegroundContinuableIntent {
     static var title: LocalizedStringResource = "Delete Last Insulin"
     static var description: LocalizedStringResource = "Delete the last insulin unit."
 
@@ -153,13 +153,18 @@ struct DeleteLastInsulinAppIntent: AppIntent {
             return .result(dialog: "Found no insulin records recently.")
 
         }
+        let elapsed = lastInsulinRecord.timestamp.timeIntervalSinceNow
+        guard -elapsed < 2*60 else {
+            throw needsToContinueInForegroundError("The last insulin record was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)) and needs to be deleted manually.")
+        }
+
         let deletedRecord: OpenGluckInsulinRecord = OpenGluckInsulinRecord(id: lastInsulinRecord.id, timestamp: lastInsulinRecord.timestamp, units: lastInsulinRecord.units, deleted: true)
         let _ = try await client.upload(insulinRecords: [deletedRecord])
         return .result(dialog: "Deleted insulin record.", view: InsulinRecordSnippet(insulinRecord: deletedRecord))
     }
 }
 
-struct DeleteLastLowAppIntent: AppIntent {
+struct DeleteLastLowAppIntent: ForegroundContinuableIntent {
     static var title: LocalizedStringResource = "Delete Last Sugar"
     static var description: LocalizedStringResource = "Delete the last sugar."
 
@@ -179,6 +184,11 @@ struct DeleteLastLowAppIntent: AppIntent {
             return .result(dialog: "Found no sugar recently.")
 
         }
+        let elapsed = lastLowRecord.timestamp.timeIntervalSinceNow
+        guard -elapsed < 2*60 else {
+            throw needsToContinueInForegroundError("The last sugar was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)) and needs to be deleted manually.")
+        }
+
         let deletedRecord: OpenGluckLowRecord = OpenGluckLowRecord(id: lastLowRecord.id, timestamp: lastLowRecord.timestamp, sugarInGrams: lastLowRecord.sugarInGrams, deleted: true)
         let _ = try await client.upload(lowRecords: [deletedRecord])
         return .result(dialog: "Deleted sugar.", view: LowRecordSnippet(lowRecord: deletedRecord))
