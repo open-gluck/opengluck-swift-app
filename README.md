@@ -88,18 +88,23 @@ once you're good, you're good.
 You can use Siri to record insulin units, or sugar, using phrases as such:
 
 - *Hey Siri, OpenGlück 6 units*;
-- *Hey Siri, OpenGlück 10 grams*.
+- *Hey Siri, OpenGlück 10 grams*;
+- *Hey Siri, delete the last insulin in OpenGlück*;
+- *Hey Siri, delete the last sugar in OpenGlück*.
 
-You can also omit the quantity (Siri will ask you for a value), or create your own custom phrases using a shortcut (see below).
+If you're feeling in a hurry, Siri understands *OG* is a synonym for *OpenGlück* so you can also say *Siri, 2 units OG* to record two insulin units taken.
+
+You can also omit the quantity (Siri will ask you for a value), or create your own custom phrases using a shortcut (see below). Creating your own custom phrase has the added benefit that you don't need to include the app name (or the *OG* synonym) in it, but needs to be done manually.
 
 # Shortcuts
 
-The OpenGlück app integrates with the Shortcuts app, allowing you to create more custom actions and trigger phrases.
+The OpenGlück app integrates with the Shortcuts app, allowing you to create more custom actions and trigger phrases (that don't include the app name).
 
-For example, you can use this to create two custom phrases, *log insulin* and *log sugar*:
+For example, you can use this to create two custom phrases, *log insulin* and *log sugar*, which you could trigger by Siri saying *Siri, log insulin* or *Siri, log sugar*:
 
 ![Shortcuts](docs/shortcuts.png)
 
+You can have a look a the suggested shortcuts by opening the Shortcuts app, go to the Shortcuts tab, and open the OpenGlück section.
 
 # Deeplinks
 
@@ -159,3 +164,17 @@ To enable the Contact Trick:
 1. go to the More tab and enable the Contact Trick
 2. grant permission to update the contacts
 3. manually create a contact whose email address is bg@calendar-trick.opengluck.com
+
+# FAQ
+
+## Siri phrases don't work.
+
+The system takes sometimes as long as ten hours to register the phrases in newly installed apps, so if you just installed the app and Siri fails to recognize the phrases, please wait a while.
+
+On your first conversation with a phrase concerning OpenGlück, Siri should ask you confirmation to enable support for the app, after which point the phrases should work without further configuration. You can force this manually by opening the Shortcuts app, go the Shortcuts tab, open the OpenGlück section, then click on the *i* rounded button at the top-right corner of the screen and enable *Siri*.
+
+![Enable Siri](<docs/siri.png>)
+
+### watchOS Caveats
+
+This toggle doesn't seem to exist on the watchOS and it appears the setting on iPhone doesn't mirror on the watch, so your best luck is that Siri eventually pick your phrase and interactively ask you to enable support. You can also create your custom shortcut, they are always picked by Siri, and do not need to include *OpenGlück* in the phrase which might be more convenient.
