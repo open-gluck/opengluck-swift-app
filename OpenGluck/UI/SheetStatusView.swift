@@ -81,7 +81,7 @@ struct SheetStatusView: View {
                         }
                     }
                 }
-                .frame(width: geometry.size.width, height: geometry.size.width)
+                .frame(width: geometry.size.width, height: geometry.size.height)
                 .background(.red)
             })
             .presentationDetents([.height(200)])

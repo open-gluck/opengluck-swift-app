@@ -5,7 +5,24 @@ import WatchConnectivity
 import os
 import OG
 
-class PhoneAppDelegate: NSObject, UIApplicationDelegate, WCSessionDelegate, ObservableObject {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        Self.handleShortcutItem(shortcutItem)
+        completionHandler(true)
+    }
+        
+    static func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) {
+        Task {
+            if shortcutItem.type == "add-insulin" {
+                await UIApplication.shared.open(PhoneNavigationData.urlAddInsulin)
+            } else if shortcutItem.type == "add-low" {
+                await UIApplication.shared.open(PhoneNavigationData.urlAddLow)
+            }
+        }
+    }
+}
+
+class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, ObservableObject {
 #if OPENGLUCK_CONTACT_TRICK_IS_YES
     @AppStorage(WKDataKeys.enableContactTrick.keyValue, store: OpenGluckManager.userDefaults) var enableContactTrick: Bool = false
 #endif
@@ -15,6 +32,7 @@ class PhoneAppDelegate: NSObject, UIApplicationDelegate, WCSessionDelegate, Obse
         category: String(describing: PhoneAppDelegate.self)
     )
 
+    let navigationData = PhoneNavigationData()
     let openGlückConnection = OpenGluckConnection()
     let sheetStatusOptions: SheetStatusViewOptions = SheetStatusViewOptions()
     private var deviceToken: String?
@@ -107,7 +125,11 @@ class PhoneAppDelegate: NSObject, UIApplicationDelegate, WCSessionDelegate, Obse
         try? WKData.default.syncToOther(key: WKDataKeys.openglückToken)
 
         self.registerDeviceTokenWithOpenGluck()
-
+        
+        if let shortcutItem = launchOptions?[UIApplication.LaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
+            SceneDelegate.handleShortcutItem(shortcutItem)
+        }
+        
 #if OPENGLUCK_CONTACT_TRICK_IS_YES
         if enableContactTrick {
             Task {
@@ -116,9 +138,17 @@ class PhoneAppDelegate: NSObject, UIApplicationDelegate, WCSessionDelegate, Obse
             }
         }
 #endif
+        
+        AppsShortcuts.updateAppShortcutParameters()
         return true
     }
     
+    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
+        sceneConfig.delegateClass = SceneDelegate.self
+        return sceneConfig
+    }
+
     func registerDeviceTokenWithOpenGluck() {
         if let deviceToken {
             Task { try? await OpenGluckConnection.client?.register(deviceToken: deviceToken) }
