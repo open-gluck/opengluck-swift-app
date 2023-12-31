@@ -58,7 +58,7 @@ struct AddInsulinAppIntent: AppIntent {
     // and an open value that can be used programatically with Shortcuts and also on the times that
     // Siri fails to understand a value, to ask the user for something more precise.
     @Parameter(title: "Units", description: "How many insulin units?", requestValueDialog: "How much insulin?")
-    var unitsEntity: InsulinUnitEntity?
+    var unitsEnum: InsulinUnitEnum?
 
     @Parameter(title: "Units", description: "How many insulin units?")
     var unitsInt: Int?
@@ -69,12 +69,12 @@ struct AddInsulinAppIntent: AppIntent {
     }
     
     @MainActor
-    func perform() async throws -> some IntentResult & ProvidesDialog {
+    func perform() async throws -> some IntentResult & ProvidesDialog & ShowsSnippetView {
         let connection = OpenGluckConnection()
         guard let client = connection.getClient() else {
             throw AppIntentError.message("Could not get a client, have you configured a valid OpenGlück server and token in the app?")
         }
-        let units = if let value = self.unitsEntity?.value {
+        let units = if let value = self.unitsEnum?.rawValue {
             value
         } else if let unitsInt {
             unitsInt
@@ -83,8 +83,11 @@ struct AddInsulinAppIntent: AppIntent {
         }
 
         let insulinRecord = OpenGluckInsulinRecord(id: UUID(), timestamp: Date(), units: units, deleted: false)
-//        let _ = try await client.upload(insulinRecords: [insulinRecord])
-        return .result(dialog: "\(units == 1 ? "Noted 1 faked insulin unit." : "Noted \(units) faked insulin units.")")
+        let _ = try await client.upload(insulinRecords: [insulinRecord])
+        return .result(
+            dialog: "\(units == 1 ? "Noted 1 insulin unit." : "Noted \(units) insulin units.")",
+            view: InsulinRecordSnippet(insulinRecord: insulinRecord)
+        )
     }
 }
 
@@ -96,7 +99,7 @@ struct AddLowAppIntent: AppIntent {
     // and an open value that can be used programatically with Shortcuts and also on the times that
     // Siri fails to understand a value, to ask the user for something more precise.
     @Parameter(title: "Sugar choices", description: "How much sugar, as a set of limited options?")
-    var sugarInGramsEntity: SugarInGramsEntity?
+    var sugarInGramsEnum: SugarInGramsEnum?
 
     @Parameter(title: "Sugar in grams", description: "How much sugar, as an open value?")
     var sugarInGramsDouble: Double?
@@ -107,12 +110,12 @@ struct AddLowAppIntent: AppIntent {
     }
     
     @MainActor
-    func perform() async throws -> some IntentResult & ProvidesDialog {
+    func perform() async throws -> some IntentResult & ProvidesDialog & ShowsSnippetView {
         let connection = OpenGluckConnection()
         guard let client = connection.getClient() else {
             throw AppIntentError.message("Could not get a client, have you configured a valid OpenGlück server and token in the app?")
         }
-        let sugarInGrams = if let value = self.sugarInGramsEntity?.value {
+        let sugarInGrams = if let value = self.sugarInGramsEnum?.rawValue {
             value
         } else if let sugarInGramsDouble {
             sugarInGramsDouble
@@ -121,28 +124,63 @@ struct AddLowAppIntent: AppIntent {
         }
         
         let lowRecord = OpenGluckLowRecord(id: UUID(), timestamp: Date(), sugarInGrams: sugarInGrams, deleted: false)
-//        let _ = try await client.upload(lowRecords: [lowRecord])
+        let _ = try await client.upload(lowRecords: [lowRecord])
         let sugarInGramsString = abs(round(sugarInGrams) - sugarInGrams) < Double.ulpOfOne ? "\(Int(round(sugarInGrams)))" : "\(sugarInGrams)"
-        return .result(dialog: "\(abs(sugarInGrams - 1.0) < Double.ulpOfOne ? "Noted 1 fake gram." : "Noted \(sugarInGramsString) fake grams of sugar.")")
+        return .result(
+            dialog: "\(abs(sugarInGrams - 1.0) < Double.ulpOfOne ? "Noted 1 gram of sugar." : "Noted \(sugarInGramsString) grams of sugar.")",
+            view: LowRecordSnippet(lowRecord: lowRecord)
+        )
     }
 }
 
+struct DeleteLastInsulinAppIntent: AppIntent {
+    static var title: LocalizedStringResource = "Delete Last Insulin"
+    static var description: LocalizedStringResource = "Delete the last insulin unit."
 
-struct DebugView: View {
-    var body: some View {
-        VStack {
-            Text("Hello")
+    static var parameterSummary: some ParameterSummary {
+        Summary("Delete the last insulin unit.") {
         }
     }
-}
-
-struct DebugAppIntent: AppIntent {
-    static var title: LocalizedStringResource = "Debug"
-    static var description: LocalizedStringResource = "Debug App Intent."
     
     @MainActor
-    func perform() async throws -> some ReturnsValue<String> & ProvidesDialog  {
-        return .result(value: "42", dialog: "Tell me")
+    func perform() async throws -> some IntentResult & ProvidesDialog & ShowsSnippetView {
+        let connection = OpenGluckConnection()
+        guard let client = connection.getClient() else {
+            throw AppIntentError.message("Could not get a client, have you configured a valid OpenGlück server and token in the app?")
+        }
+        let last = try await client.getLastData()
+        guard let lastInsulinRecord = last?.insulinRecords?.sorted(by: { $0.timestamp > $1.timestamp }).filter({ !$0.deleted }).first else {
+            return .result(dialog: "Found no insulin records recently.")
+
+        }
+        let deletedRecord: OpenGluckInsulinRecord = OpenGluckInsulinRecord(id: lastInsulinRecord.id, timestamp: lastInsulinRecord.timestamp, units: lastInsulinRecord.units, deleted: true)
+        let _ = try await client.upload(insulinRecords: [deletedRecord])
+        return .result(dialog: "Deleted insulin record.", view: InsulinRecordSnippet(insulinRecord: deletedRecord))
     }
 }
 
+struct DeleteLastLowAppIntent: AppIntent {
+    static var title: LocalizedStringResource = "Delete Last Sugar"
+    static var description: LocalizedStringResource = "Delete the last sugar."
+
+    static var parameterSummary: some ParameterSummary {
+        Summary("Delete the last sugar.") {
+        }
+    }
+    
+    @MainActor
+    func perform() async throws -> some IntentResult & ProvidesDialog & ShowsSnippetView {
+        let connection = OpenGluckConnection()
+        guard let client = connection.getClient() else {
+            throw AppIntentError.message("Could not get a client, have you configured a valid OpenGlück server and token in the app?")
+        }
+        let last = try await client.getLastData()
+        guard let lastLowRecord = last?.lowRecords?.sorted(by: { $0.timestamp > $1.timestamp }).filter({ !$0.deleted }).first else {
+            return .result(dialog: "Found no sugar recently.")
+
+        }
+        let deletedRecord: OpenGluckLowRecord = OpenGluckLowRecord(id: lastLowRecord.id, timestamp: lastLowRecord.timestamp, sugarInGrams: lastLowRecord.sugarInGrams, deleted: true)
+        let _ = try await client.upload(lowRecords: [deletedRecord])
+        return .result(dialog: "Deleted sugar.", view: LowRecordSnippet(lowRecord: deletedRecord))
+    }
+}

@@ -2,6 +2,25 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>INAlternativeAppNames</key>
+	<array>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>OpenGlück</string>
+			<key>INAlternativeAppNamePronunciationHint</key>
+			<string>open click</string>
+		</dict>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>Glück</string>
+			<key>INAlternativeAppNamePronunciationHint</key>
+			<string>gluck</string>
+		</dict>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>OG</string>
+		</dict>
+	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>OPENGLUCK_DEFAULT_TOKEN</key>
