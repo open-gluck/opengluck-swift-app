@@ -154,6 +154,8 @@
 		9D924D442A41DC5200B477AF /* GlucoseGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D786CBE29CE3542008F9270 /* GlucoseGraph.swift */; };
 		9D924D452A41DC5300B477AF /* GlucoseGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D786CBE29CE3542008F9270 /* GlucoseGraph.swift */; };
 		9D93A2402A1A09E900F644B2 /* GlucoseNumbersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D93A23F2A1A09E900F644B2 /* GlucoseNumbersView.swift */; };
+		9D9443E42B52DF7C0088ACD8 /* GlucoseRecordSnippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9443E32B52DF7C0088ACD8 /* GlucoseRecordSnippet.swift */; };
+		9D9443E52B52DF7C0088ACD8 /* GlucoseRecordSnippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9443E32B52DF7C0088ACD8 /* GlucoseRecordSnippet.swift */; };
 		9D973C3F2B402615002EE231 /* SugarInGramsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7836B2B3B83CB0039C578 /* SugarInGramsEnum.swift */; };
 		9D973C402B402618002EE231 /* InsulinUnitEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB783672B3B79810039C578 /* InsulinUnitEnum.swift */; };
 		9D973C412B40261F002EE231 /* AppsShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB783692B3B79E00039C578 /* AppsShortcuts.swift */; };
@@ -371,6 +373,7 @@
 		9D924D3A2A3F3A0200B477AF /* CurrentDataColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDataColors.swift; sourceTree = "<group>"; };
 		9D924D412A41DA9700B477AF /* GraphWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphWidget.swift; sourceTree = "<group>"; };
 		9D93A23F2A1A09E900F644B2 /* GlucoseNumbersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseNumbersView.swift; sourceTree = "<group>"; };
+		9D9443E32B52DF7C0088ACD8 /* GlucoseRecordSnippet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseRecordSnippet.swift; sourceTree = "<group>"; };
 		9D973C442B416AFF002EE231 /* InsulinRecordSnippet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinRecordSnippet.swift; sourceTree = "<group>"; };
 		9D973C472B416B16002EE231 /* RecordSnippet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSnippet.swift; sourceTree = "<group>"; };
 		9D973C4A2B416E63002EE231 /* LowRecordSnippet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LowRecordSnippet.swift; sourceTree = "<group>"; };
@@ -741,6 +744,7 @@
 				9D973C472B416B16002EE231 /* RecordSnippet.swift */,
 				9D973C442B416AFF002EE231 /* InsulinRecordSnippet.swift */,
 				9D973C4A2B416E63002EE231 /* LowRecordSnippet.swift */,
+				9D9443E32B52DF7C0088ACD8 /* GlucoseRecordSnippet.swift */,
 			);
 			path = Snippets;
 			sourceTree = "<group>";
@@ -1096,6 +1100,7 @@
 				9DC4DF4A2B2F6C2F00BAF7C5 /* CurrentGlucose.swift in Sources */,
 				9DB7836C2B3B83CB0039C578 /* SugarInGramsEnum.swift in Sources */,
 				9D924D362A3F33A600B477AF /* CurrentDataGauge.swift in Sources */,
+				9D9443E42B52DF7C0088ACD8 /* GlucoseRecordSnippet.swift in Sources */,
 				9D2F2FAA2A3075140025A3D3 /* TimestampView.swift in Sources */,
 				9DAD39232AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */,
 				9D332E2929D6130B002613F6 /* WKData.swift in Sources */,
@@ -1182,6 +1187,7 @@
 				9DC4DF4C2B2F6C2F00BAF7C5 /* CurrentGlucose.swift in Sources */,
 				9D924D3D2A3F3A0200B477AF /* CurrentDataColors.swift in Sources */,
 				9DF375DC29D254360043CAA6 /* GlucoseRecordView.swift in Sources */,
+				9D9443E52B52DF7C0088ACD8 /* GlucoseRecordSnippet.swift in Sources */,
 				9DB44C7C29DE31C0005BB7F8 /* WKComplicationDebugView.swift in Sources */,
 				9DF375E029D254990043CAA6 /* OpenGluckManager.swift in Sources */,
 				9D973C462B416B02002EE231 /* InsulinRecordSnippet.swift in Sources */,

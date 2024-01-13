@@ -35,6 +35,9 @@ struct TimestampView: View {
         }
         
         private var whenMinutesToText: String {
+            if elapsedMinutes < 1 {
+                return "now"
+            }
             if elapsedMinutes < 60 {
                 return OpenGluckManager.minutesToText(elapsedMinutes: elapsedMinutes)
             } else {
