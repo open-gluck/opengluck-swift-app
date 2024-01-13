@@ -1,6 +1,7 @@
 import AppIntents
 import SwiftUI
 import OG
+import OGUI
 
 enum AppIntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
     case message(_ message: String)
@@ -192,5 +193,44 @@ struct DeleteLastLowAppIntent: ForegroundContinuableIntent {
         let deletedRecord: OpenGluckLowRecord = OpenGluckLowRecord(id: lastLowRecord.id, timestamp: lastLowRecord.timestamp, sugarInGrams: lastLowRecord.sugarInGrams, deleted: true)
         let _ = try await client.upload(lowRecords: [deletedRecord])
         return .result(dialog: "Deleted sugar.", view: LowRecordSnippet(lowRecord: deletedRecord))
+    }
+}
+
+struct GetCurrentBloodGlucoseAppIntent: ForegroundContinuableIntent {
+    static var title: LocalizedStringResource = "Get Current Blood Glucose"
+    static var description: LocalizedStringResource = "Return the current blood glucose."
+
+    static var parameterSummary: some ParameterSummary {
+        Summary("Get the current blood glucose.") {
+        }
+    }
+    
+    @MainActor
+    func perform() async throws -> some IntentResult & ProvidesDialog & ShowsSnippetView {
+        let connection = OpenGluckConnection()
+        guard let client = connection.getClient() else {
+            throw AppIntentError.message("Could not get a client, have you configured a valid OpenGlück server and token in the app?")
+        }
+        let last = try await client.getLastData()
+        guard let lastGlucoseRecord = last?.glucoseRecords?.sorted(by: { $0.timestamp > $1.timestamp }).first else {
+            return .result(dialog: "I found no recent blood glucose.")
+        }
+        let elapsed = lastGlucoseRecord.timestamp.timeIntervalSinceNow
+        guard -elapsed < 10*60 else {
+            throw needsToContinueInForegroundError("I found no recent blood glucose measurement. Last was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)).")
+        }
+
+        let mgDl: Double = Double(lastGlucoseRecord.mgDl)
+        let postfix = if mgDl < OGUI.thresholdNormalLow {
+            ", low"
+        } else if mgDl >= OGUI.thresholdHighVeryHigh {
+            ", very high"
+        } else if mgDl >= OGUI.thresholdNormalHigh {
+            ", high"
+        } else {
+            ""
+        }
+        let dialog: String = "Current glucose \(BloodGlucose.localize(lastGlucoseRecord.mgDl, style: .short))\(postfix)"
+        return .result(dialog: "\(dialog)", view: GlucoseRecordSnippet(glucoseRecord: lastGlucoseRecord))
     }
 }

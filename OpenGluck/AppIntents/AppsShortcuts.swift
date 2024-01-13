@@ -43,5 +43,14 @@ struct AppsShortcuts: AppShortcutsProvider {
             shortTitle: "Add sugar",
             systemImageName: "takeoutbag.and.cup.and.straw"
         )
+        AppShortcut(
+            intent: GetCurrentBloodGlucoseAppIntent(),
+            phrases: [
+                "what's my current blood glucose in \(.applicationName)",
+                "get \(.applicationName)",
+            ],
+            shortTitle: "Get current blood glucose",
+            systemImageName: "drop"
+        )
     }
 }
