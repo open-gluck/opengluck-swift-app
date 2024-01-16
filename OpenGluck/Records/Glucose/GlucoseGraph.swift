@@ -324,6 +324,7 @@ struct GlucoseGraph: View {
         let systemGray6 = Color(cgColor: UIColor.systemGray6.resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark)).cgColor)
         let gray = Color(cgColor: UIColor.systemGray4.resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark)).cgColor)
         let xAxisLineColor = Color(cgColor: UIColor.gray.resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark)).cgColor)
+        let secondarySystemBackground = Color(uiColor: .secondarySystemBackground)
 #else
         let labelColor = Color.white
         let gray = Color.gray
@@ -332,6 +333,7 @@ struct GlucoseGraph: View {
         let systemGray4 = Color(red: 28/256, green: 28/256, blue: 30/256)
         let systemGray6 = Color(red: 58/256, green: 58/256, blue: 60/256)
         let xAxisLineColor = Color.gray
+        let secondarySystemBackground = Color(red: 28/256, green: 28/256, blue: 30/256)
 #endif
         
         
@@ -557,12 +559,18 @@ struct GlucoseGraph: View {
         
         @ChartContentBuilder
         private var lows: some ChartContent {
+#if os(watchOS)
+            let circleDiameter: CGFloat = 17
+#else
+            let circleDiameter: CGFloat = 20
+#endif
             let lowsRecords = lowRecords
                 .filter { !$0.deleted }
                 .sorted(by: { $0.timestamp < $1.timestamp })
             ForEach(lowRecords.filter { !$0.deleted }, id: \.self) {
                 let isMostRecent = $0.id == lowsRecords.last?.id
                 let timestamp = $0.timestamp
+                let isSnoozed = abs($0.sugarInGrams) < Double.ulpOfOne
                 let elapsed = -timestamp.timeIntervalSince(now)
                 let elapsedMinutes = Int(round(elapsed / 60))
                 let agoString = { () -> String? in
@@ -573,9 +581,13 @@ struct GlucoseGraph: View {
                     }
                 }()
                 
-                RuleMark(x: .value("Minutes", timestamp))
-                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [5, 3]))
-                    .foregroundStyle(OGUI.lowColor.opacity(0.6))
+                if !isSnoozed {
+                    RuleMark(x: .value("Minutes", timestamp))
+                        .lineStyle(StrokeStyle(lineWidth: 2.5))
+                        .foregroundStyle(.linearGradient(
+                            colors: [OGUI.lowColor, OGUI.lowColor, OGUI.lowColor.opacity(0), OGUI.lowColor.opacity(0)],
+                            startPoint: .bottom, endPoint: .top))
+                }
                 PointMark(
                     x: .value("Minutes", timestamp),
                     y: .value("Predicted", annotateAtMgDl)
@@ -599,23 +611,27 @@ struct GlucoseGraph: View {
                                         .padding(2)
                                         .clipShape(RoundedRectangle(cornerRadius: 4.0, style: .continuous))
                                         .font(agoFont)
-                                        .offset(x: 0, y: 1)
+                                        .offset(x: 0, y: -1)
                                 }
                             }
                             if widgetRenderingMode == .fullColor {
-                                ZStack {
-                                    Image(systemName: "arrow.up.right")
+                                if isSnoozed {
+                                    ZStack {
+                                        Image(systemName: "arrow.right.circle.fill")
+                                            .resizable()
+                                            .foregroundStyle(OGUI.lowColorText, OGUI.lowColor)
+                                        // dim the arrow to mark this as snoozed
+                                        Color.white.opacity(0.43)
+                                            .clipShape(Circle())
+                                    }
+                                        .frame(width: circleDiameter, height: circleDiameter)
+                                } else {
+                                    Image(systemName: "arrow.up.right.circle.fill")
                                         .resizable()
-                                        .padding(4)
+                                        .foregroundStyle(OGUI.lowColorText, OGUI.lowColor)
+                                        .frame(width: circleDiameter, height: circleDiameter)
                                 }
-                                .background(OGUI.lowColor)
-                                .foregroundColor(OGUI.lowColorText)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(fadeColor.opacity(0.5), lineWidth: 1)
-                                )
-                                .frame(width: 17, height: 17)
-                                .clipShape(Circle())
+                                
                             } else {
                                 ZStack {
                                     Image(systemName: "arrow.up.right.circle.fill")
@@ -626,7 +642,7 @@ struct GlucoseGraph: View {
                         }
                     }
                     .foregroundColor(OGUI.lowColorText)
-                    .offset(x: 0, y: 27)
+                    .offset(x: 0, y: 25)
                     
                 }
                 .symbolSize(0)
@@ -986,6 +1002,7 @@ struct GlucoseGraph_Previews: PreviewProvider {
                 OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(0 * 60), mgDl: 130, recordType: "scan")
             ]
             let lowRecords: [OpenGluckLowRecord] = [
+                .init(id: UUID(), timestamp: Date().addingTimeInterval(-108*60), sugarInGrams: 0, deleted: false),
                 .init(id: UUID(), timestamp: Date().addingTimeInterval(-62*60), sugarInGrams: 10, deleted: false),
                 .init(id: UUID(), timestamp: Date().addingTimeInterval(-2*60), sugarInGrams: 20, deleted: false)
             ]
