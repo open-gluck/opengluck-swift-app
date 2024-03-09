@@ -22,6 +22,8 @@ struct AppsShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: AddInsulinAppIntent(),
             phrases: [
+                "\(.applicationName) insulin",
+                "\(.applicationName) add insulin",
                 "\(\.$unitsEnum) insulin units in \(.applicationName)",
                 "\(.applicationName) \(\.$unitsEnum) unit",
                 "\(.applicationName) \(\.$unitsEnum) units",
@@ -31,9 +33,11 @@ struct AppsShortcuts: AppShortcutsProvider {
             shortTitle: "Add insulin",
             systemImageName: "cross.vial"
         )
+
         AppShortcut(
             intent: AddLowAppIntent(),
             phrases: [
+                "\(.applicationName) sugar",
                 "\(\.$sugarInGramsEnum) grams of sugar in \(.applicationName)",
                 "\(.applicationName) \(\.$sugarInGramsEnum) gram",
                 "\(.applicationName) \(\.$sugarInGramsEnum) grams",
