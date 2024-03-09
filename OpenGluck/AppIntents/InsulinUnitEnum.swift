@@ -70,7 +70,7 @@ enum InsulinUnitEnum: Int, AppEnum {
         .value29 : DisplayRepresentation(stringLiteral: "29"),
     ]
     
-    static var allCases: [InsulinUnitEnum] = (1...25).map { InsulinUnitEnum(rawValue: $0)! }
+    static var allCases: [InsulinUnitEnum] = (1...29).map { InsulinUnitEnum(rawValue: $0)! }
 }
 
 #if false
