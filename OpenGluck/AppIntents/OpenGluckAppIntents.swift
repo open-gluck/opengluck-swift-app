@@ -92,6 +92,47 @@ struct AddInsulinAppIntent: AppIntent {
     }
 }
 
+#if false
+/// the same hack, with AppEntity
+/// doesn't work on watchOS 10.4
+struct AddInsulinShotAppIntent: AppIntent {
+    static var title: LocalizedStringResource = "Record Insulin"
+    static var description: LocalizedStringResource = "Records some insulin units."
+
+    // We provide two parameters, one used only for AppShortcuts with a limited value of options,
+    // and an open value that can be used programatically with Shortcuts and also on the times that
+    // Siri fails to understand a value, to ask the user for something more precise.
+    @Parameter(title: "Units", description: "How many insulin units?")
+    var units: InsulinAppEntity?
+
+    static var parameterSummary: some ParameterSummary {
+        Summary("Record \(\.$units) units of insulin") {
+        }
+    }
+    
+    @MainActor
+    func perform() async throws -> some IntentResult & ProvidesDialog & ShowsSnippetView {
+        let connection = OpenGluckConnection()
+        guard let client = connection.getClient() else {
+            throw AppIntentError.message("Could not get a client, have you configured a valid OpenGlück server and token in the app?")
+        }
+        let units = if let units {
+            units
+        } else {
+            try await self.$units.requestValue("How many insulin units?")
+        }
+
+        let insulinRecord = OpenGluckInsulinRecord(id: UUID(), timestamp: Date(), units: units.units, deleted: false)
+        let _ = try await client.upload(insulinRecords: [insulinRecord])
+        return .result(
+            dialog: "\(units.units == 1 ? "Noted 1 insulin unit." : "Noted \(units.units)  insulin units.")",
+            view: InsulinRecordSnippet(insulinRecord: insulinRecord)
+        )
+    }
+}
+#endif
+
+
 struct AddLowAppIntent: AppIntent {
     static var title: LocalizedStringResource = "Record Sugar"
     static var description: LocalizedStringResource = "Records some sugar."

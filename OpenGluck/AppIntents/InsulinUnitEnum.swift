@@ -2,6 +2,7 @@ import AppIntents
 
 /* 
  For some reasons Siri won't parse integers in intents but is glad to parse an enum, so here we go.
+ FIXME: seems this is broken in iOS 17.4 and watchOS 10.4 :/
  */
 
 enum InsulinUnitEnum: Int, AppEnum {
@@ -72,3 +73,37 @@ enum InsulinUnitEnum: Int, AppEnum {
     static var allCases: [InsulinUnitEnum] = (1...29).map { InsulinUnitEnum(rawValue: $0)! }
 }
 
+#if false
+/// the same hack, with AppEntity
+/// doesn't work on watchOS 10.4
+
+struct InsulinAppEntity: Identifiable {
+    var id: String { "\(units)" }
+    let units: Int
+}
+
+extension InsulinAppEntity: AppEntity {
+    static var defaultQuery = InsulinAppEntityQuery()
+    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Insulin units"
+    var displayRepresentation: DisplayRepresentation {
+        DisplayRepresentation(title: "\(units)")
+    }
+}
+
+struct InsulinAppEntityQuery: EntityQuery {
+    func entities(for identifiers: [String]) async throws -> [InsulinAppEntity] {
+        /// Filter all available groups using the given identifiers
+        try await suggestedEntities().filter { identifiers.contains($0.id) }
+    }
+    
+    func suggestedEntities() async throws -> [InsulinAppEntity] {
+        /// Return a list of suggested favorite groups to use
+        (1...25).map { InsulinAppEntity(units: $0) }
+    }
+    
+    func defaultResult() async -> InsulinAppEntity? {
+        /// Return default selected group
+        nil
+    }
+}
+#endif
