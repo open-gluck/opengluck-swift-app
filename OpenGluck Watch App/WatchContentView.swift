@@ -26,7 +26,6 @@ struct WatchContentView: View {
             
             ZStack {
                 AddInsulinButton.Interface(addInsulinButtonData: addInsulinButtonData)
-                AddLowButton.Interface(addLowButtonData: addLowButtonData)
                 
                 OpenGluckEnvironmentUpdater {
                     NavigationStack {
@@ -42,7 +41,6 @@ struct WatchContentView: View {
                                     .containerBackground(GlucoseGraph.Background.gradient, for: .tabView)
                                 }
                             }
-                            .frame(width: .infinity, height: .infinity)
                             .safeAreaInset(edge: .bottom) {
                                 CheckConnectionHasClient {
                                     HStack {
@@ -79,7 +77,7 @@ struct WatchContentView: View {
                             ToolbarItem(placement: .topBarLeading) {
                                 HStack {
                                     if pageNumber == Page.graph.rawValue {
-                                        AddLowButton(addLowButtonData: addLowButtonData)
+                                        AddLowButtonMulti(addLowButtonData: addLowButtonData)
                                     }
                                 }
                                 .animation(.easeInOut, value: pageNumber)
