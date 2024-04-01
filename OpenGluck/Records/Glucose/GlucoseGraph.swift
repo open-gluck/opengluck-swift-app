@@ -269,6 +269,8 @@ struct GlucoseGraph: View {
         let widgetRenderingMode: WidgetRenderingModePolyfill = .fullColor
 #endif
         @State var rerender: UUID = UUID()
+        @State var angleLastToPreviousScanRecord: Double? = nil
+        @State var trendLineLengthOnAXis: Double? = nil
         
         let now: Date
         let glucoseRecords: [OpenGluckGlucoseRecord]
@@ -507,7 +509,36 @@ struct GlucoseGraph: View {
                     .filter { $0.recordType == "historic" }
                     .map { ($0.timestamp.timeIntervalSince1970, Double($0.mgDl) )}
             )
-            ForEach(glucoseRecords.sorted(by: { $0.timestamp < $1.timestamp }), id: \.self) {
+            let sortedGlucoseRecords: [OpenGluckGlucoseRecord] = glucoseRecords.sorted(by: { $0.timestamp < $1.timestamp })
+            let sortedScanRecords = sortedGlucoseRecords.filter { $0.recordType == "scan" }
+            let lastScanRecord: OpenGluckGlucoseRecord? = sortedScanRecords.count >= 2 ? sortedScanRecords[sortedScanRecords.count - 1] : nil
+            ForEach(sortedGlucoseRecords, id: \.self) {
+                if $0.recordType == "scan" {
+                    let isLast = $0.timestamp == lastScanRecord?.timestamp
+                    PointMark(
+                        x: .value("Timestamp", $0.timestamp),
+                        y: .value("BG", $0.mgDl)                    )
+                    .foregroundStyle(GlucoseRange.from(mgDl: Double($0.mgDl)).color)
+                    .symbol(.cross)
+                    .symbolSize(0)
+                    .annotation(position: .overlay, alignment: .center, spacing: 0) {
+                        ZStack {
+                            if isLast, let angleLastToPreviousScanRecord, let trendLineLengthOnAXis {
+                                Rectangle()
+                                    .position(x: trendLineLengthOnAXis, y: 5)
+                                    .rotationEffect(.radians(Double.pi + angleLastToPreviousScanRecord))
+                                    .frame(width: trendLineLengthOnAXis, height: 10)
+                                    .foregroundStyle(.linearGradient(colors: [
+                                        .white.opacity(0.3),
+                                        .white.opacity(0)
+                                    ], startPoint: .leading, endPoint: .trailing))
+                            }
+                        }
+                        .frame(height: 20)
+                    }
+                }
+            }
+            ForEach(sortedGlucoseRecords, id: \.self) {
                 if $0.recordType == "historic" {
                     LineMark(
                         x: .value("Timestamp", $0.timestamp),
@@ -877,6 +908,44 @@ struct GlucoseGraph: View {
 //                GlucoseRange.high: OGUI.highColor,
 //                GlucoseRange.veryHigh: OGUI.veryHighColor,
 //            ])
+            .chartOverlay { proxy in
+                let sortedGlucoseRecords: [OpenGluckGlucoseRecord] = glucoseRecords.sorted(by: { $0.timestamp < $1.timestamp })
+                let sortedScanRecords = sortedGlucoseRecords.filter { $0.recordType == "scan" }
+                let _ = {
+                    if sortedScanRecords.count < 2 {
+                        Task {
+                            angleLastToPreviousScanRecord = nil
+                            trendLineLengthOnAXis = nil
+                        }
+                    } else {
+                        let firstScanRecord: OpenGluckGlucoseRecord = sortedScanRecords[0]
+                        let lastScanRecord: OpenGluckGlucoseRecord = sortedScanRecords[sortedScanRecords.count - 1]
+                        let previousToLastScanRecord: OpenGluckGlucoseRecord = sortedScanRecords[sortedScanRecords.count - 2]
+                        
+                        if
+                            let x0 = proxy.position(forX: firstScanRecord.timestamp),
+                            let x1 = proxy.position(forX: previousToLastScanRecord.timestamp),
+                            let x2 = proxy.position(forX: lastScanRecord.timestamp),
+                            let y0 = proxy.position(forY: firstScanRecord.mgDl),
+                            let y1 = proxy.position(forY: previousToLastScanRecord.mgDl),
+                            let y2 = proxy.position(forY: lastScanRecord.mgDl) {
+                            let spanX = x2 - x0
+                            let spanY = y2 - y0
+                            let dx = x2 - x1
+                            let dy = y2 - y1
+                            let angle = atan2(dy, dx)
+                            var newTrendLineLengthOnAXis = sqrt(spanX * spanX + spanY * spanY)
+                            newTrendLineLengthOnAXis *= newTrendLineLengthOnAXis / spanX
+                            newTrendLineLengthOnAXis *= 4
+                            Task {
+                                angleLastToPreviousScanRecord = angle
+                                trendLineLengthOnAXis = newTrendLineLengthOnAXis
+                            }
+                        }
+                    }
+                }()
+                Rectangle().fill(.clear).contentShape(Rectangle())
+            }
             .chartLegend(.hidden)
             .chartXScale(domain: minTimestamp...maxTimestamp)
             .chartYScale(domain: bottomOfChartAtMgDl...maxMgDl+bonusMgDl)
@@ -998,7 +1067,7 @@ struct GlucoseGraph_Previews: PreviewProvider {
                 OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-22 * 60), mgDl: 160, recordType: "historic"),
                 OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-17 * 60), mgDl: 150, recordType: "historic"),
                 OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-12 * 60), mgDl: 120, recordType: "historic"),
-                OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-5 * 60), mgDl: 130, recordType: "scan"),
+                OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-5 * 60), mgDl: 110, recordType: "scan"),
                 OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(0 * 60), mgDl: 130, recordType: "scan")
             ]
             let lowRecords: [OpenGluckLowRecord] = [
@@ -1020,7 +1089,7 @@ struct GlucoseGraph_Previews: PreviewProvider {
         }
     }
     
-    #if false
+    #if true
     // LATER FIXME can't show live previews on widget
     struct LivePreview: View {
         @EnvironmentObject var openGlückEnvironment: OpenGluckEnvironment
@@ -1056,9 +1125,8 @@ struct GlucoseGraph_Previews: PreviewProvider {
 #endif
             .preferredColorScheme(.dark)
             .previewDisplayName("Empty Mock Data")
-        
 
-#if false
+#if true
         // LATER FIXME can't show live previews on widget
         OpenGluckEnvironmentUpdater {
             LivePreview()
@@ -1067,7 +1135,7 @@ struct GlucoseGraph_Previews: PreviewProvider {
         .frame(maxHeight: 100)
 #endif
         .preferredColorScheme(.dark)
-        .environmentObject(OpenGluck())
+        .environmentObject(OpenGluckConnection())
         .previewDisplayName("Live Data")
 #endif
     }
