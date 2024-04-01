@@ -1089,7 +1089,7 @@ struct GlucoseGraph_Previews: PreviewProvider {
         }
     }
     
-    #if true
+    #if false
     // LATER FIXME can't show live previews on widget
     struct LivePreview: View {
         @EnvironmentObject var openGlückEnvironment: OpenGluckEnvironment
@@ -1126,7 +1126,7 @@ struct GlucoseGraph_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
             .previewDisplayName("Empty Mock Data")
 
-#if true
+#if false
         // LATER FIXME can't show live previews on widget
         OpenGluckEnvironmentUpdater {
             LivePreview()
