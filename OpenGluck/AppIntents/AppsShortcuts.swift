@@ -41,6 +41,8 @@ struct AppsShortcuts: AppShortcutsProvider {
             intent: AddLowAppIntent(),
             phrases: [
                 "\(.applicationName) record sugar",
+                "\(.applicationName) note sugar",
+                "\(.applicationName) add sugar",
                 "\(\.$sugarInGramsEnum) grams of sugar in \(.applicationName)",
                 "\(.applicationName) \(\.$sugarInGramsEnum) gram",
                 "\(.applicationName) \(\.$sugarInGramsEnum) grams",
