@@ -6,6 +6,7 @@ struct AppsShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: DeleteLastInsulinAppIntent(),
             phrases: [
+                "\(.applicationName) delete last insulin",
                 "Delete the last insulin in \(.applicationName)",
             ],
             shortTitle: "Delete Last Insulin",
@@ -14,6 +15,7 @@ struct AppsShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: DeleteLastLowAppIntent(),
             phrases: [
+                "\(.applicationName) delete last sugar",
                 "Delete the last sugar in \(.applicationName)",
             ],
             shortTitle: "Delete Last Sugar",
@@ -22,7 +24,8 @@ struct AppsShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: AddInsulinAppIntent(),
             phrases: [
-                "\(.applicationName) insulin",
+                "\(.applicationName) record insulin",
+                "\(.applicationName) note insulin",
                 "\(.applicationName) add insulin",
                 "\(\.$unitsEnum) insulin units in \(.applicationName)",
                 "\(.applicationName) \(\.$unitsEnum) unit",
@@ -37,7 +40,9 @@ struct AppsShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: AddLowAppIntent(),
             phrases: [
-                "\(.applicationName) sugar",
+                "\(.applicationName) record sugar",
+                "\(.applicationName) note sugar",
+                "\(.applicationName) add sugar",
                 "\(\.$sugarInGramsEnum) grams of sugar in \(.applicationName)",
                 "\(.applicationName) \(\.$sugarInGramsEnum) gram",
                 "\(.applicationName) \(\.$sugarInGramsEnum) grams",
