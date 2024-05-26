@@ -524,13 +524,20 @@ struct GlucoseGraph: View {
                     .annotation(position: .overlay, alignment: .center, spacing: 0) {
                         ZStack {
                             if isLast, let angleLastToPreviousScanRecord, let trendLineLengthOnAXis {
+#if os(watchOS)
+                                let colorStart: Color =  .white.opacity(0.6)
+                                let colorEnd: Color = .white.opacity(0.05)
+#else
+                                let colorStart: Color = .white.opacity(0.3)
+                                let colorEnd: Color = .white.opacity(0)
+#endif
                                 Rectangle()
                                     .position(x: trendLineLengthOnAXis, y: 5)
                                     .rotationEffect(.radians(Double.pi + angleLastToPreviousScanRecord))
                                     .frame(width: trendLineLengthOnAXis, height: 10)
                                     .foregroundStyle(.linearGradient(colors: [
-                                        .white.opacity(0.3),
-                                        .white.opacity(0)
+                                        colorStart,
+                                        colorEnd
                                     ], startPoint: .leading, endPoint: .trailing))
                             }
                         }
