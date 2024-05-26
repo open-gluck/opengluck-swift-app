@@ -23,5 +23,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         PhoneContentView()
             .environmentObject(PhoneAppDelegate())
+            .environmentObject(PhoneNavigationData())
     }
 }

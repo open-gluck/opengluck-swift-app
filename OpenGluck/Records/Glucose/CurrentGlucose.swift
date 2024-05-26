@@ -6,6 +6,7 @@ struct CurrentGlucose: View {
 
     var body: some View {
         if let currentGlucoseRecord = openGlückEnvironment.currentGlucoseRecord {
+            let currentInstantGlucoseRecord = openGlückEnvironment.currentInstantGlucoseRecord
 #if os(tvOS)
             GlucoseView(
                 glucoseRecord: .constant(currentGlucoseRecord),
@@ -15,8 +16,9 @@ struct CurrentGlucose: View {
                 mode: .coloredBackground
             )
 #else
-            let freshnessLevel = 1.0 - (-currentGlucoseRecord.timestamp.timeIntervalSince(now) / TimeInterval(10 * 60))
-            CurrentDataGauge(timestamp: .constant(currentGlucoseRecord.timestamp), mgDl: .constant(currentGlucoseRecord.mgDl), hasCgmRealTimeData: .constant(openGlückEnvironment.cgmHasRealTimeData), episode: .constant(nil), episodeTimestamp: .constant(nil), freshnessLevel: .constant(freshnessLevel))
+            let freshnessLevel = 1.0 - (-currentGlucoseRecord.timestamp.timeIntervalSince(now) / OpenGluckUI.maxGlucoseFreshnessTimeInterval)
+            let currentInstantIsFresh = if let timestamp = currentInstantGlucoseRecord?.timestamp { -timestamp.timeIntervalSince(now) < OpenGluckUI.maxGlucoseFreshnessTimeInterval } else { false }
+            CurrentDataGauge(timestamp: .constant(currentGlucoseRecord.timestamp), mgDl: .constant(currentGlucoseRecord.mgDl), instantMgDl: .constant(currentInstantIsFresh ? currentInstantGlucoseRecord?.mgDl : nil), hasCgmRealTimeData: .constant(openGlückEnvironment.cgmHasRealTimeData), episode: .constant(nil), episodeTimestamp: .constant(nil), freshnessLevel: .constant(freshnessLevel))
 #endif
         }
     }

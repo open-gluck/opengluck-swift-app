@@ -100,16 +100,19 @@ fileprivate class CurrentGlucoseWidgetConfiguration: BaseWidgetConfiguration {
     }
     
     static func getData(forTimelineDate timelineDate: Date, date: Date) async throws -> CurrentGlucoseWidgetData {
+        let openGlückConnection = OpenGluckConnection()
         do {
-            let openGlückConnection = OpenGluckConnection()
             guard let client = openGlückConnection.getClient() else {
+                await openGlückConnection.getClient()?.recordLog("getData(forTimelineDate:date:) got error WidgetError.noClientConfiguration")
                 return CurrentGlucoseWidgetData(state: .error(error: WidgetError.noClientConfiguration))
             }
             guard let currentData = try await client.getCurrentData() else {
+                await openGlückConnection.getClient()?.recordLog("getData(forTimelineDate:date:) got error WidgetError.noData")
                 return CurrentGlucoseWidgetData(state: .error(error: WidgetError.noData))
             }
             return CurrentGlucoseWidgetData(state: .ok(currentData: currentData))
         } catch {
+            await openGlückConnection.getClient()?.recordLog("getData(forTimelineDate:date:) got error \(error)")
             return CurrentGlucoseWidgetData(state: .error(error: error))
         }
     }
@@ -295,12 +298,12 @@ struct CurrentGlucoseWidget: Widget {
                 .gaugeStyle(.accessoryCircularCapacity)
                 .redacted(reason: .placeholder)
             case .expired:
-                CurrentDataGauge(timestamp: .constant(nil), mgDl: .constant(nil), hasCgmRealTimeData: .constant(true), episode: .constant(.unknown), episodeTimestamp: .constant(entry.date), freshnessLevel: .constant(entry.freshnessLevel))
+                CurrentDataGauge(timestamp: .constant(nil), mgDl: .constant(nil), instantMgDl: .constant(nil), hasCgmRealTimeData: .constant(true), episode: .constant(.unknown), episodeTimestamp: .constant(entry.date), freshnessLevel: .constant(entry.freshnessLevel))
             case .normal:
                 if currentError != nil {
-                    CurrentDataGauge(timestamp: .constant(nil), mgDl: .constant(nil), hasCgmRealTimeData: .constant(true), episode: .constant(.error), episodeTimestamp: .constant(entry.date), freshnessLevel: .constant(entry.freshnessLevel))
+                    CurrentDataGauge(timestamp: .constant(nil), mgDl: .constant(nil), instantMgDl: .constant(nil), hasCgmRealTimeData: .constant(true), episode: .constant(.error), episodeTimestamp: .constant(entry.date), freshnessLevel: .constant(entry.freshnessLevel))
                 } else {
-                    CurrentDataGauge(timestamp: .constant(currentTimestamp), mgDl: .constant(currentGlucose), hasCgmRealTimeData: .constant(hasCgmRealTimeData), episode: .constant(currentEpisode), episodeTimestamp: .constant(currentEpisodeTimestamp), freshnessLevel: .constant(includeFreshnessLevel ? entry.freshnessLevel : nil))
+                    CurrentDataGauge(timestamp: .constant(currentTimestamp), mgDl: .constant(currentGlucose), instantMgDl: .constant(nil), hasCgmRealTimeData: .constant(hasCgmRealTimeData), episode: .constant(currentEpisode), episodeTimestamp: .constant(currentEpisodeTimestamp), freshnessLevel: .constant(includeFreshnessLevel ? entry.freshnessLevel : nil))
                 }
             }
         }

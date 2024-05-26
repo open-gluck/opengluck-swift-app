@@ -138,7 +138,7 @@ struct GraphWidget: Widget {
                         .redacted(reason: .placeholder)
                 } else if entry.entryType == .expired {
                     VStack {
-                        CurrentDataGauge(timestamp: .constant(nil), mgDl: .constant(nil), hasCgmRealTimeData: .constant(true), episode: .constant(.unknown), episodeTimestamp: .constant(entry.date), freshnessLevel: .constant(entry.freshnessLevel))
+                        CurrentDataGauge(timestamp: .constant(nil), mgDl: .constant(nil), instantMgDl: .constant(nil), hasCgmRealTimeData: .constant(true), episode: .constant(.unknown), episodeTimestamp: .constant(entry.date), freshnessLevel: .constant(entry.freshnessLevel))
                         HStack {
                             Text("Expired")
                                 .font(.headline)
@@ -148,7 +148,7 @@ struct GraphWidget: Widget {
                     }
                 } else if entry.entryType == .normal {
                     if let currentError {
-                        CurrentDataGauge(timestamp: .constant(nil), mgDl: .constant(nil), hasCgmRealTimeData: .constant(true), episode: .constant(.unknown), episodeTimestamp: .constant(entry.date), freshnessLevel: .constant(entry.freshnessLevel))
+                        CurrentDataGauge(timestamp: .constant(nil), mgDl: .constant(nil), instantMgDl: .constant(nil), hasCgmRealTimeData: .constant(true), episode: .constant(.unknown), episodeTimestamp: .constant(entry.date), freshnessLevel: .constant(entry.freshnessLevel))
                         HStack {
                             Text("Error")
                                 .font(.headline)

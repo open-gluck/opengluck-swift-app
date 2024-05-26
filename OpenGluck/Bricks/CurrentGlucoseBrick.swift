@@ -14,10 +14,13 @@ struct CurrentGlucoseBrick: View {
 }
 
 #Preview("TrendBrick") {
-    Grid {
-        GridRow {
-            GlucoseTrendBrick(graphGeometry: CGSize(width: 300, height: 200))
+    OpenGluckEnvironmentUpdater {
+        Grid {
+            GridRow {
+                CurrentGlucoseBrick(now: Date())
+            }
         }
     }
-        .preferredColorScheme(.dark)
+    .environmentObject(OpenGluckConnection())
+    .preferredColorScheme(.dark)
 }
