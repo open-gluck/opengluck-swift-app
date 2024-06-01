@@ -9,6 +9,7 @@ class OpenGluckEnvironment: ObservableObject
     @Published var revision: Int64? = nil
     @Published var hasTimedOut: Bool = false
     @Published var currentGlucoseRecord: OpenGluckGlucoseRecord? = nil
+    @Published var currentInstantGlucoseRecord: OpenGluckInstantGlucoseRecord? = nil
     @Published var lastHistoricGlucoseRecord: OpenGluckGlucoseRecord? = nil
     @Published var lastGlucoseRecords: [OpenGluckGlucoseRecord]? = nil
     @Published var cgmHasRealTimeData: Bool? = nil
@@ -17,8 +18,9 @@ class OpenGluckEnvironment: ObservableObject
     @Published var lastSuccessAt: Date? = nil
     @Published var lastAttemptAt: Date? = nil
     
-    init(currentGlucoseRecord: OpenGluckGlucoseRecord? = nil, lastHistoricGlucoseRecord: OpenGluckGlucoseRecord? = nil, lastGlucoseRecords: [OpenGluckGlucoseRecord]? = nil, lastInsulinRecords: [OpenGluckInsulinRecord]? = nil, lastLowRecords: [OpenGluckLowRecord]? = nil) {
+    init(currentGlucoseRecord: OpenGluckGlucoseRecord? = nil, currentInstantGlucoseRecord: OpenGluckInstantGlucoseRecord? = nil, lastHistoricGlucoseRecord: OpenGluckGlucoseRecord? = nil, lastGlucoseRecords: [OpenGluckGlucoseRecord]? = nil, lastInsulinRecords: [OpenGluckInsulinRecord]? = nil, lastLowRecords: [OpenGluckLowRecord]? = nil) {
         self.currentGlucoseRecord = currentGlucoseRecord
+        self.currentInstantGlucoseRecord = currentInstantGlucoseRecord
         self.lastHistoricGlucoseRecord = lastHistoricGlucoseRecord
         self.lastGlucoseRecords = lastGlucoseRecords
         self.lastInsulinRecords = lastInsulinRecords
@@ -27,6 +29,7 @@ class OpenGluckEnvironment: ObservableObject
 
     func clear() {
         self.currentGlucoseRecord = nil
+        self.currentInstantGlucoseRecord = nil
         self.lastHistoricGlucoseRecord = nil
         self.lastGlucoseRecords = nil
         self.lastInsulinRecords = nil
@@ -89,6 +92,9 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
             }
         }
         .onReceive(environment.$currentGlucoseRecord, perform: { _ in
+            rerender = UUID()
+        })
+        .onReceive(environment.$currentInstantGlucoseRecord, perform: { _ in
             rerender = UUID()
         })
     }
@@ -190,10 +196,11 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
                 log("environment.revision=\(String(describing: environment.revision))")
                 if environment.revision == nil || currentData.revision != environment.revision! {
                     let lastData: LastData?
+                    let syncClient = await openGlückConnection.getSyncClient()
                     if environment.revision == nil {
                         log("Getting last data")
                         do {
-                            lastData = try await openGlückConnection.syncClient.getLastData()
+                            lastData = try await syncClient.getLastData()
                         } catch {
                             log("Failed getting last data, ignoring: \(error)")
                             lastData = nil
@@ -201,7 +208,7 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
                     } else {
                         log("Getting last data at revision")
                         do {
-                            lastData = try await openGlückConnection.syncClient.getLastDataIfChanged()
+                            lastData = try await syncClient.getLastDataIfChanged()
                         } catch {
                             log("Failed getting last data from revision, ignoring: \(error)")
                             lastData = nil
@@ -225,6 +232,7 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
                     environment.revision = currentData.revision
                     environment.cgmHasRealTimeData = currentData.hasCgmRealTimeData
                     environment.currentGlucoseRecord = currentData.currentGlucoseRecord
+                    environment.currentInstantGlucoseRecord = currentData.currentInstantGlucoseRecord
                     environment.lastHistoricGlucoseRecord = currentData.lastHistoricGlucoseRecord
                     environment.lastSuccessAt = Date()
                     log("Now at revision \(String(describing: environment.revision)), with \(String(describing: environment.lastGlucoseRecords?.count)) glucose records")
@@ -247,6 +255,7 @@ struct OpenGluckEnvironmentUpdater_Previews: PreviewProvider {
             List {
                 Text("\(String(describing: environment))")
                 Text("\(String(describing: environment.currentGlucoseRecord))")
+                Text("\(String(describing: environment.currentInstantGlucoseRecord))")
                 Text("lastGlucoseRecords.count=\(String(describing: environment.lastGlucoseRecords?.count))")
             }
         }

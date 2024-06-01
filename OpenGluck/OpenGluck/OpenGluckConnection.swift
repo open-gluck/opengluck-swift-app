@@ -7,7 +7,7 @@ import OG
 import OGUI
 
 class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate {
-    let syncClient: OpenGluckSyncClient
+    private let syncClient: OpenGluckSyncClient
     #if OPENGLUCK_CONTACT_TRICK_IS_YES
     let contactsUpdater = ContactUpdater()
     @AppStorage(WKDataKeys.enableContactTrick.keyValue, store: OpenGluckManager.userDefaults) var enableContactTrick: Bool = false
@@ -17,7 +17,6 @@ class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate {
 
     init() {
         syncClient = OpenGluckSyncClient()
-        syncClient.delegate = self
         OGUI.thresholdsDelegate = thresholdsDelegate
     }
     
@@ -36,13 +35,19 @@ class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate {
         Self.client
     }
     
+    func getSyncClient() async -> OpenGluckSyncClient {
+        await syncClient.setDelegate(self)
+        return syncClient
+    }
+    
     func getCurrentData(becauseUpdateOf: String, force: Bool? = false) async throws -> CurrentData? {
         guard Self.client != nil else {
             return nil
         }
+        let syncClient = await getSyncClient()
         let currentData = try await syncClient.getCurrentDataIfChanged()
         guard let currentData else {
-            guard let lastSyncCurrentData = syncClient.lastSyncCurrentData else {
+            guard let lastSyncCurrentData = await syncClient.lastSyncCurrentData else {
                 return nil
             }
             return lastSyncCurrentData
@@ -57,10 +62,24 @@ class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate {
             }
 #endif
         }
-        if let mgDl: Int = currentData.currentGlucoseRecord?.mgDl {
+        let instantMgDl: Int? = currentData.currentInstantGlucoseRecord?.mgDl
+        let instantTimestamp: Date? = currentData.currentInstantGlucoseRecord?.timestamp
+        let dataTimestamp: Date? = currentData.currentGlucoseRecord?.timestamp
+        let mostRecentTimestamp: Date? = if let instantTimestamp, let dataTimestamp {
+            max(instantTimestamp, dataTimestamp)
+        } else if let instantTimestamp {
+            instantTimestamp
+        } else if let dataTimestamp {
+            dataTimestamp
+        } else {
+            nil
+        }
+        if enableUpdateBadgeCount {
 #if os(iOS)
-            if enableUpdateBadgeCount {
-                try await UNUserNotificationCenter.current().setBadgeCount(mgDl)
+            if let mostRecentTimestamp, -mostRecentTimestamp.timeIntervalSinceNow >= OpenGluckUI.maxGlucoseFreshnessTimeInterval {
+                try await UNUserNotificationCenter.current().setBadgeCount(0)
+            } else if let mgDl: Int = currentData.currentGlucoseRecord?.mgDl {
+                try await UNUserNotificationCenter.current().setBadgeCount(instantMgDl ?? mgDl)
             }
 #endif
         }

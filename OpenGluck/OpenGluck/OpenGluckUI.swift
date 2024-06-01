@@ -1,8 +1,7 @@
-//
-//  OpenGluckUI.swift
-//  OpenGluck
-//
-//  Created by Christopher on 26/05/2024.
-//
+import SwiftUI
 
-import Foundation
+final class OpenGluckUI {
+    private init() {}
+    
+    static let maxGlucoseFreshnessTimeInterval: TimeInterval = TimeInterval(10 * 60)
+}
