@@ -861,6 +861,15 @@ struct GlucoseGraph: View {
 //            }
 //        }
         
+        private func filterDuplicateRecords(_ records: [OpenGluckGlucoseRecord]) -> [OpenGluckGlucoseRecord] {
+            guard let last = records.last else { return [] }
+            let allButLast = records[0..<records.count - 1]
+            let filtered: [OpenGluckGlucoseRecord] = allButLast.filter {
+                -$0.timestamp.timeIntervalSince(last.timestamp) > TimeInterval(60)
+            } + [last]
+            return filtered
+        }
+        
         @ViewBuilder
         var body: some View {
             let minTimestamp = now.addingTimeInterval(-GlucoseGraph.maxLookbehindInterval)
@@ -917,7 +926,9 @@ struct GlucoseGraph: View {
 //            ])
             .chartOverlay { proxy in
                 let sortedGlucoseRecords: [OpenGluckGlucoseRecord] = glucoseRecords.sorted(by: { $0.timestamp < $1.timestamp })
-                let sortedScanRecords = sortedGlucoseRecords.filter { $0.recordType == "scan" }
+                
+                let sortedScanRecords = filterDuplicateRecords(sortedGlucoseRecords.filter { $0.recordType == "scan" })
+                // sometimes we have two scan records in the same minute; keep only the last
                 let _ = {
                     if sortedScanRecords.count < 2 {
                         Task {
