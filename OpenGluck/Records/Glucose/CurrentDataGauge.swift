@@ -91,7 +91,7 @@ struct CurrentDataGauge: View {
                         .background(instantColorBackground)
                         .clipShape(Capsule())
                         .offset(x: 12, y: -12)
-                        .shadow(radius: 10)
+                        .shadow(radius: 4)
                 }
             }
         }
