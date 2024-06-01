@@ -47,7 +47,7 @@ struct OpenGluckWatchApp: App {
         }
         .backgroundTask(.appRefresh(Self.taskReloadTime)) { context in
             await scheduleBackgroundTask()
-            await openGlückConnection.getClient()?.recordLog(".backgroundTask(.appRefresh(Self.taskReloadTime)), context=\(context)")
+//            await openGlückConnection.getClient()?.recordLog(".backgroundTask(.appRefresh(Self.taskReloadTime)), context=\(context)")
             print(".backgroundTask(.appRefresh(Self.taskReloadTime))")
             WidgetCenter.shared.reloadAllTimelines()
         }
