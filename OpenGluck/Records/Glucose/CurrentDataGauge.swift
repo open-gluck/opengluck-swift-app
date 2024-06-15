@@ -81,10 +81,10 @@ struct CurrentDataGauge: View {
             .tint(tintColor)
             .background(backgroundColor)
             .clipShape(Circle())
-            if let instantMgDl, instantMgDl != mgDl {
+            if let instantMgDl {
             let (instantColorBackground, instantColorText, instantText, _) = CurrentDataColors.getInfo(forMgDl: instantMgDl, hasCgmRealTimeData: true)
                 if let instantText {
-                    Text(instantText)
+                    Text(instantMgDl != mgDl ? instantText : "→")
                         .font(.system(size: 15))
                         .foregroundStyle(instantColorText)
                         .padding(5)
