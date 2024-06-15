@@ -639,7 +639,7 @@ struct GlucoseGraph: View {
                                 case .fullColor:
                                     Text(agoString)
                                         .padding(2)
-                                        .background(OGUI.lowColor)
+                                        .background(isSnoozed ? Color(uiColor: .darkGray) : OGUI.lowColor)
                                         .foregroundColor(OGUI.lowColorText)
                                         .clipShape(RoundedRectangle(cornerRadius: 4.0, style: .continuous))
                                         .font(agoFont)
@@ -653,27 +653,12 @@ struct GlucoseGraph: View {
                                 }
                             }
                             if widgetRenderingMode == .fullColor {
-                                if isSnoozed {
-                                    ZStack {
-                                        Image(systemName: "arrow.right.circle.fill")
-                                            .resizable()
-                                            .foregroundStyle(OGUI.lowColorText, OGUI.lowColor)
-                                        // dim the arrow to mark this as snoozed
-                                        Color.white.opacity(0.43)
-                                            .clipShape(Circle())
-                                    }
-                                        .frame(width: circleDiameter, height: circleDiameter)
-                                } else {
-                                    Image(systemName: "arrow.up.right.circle.fill")
-                                        .resizable()
-                                        .foregroundStyle(OGUI.lowColorText, OGUI.lowColor)
-                                        .frame(width: circleDiameter, height: circleDiameter)
-                                }
+                                LowIconFill(isSnoozed: isSnoozed, isActive: true)
+                                    .frame(width: circleDiameter, height: circleDiameter)
                                 
                             } else {
                                 ZStack {
-                                    Image(systemName: "arrow.up.right.circle.fill")
-                                        .resizable()
+                                    LowIconFill(isSnoozed: isSnoozed, isActive: true)
                                 }
                                 .frame(width: 17, height: 17)
                             }
