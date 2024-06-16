@@ -133,6 +133,8 @@ struct AddLowButtonInterface: View {
                 await Task.yield()
                 if let valueString = Double(addLowButtonData.valueString) {
                     addLow(value: valueString)
+                } else {
+                    addLow(value: 0)
                 }
             }
         })
