@@ -152,10 +152,16 @@ struct CurrentDataGauge: View {
     }
     
     private func getInstantMgDlAngle() -> Angle {
-        if let mgDl, let instantMgDl, instantMgDl > mgDl {
-            .degrees(-30)
+        #if os(watchOS)
+        // we use a smaller angle on watchOS, to make things tidier
+        let positiveAngle: Angle = .degrees(24)
+        #else
+        let positiveAngle: Angle = .degrees(30)
+        #endif
+        return if let mgDl, let instantMgDl, instantMgDl > mgDl {
+            -positiveAngle
         } else if let mgDl, let instantMgDl, instantMgDl < mgDl {
-            .degrees(+30)
+            positiveAngle
         } else {
             .zero
         }

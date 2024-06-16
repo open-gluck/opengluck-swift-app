@@ -12,6 +12,7 @@ struct GlucoseView: View {
         case coloredBackground
         case transparent
         case vibrantAgo
+        case vibrantAgoSmall
         case vibrant
     }
     let mode: Mode
@@ -56,6 +57,16 @@ struct GlucoseView: View {
             .font(font)
     }
     
+    @ViewBuilder func agoSmall(forDate date: Date) -> some View {
+        HStack(spacing: 0) {
+            TimestampView(mode: .minutesToText, timestamp: .constant(glucoseRecord.timestamp))
+            if tooOld(forDate: date) {
+                Text("⚠️")
+            }
+        }
+        .font(captionFont)
+    }
+    
     @ViewBuilder func ago(forDate date: Date) -> some View {
         HStack(spacing: 0) {
             TimestampView(mode: .secondsToTextAgo, timestamp: .constant(glucoseRecord.timestamp))
@@ -69,7 +80,10 @@ struct GlucoseView: View {
     @ViewBuilder
     private func content(forDate date: Date) -> some View {
         VStack(spacing: 0) {
-            if mode == .vibrantAgo {
+            if mode == .vibrantAgoSmall {
+                agoSmall(forDate: date)
+                glucose
+            } else if mode == .vibrantAgo {
                 ago(forDate: date)
                 glucose
             } else {

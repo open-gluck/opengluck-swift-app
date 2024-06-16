@@ -42,10 +42,12 @@ struct WatchContentView: View {
                                 }
                             }
                             .safeAreaInset(edge: .bottom) {
+                                let bottomInsetHeight: CGFloat = 20.0
                                 CheckConnectionHasClient {
-                                    HStack {
+                                    HStack(spacing: 0) {
                                         GlucoseTrend(graphGeometry: graphGeometry)
-                                            .frame(width: 100)
+                                            .frame(width: 55)
+                                            .offset(x: 10, y: 0)
                                         Spacer()
                                         TimelineView(.everyMinute) { context in
                                             CurrentGlucose(now: context.date)
@@ -59,8 +61,9 @@ struct WatchContentView: View {
                                 } exceptionContent: {
                                     Image(systemName: CheckConnectionHasClientDefaultExceptionContent.systemImage)
                                 }
-                                .padding(.horizontal, 15)
-                                .frame(height: 15)
+                                .padding(.horizontal, bottomInsetHeight)
+                                .padding([.bottom, .trailing], bottomInsetHeight / 2)
+                                .frame(height: bottomInsetHeight)
                                 .offset(x: 0, y: 10)
                             }
                             .tag(Page.graph.rawValue)
