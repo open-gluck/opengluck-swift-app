@@ -112,7 +112,11 @@ struct CurrentDataGauge: View {
                     .frame(minWidth: 92, alignment: .leading)
 //                    .border(.purple)
                 }
+                #if !os(watchOS)
                 .offset(x: 42, y: 0)
+                #else
+                .offset(x: 37, y: 0)
+                #endif
                 .frame(width: 64, height: 64)
 //                .border(.red)
                 .rotationEffect(instantMgDlAngle)
@@ -215,15 +219,22 @@ fileprivate struct CurrentDataGaugePreview: View {
         var body: some View {
             VStack {
                 Text(BloodGlucose.localize(mgDl!, style: .short))
+#if !os(watchOS)
                 Picker("Instant", selection: $instant) {
                     Text("nil").tag(PreviewInstant.none)
                     Text("lower").tag(PreviewInstant.lower)
                     Text("equal").tag(PreviewInstant.equal)
                     Text("greater").tag(PreviewInstant.greater)
                 }
-                #if !os(watchOS)
                 .pickerStyle(.palette)
-                #endif
+#else
+                HStack {
+                    Button("nil") { instant = PreviewInstant.none }
+                    Button("<") { instant = PreviewInstant.lower }
+                    Button("=") { instant = PreviewInstant.equal }
+                    Button(">") { instant = PreviewInstant.greater }
+                }
+#endif
                 CurrentDataGaugePreview(timestamp: .constant(Date()), mgDl: $mgDl, instantMgDl: $instantMgDl, hasCgmRealTimeData: .constant(true), episode: .constant(nil), episodeTimestamp: .constant(nil))
             }
                 .previewDisplayName("Random")
