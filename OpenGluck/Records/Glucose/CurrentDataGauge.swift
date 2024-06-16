@@ -60,7 +60,7 @@ struct CurrentDataGauge: View {
             }
             return Color(red: f(r), green: f(g), blue: f(b))
         }()
-        ZStack(/*alignment: .topTrailing*/) {
+        ZStack {
             Gauge(value: freshnessLevel ?? 0, in: 0...1) {
                 if let systemName {
                     Image(systemName: systemName)
@@ -89,39 +89,23 @@ struct CurrentDataGauge: View {
             .background(backgroundColor)
             .clipShape(Circle())
             VStack {
-                //                if instantText != nil { //} let instantMgDl {
-                //                    let (instantColorBackground, instantColorText, instantText, _) = CurrentDataColors.getInfo(forMgDl: instantMgDl, hasCgmRealTimeData: true)
-                //                    Text(instantMgDl != mgDl ? instantText : "→")
-                //                        .font(.system(size: 15))
-                //                        .foregroundStyle(instantColorText)
-                //                        .padding(5)
-                //                        .background(instantColorBackground)
-                //                        .clipShape(Capsule())
-                //                        .offset(x: 12, y: -12)
-                //                        .shadow(radius: 4)
                 ZStack {
                     ZStack {
                         if let instantText {
-                            let _ = print("DEBUG INTEL", animatedInstantMgDl, instantMgDl, mgDl, instantText)
                             Text(animatedInstantMgDl != mgDl ? instantText : "→")
                                 .contentTransition(.numericText(value: Double(animatedInstantMgDl ?? 0)))
                                 .rotationEffect(-instantMgDlAngle)
                                                     .font(.system(size: 15))
                                                     .foregroundStyle(instantColorText ?? Color.white)
                                                     .padding(5)
-//                                                    .background(instantColorBackground)
                                                     .background {
                                                         instantColorBackground
                                                             .clipShape(Capsule())
                                                             .rotationEffect(-instantMgDlAngle)
                                                     }
-//                                                    .clipShape(Capsule())
-//                                                    .offset(x: 12, y: -12)
                                                     .shadow(radius: 6)
                                                     .padding(.leading, 28)
 
-//                            Text(instantMgDl != mgDl ? instantText : "→")
-//                                .background(.cyan)
                                                     .transition(.scale)
                         }
                     }
@@ -132,14 +116,10 @@ struct CurrentDataGauge: View {
                 .frame(width: 64, height: 64)
 //                .border(.red)
                 .rotationEffect(instantMgDlAngle)
-                //                    }
-                //                }
             }
         }
-//        .background(.yellow)
         .task(id: instantMgDl) {
             let animation: Animation = .default.speed(4)
-//            let animation: Animation = .default.speed(0.5)
             if let instantMgDl {
                 let (instantColorBackground, instantColorText, instantText, _) = CurrentDataColors.getInfo(forMgDl: instantMgDl, hasCgmRealTimeData: true)
                 if instantText != nil && self.instantText == nil, !isAnimatingOut {
