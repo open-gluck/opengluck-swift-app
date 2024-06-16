@@ -298,12 +298,12 @@ struct CurrentGlucoseWidget: Widget {
                 .gaugeStyle(.accessoryCircularCapacity)
                 .redacted(reason: .placeholder)
             case .expired:
-                CurrentDataGauge(timestamp: .constant(nil), mgDl: .constant(nil), instantMgDl: .constant(nil), hasCgmRealTimeData: .constant(true), episode: .constant(.unknown), episodeTimestamp: .constant(entry.date), freshnessLevel: .constant(entry.freshnessLevel))
+                CurrentDataGauge(enableInstantGlucose: false, timestamp: .constant(nil), mgDl: .constant(nil), instantMgDl: .constant(nil), hasCgmRealTimeData: .constant(true), episode: .constant(.unknown), episodeTimestamp: .constant(entry.date), freshnessLevel: .constant(entry.freshnessLevel))
             case .normal:
                 if currentError != nil {
-                    CurrentDataGauge(timestamp: .constant(nil), mgDl: .constant(nil), instantMgDl: .constant(nil), hasCgmRealTimeData: .constant(true), episode: .constant(.error), episodeTimestamp: .constant(entry.date), freshnessLevel: .constant(entry.freshnessLevel))
+                    CurrentDataGauge(enableInstantGlucose: false, timestamp: .constant(nil), mgDl: .constant(nil), instantMgDl: .constant(nil), hasCgmRealTimeData: .constant(true), episode: .constant(.error), episodeTimestamp: .constant(entry.date), freshnessLevel: .constant(entry.freshnessLevel))
                 } else {
-                    CurrentDataGauge(timestamp: .constant(currentTimestamp), mgDl: .constant(currentGlucose), instantMgDl: .constant(nil), hasCgmRealTimeData: .constant(hasCgmRealTimeData), episode: .constant(currentEpisode), episodeTimestamp: .constant(currentEpisodeTimestamp), freshnessLevel: .constant(includeFreshnessLevel ? entry.freshnessLevel : nil))
+                    CurrentDataGauge(enableInstantGlucose: false, timestamp: .constant(currentTimestamp), mgDl: .constant(currentGlucose), instantMgDl: .constant(nil), hasCgmRealTimeData: .constant(hasCgmRealTimeData), episode: .constant(currentEpisode), episodeTimestamp: .constant(currentEpisodeTimestamp), freshnessLevel: .constant(includeFreshnessLevel ? entry.freshnessLevel : nil))
                 }
             }
         }
