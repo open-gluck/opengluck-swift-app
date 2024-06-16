@@ -15,6 +15,13 @@ struct CurrentDataGauge: View {
     @Binding var freshnessLevel: Double?
 
     @State var freshnessColorOpacity: CGFloat = 0.4
+    
+    @State private var isAnimatingOut: Bool = false
+    @State private var instantMgDlAngle: Angle = .zero
+    @State private var instantColorBackground: Color? = nil
+    @State private var instantColorText: Color? = nil
+    @State private var instantText: String? = nil
+    @State private var animatedInstantMgDl: Int? = nil
 
     var body: some View {
         let (color, colorText, string, systemName): (Color, Color, String?, String?) = {
@@ -53,7 +60,7 @@ struct CurrentDataGauge: View {
             }
             return Color(red: f(r), green: f(g), blue: f(b))
         }()
-        ZStack(alignment: .topTrailing) {
+        ZStack(/*alignment: .topTrailing*/) {
             Gauge(value: freshnessLevel ?? 0, in: 0...1) {
                 if let systemName {
                     Image(systemName: systemName)
@@ -81,48 +88,97 @@ struct CurrentDataGauge: View {
             .tint(tintColor)
             .background(backgroundColor)
             .clipShape(Circle())
-            if let instantMgDl {
-            let (instantColorBackground, instantColorText, instantText, _) = CurrentDataColors.getInfo(forMgDl: instantMgDl, hasCgmRealTimeData: true)
-                if let instantText {
-                    Text(instantMgDl != mgDl ? instantText : "→")
-                        .font(.system(size: 15))
-                        .foregroundStyle(instantColorText)
-                        .padding(5)
-                        .background(instantColorBackground)
-                        .clipShape(Capsule())
-                        .offset(x: 12, y: -12)
-                        .shadow(radius: 4)
+            VStack {
+                //                if instantText != nil { //} let instantMgDl {
+                //                    let (instantColorBackground, instantColorText, instantText, _) = CurrentDataColors.getInfo(forMgDl: instantMgDl, hasCgmRealTimeData: true)
+                //                    Text(instantMgDl != mgDl ? instantText : "→")
+                //                        .font(.system(size: 15))
+                //                        .foregroundStyle(instantColorText)
+                //                        .padding(5)
+                //                        .background(instantColorBackground)
+                //                        .clipShape(Capsule())
+                //                        .offset(x: 12, y: -12)
+                //                        .shadow(radius: 4)
+                ZStack {
+                    ZStack {
+                        if let instantText {
+                            let _ = print("DEBUG INTEL", animatedInstantMgDl, instantMgDl, mgDl, instantText)
+                            Text(animatedInstantMgDl != mgDl ? instantText : "→")
+                                .contentTransition(.numericText(value: Double(animatedInstantMgDl ?? 0)))
+                                .rotationEffect(-instantMgDlAngle)
+                                                    .font(.system(size: 15))
+                                                    .foregroundStyle(instantColorText ?? Color.white)
+                                                    .padding(5)
+//                                                    .background(instantColorBackground)
+                                                    .background {
+                                                        instantColorBackground
+                                                            .clipShape(Capsule())
+                                                            .rotationEffect(-instantMgDlAngle)
+                                                    }
+//                                                    .clipShape(Capsule())
+//                                                    .offset(x: 12, y: -12)
+                                                    .shadow(radius: 6)
+                                                    .padding(.leading, 28)
+
+//                            Text(instantMgDl != mgDl ? instantText : "→")
+//                                .background(.cyan)
+                                                    .transition(.scale)
+                        }
+                    }
+                    .frame(minWidth: 92, alignment: .leading)
+//                    .border(.purple)
                 }
+                .offset(x: 42, y: 0)
+                .frame(width: 64, height: 64)
+//                .border(.red)
+                .rotationEffect(instantMgDlAngle)
+                //                    }
+                //                }
             }
         }
-    }
-}
-
-struct CurrentDataGaugeVarying_Previews: PreviewProvider {
-    struct Preview: View {
-        let timer = Timer.publish(every: 0.3, on: .main, in: .common).autoconnect()
-        @State var mgDl: Int? = 100
-        @State var instantMgDl: Int? = 105
-        
-        var body: some View {
-            VStack {
-                Text(BloodGlucose.localize(mgDl!, style: .short))
-                CurrentDataGaugePreview(timestamp: .constant(Date()), mgDl: $mgDl, instantMgDl: $instantMgDl, hasCgmRealTimeData: .constant(true), episode: .constant(nil), episodeTimestamp: .constant(nil))
-            }
-                .onReceive(timer) { _ in
-                    mgDl = .random(in: 50...250)
-                    instantMgDl = .random(in: 50...250)
+//        .background(.yellow)
+        .task(id: instantMgDl) {
+            let animation: Animation = .default.speed(4)
+//            let animation: Animation = .default.speed(0.5)
+            if let instantMgDl {
+                let (instantColorBackground, instantColorText, instantText, _) = CurrentDataColors.getInfo(forMgDl: instantMgDl, hasCgmRealTimeData: true)
+                if instantText != nil && self.instantText == nil, !isAnimatingOut {
+                    instantMgDlAngle = getInstantMgDlAngle()
                 }
-                .previewDisplayName("Random")
+                withAnimation(animation) {
+                    self.instantColorBackground = instantColorBackground
+                    self.instantColorText = instantColorText
+                    self.instantText = instantText
+                    self.animatedInstantMgDl = instantMgDl
+
+                    instantMgDlAngle = getInstantMgDlAngle()
+                }
+            } else {
+                self.isAnimatingOut = true
+                withAnimation(animation) {
+                    self.instantColorBackground = nil
+                    self.instantColorText = nil
+                    self.instantText = nil
+                } completion: {
+                    self.animatedInstantMgDl = nil
+                    self.isAnimatingOut = false
+                }
+            }
         }
     }
     
-    static var previews: some View {
-        Preview()
+    private func getInstantMgDlAngle() -> Angle {
+        if let mgDl, let instantMgDl, instantMgDl > mgDl {
+            .degrees(-30)
+        } else if let mgDl, let instantMgDl, instantMgDl < mgDl {
+            .degrees(+30)
+        } else {
+            .zero
+        }
     }
 }
 
-struct CurrentDataGaugePreview: View {
+fileprivate struct CurrentDataGaugePreview: View {
     @Binding var timestamp: Date?
     @Binding var mgDl: Int?
     @Binding var instantMgDl: Int?
@@ -140,7 +196,73 @@ struct CurrentDataGaugePreview: View {
     }
 }
 
+#Preview("Random") {
+    struct Preview: View {
+        let timer = Timer.publish(every: 0.3, on: .main, in: .common).autoconnect()
+        @State var mgDl: Int? = 100
+        @State var instantMgDl: Int? = 105
+        
+        var body: some View {
+            VStack {
+                Text(BloodGlucose.localize(mgDl!, style: .short))
+                CurrentDataGaugePreview(timestamp: .constant(Date()), mgDl: $mgDl, instantMgDl: $instantMgDl, hasCgmRealTimeData: .constant(true), episode: .constant(nil), episodeTimestamp: .constant(nil))
+            }
+                .onReceive(timer) { _ in
+                    mgDl = .random(in: 50...250)
+                    instantMgDl = .random(in: 50...250)
+                }
+                .previewDisplayName("Random")
+        }
+    }
 
+    return Preview()
+}
+
+#Preview("Instant") {
+    struct Preview: View {
+        let timer = Timer.publish(every: 0.3, on: .main, in: .common).autoconnect()
+        @State var mgDl: Int? = 128
+        @State var instantMgDl: Int? = nil
+        
+        enum PreviewInstant: Int, Hashable {
+            case none
+            case lower
+            case equal
+            case greater
+        }
+        @State var instant: PreviewInstant  = .greater
+        
+        var body: some View {
+            VStack {
+                Text(BloodGlucose.localize(mgDl!, style: .short))
+                Picker("Instant", selection: $instant) {
+                    Text("nil").tag(PreviewInstant.none)
+                    Text("lower").tag(PreviewInstant.lower)
+                    Text("equal").tag(PreviewInstant.equal)
+                    Text("greater").tag(PreviewInstant.greater)
+                }
+                #if !os(watchOS)
+                .pickerStyle(.palette)
+                #endif
+                CurrentDataGaugePreview(timestamp: .constant(Date()), mgDl: $mgDl, instantMgDl: $instantMgDl, hasCgmRealTimeData: .constant(true), episode: .constant(nil), episodeTimestamp: .constant(nil))
+            }
+                .previewDisplayName("Random")
+                .task(id: instant) {
+                    instantMgDl = switch (instant) {
+                    case .none: nil
+                    case .lower: 119
+                    case .equal: 128
+                    case .greater: 133
+                    }
+                }
+        }
+    }
+
+    return Preview()
+}
+
+
+/*
 struct CurrentDataGaugeFreshnessPreview: View {
     @Binding var timestamp: Date?
     @Binding var mgDl: Int?
@@ -225,3 +347,4 @@ struct CurrentDataGauge_Previews: PreviewProvider {
         Preview()
     }
 }
+*/
