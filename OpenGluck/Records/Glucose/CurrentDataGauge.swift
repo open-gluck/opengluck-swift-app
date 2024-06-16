@@ -6,6 +6,7 @@ import OGUI
 struct CurrentDataGauge: View {
     @Environment(\.widgetRenderingMode) var widgetRenderingMode
 
+    var enableInstantGlucose: Bool = true
     @Binding var timestamp: Date?
     @Binding var mgDl: Int?
     @Binding var instantMgDl: Int?
@@ -88,38 +89,40 @@ struct CurrentDataGauge: View {
             .tint(tintColor)
             .background(backgroundColor)
             .clipShape(Circle())
-            VStack {
-                ZStack {
+            if enableInstantGlucose {
+                VStack {
                     ZStack {
-                        if let instantText {
-                            Text(animatedInstantMgDl != mgDl ? instantText : "→")
-                                .contentTransition(.numericText(value: Double(animatedInstantMgDl ?? 0)))
-                                .rotationEffect(-instantMgDlAngle)
-                                                    .font(.system(size: 15))
-                                                    .foregroundStyle(instantColorText ?? Color.white)
-                                                    .padding(5)
-                                                    .background {
-                                                        instantColorBackground
-                                                            .clipShape(Capsule())
-                                                            .rotationEffect(-instantMgDlAngle)
-                                                    }
-                                                    .shadow(radius: 6)
-                                                    .padding(.leading, 28)
-
-                                                    .transition(.scale)
+                        ZStack {
+                            if let instantText {
+                                Text(animatedInstantMgDl != mgDl ? instantText : "→")
+                                    .contentTransition(.numericText(value: Double(animatedInstantMgDl ?? 0)))
+                                    .rotationEffect(-instantMgDlAngle)
+                                    .font(.system(size: 15))
+                                    .foregroundStyle(instantColorText ?? Color.white)
+                                    .padding(5)
+                                    .background {
+                                        instantColorBackground
+                                            .clipShape(Capsule())
+                                            .rotationEffect(-instantMgDlAngle)
+                                    }
+                                    .shadow(radius: 6)
+                                    .padding(.leading, 28)
+                                
+                                    .transition(.scale)
+                            }
                         }
+                        .frame(minWidth: 92, alignment: .leading)
+                        //                    .border(.purple)
                     }
-                    .frame(minWidth: 92, alignment: .leading)
-//                    .border(.purple)
+#if !os(watchOS)
+                    .offset(x: 42, y: 0)
+#else
+                    .offset(x: 37, y: 0)
+#endif
+                    .frame(width: 64, height: 64)
+                    //                .border(.red)
+                    .rotationEffect(instantMgDlAngle)
                 }
-                #if !os(watchOS)
-                .offset(x: 42, y: 0)
-                #else
-                .offset(x: 37, y: 0)
-                #endif
-                .frame(width: 64, height: 64)
-//                .border(.red)
-                .rotationEffect(instantMgDlAngle)
             }
         }
         .task(id: instantMgDl) {
