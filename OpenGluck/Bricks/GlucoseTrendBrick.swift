@@ -7,6 +7,7 @@ struct GlucoseTrendBrick: View {
     var body: some View {
         Brick(title: "Trend") {
             GlucoseTrend(graphGeometry: graphGeometry)
+                .frame(maxWidth: 75)
         }
         .frame(maxHeight: BrickUI.smallHeight)
 
