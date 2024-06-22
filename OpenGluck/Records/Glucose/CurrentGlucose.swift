@@ -1,4 +1,5 @@
 import SwiftUI
+import OG
 
 struct CurrentGlucose: View {
     @EnvironmentObject var openGlückEnvironment: OpenGluckEnvironment
@@ -6,7 +7,11 @@ struct CurrentGlucose: View {
 
     var body: some View {
         if let currentGlucoseRecord = openGlückEnvironment.currentGlucoseRecord {
-            let currentInstantGlucoseRecord = openGlückEnvironment.currentInstantGlucoseRecord
+            let currentInstantGlucoseRecord: OpenGluckInstantGlucoseRecord? = if let currentInstantGlucoseRecord = openGlückEnvironment.currentInstantGlucoseRecord {
+                if currentInstantGlucoseRecord.timestamp > currentGlucoseRecord.timestamp { currentInstantGlucoseRecord } else { nil }
+            } else {
+                nil
+            }
 #if os(tvOS)
             GlucoseView(
                 glucoseRecord: .constant(currentGlucoseRecord),
