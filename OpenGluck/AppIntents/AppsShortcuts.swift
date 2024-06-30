@@ -55,7 +55,10 @@ struct AppsShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: GetCurrentBloodGlucoseAppIntent(),
             phrases: [
+                "\(.applicationName) get current blood glucose",
+                "\(.applicationName) what's my current blood glucose",
                 "what's my current blood glucose in \(.applicationName)",
+                "\(.applicationName) get",
                 "get \(.applicationName)",
             ],
             shortTitle: "Get current blood glucose",
