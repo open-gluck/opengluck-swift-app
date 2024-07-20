@@ -9,7 +9,61 @@ class AddLowButtonData: ObservableObject, CustomStringConvertible {
     @Published var getSugarFromValue: ((Double) -> Double)? = nil
     @Published var formatValue: ((String) -> String)? = nil
     
+    private func uploadLowToOpenGlück(openGlückConnection: OpenGluckConnection, sugarInGrams: Double) async throws {
+        guard let client = openGlückConnection.getClient() else {
+            fatalError("No client")
+        }
+        let lowRecords: [OpenGluckLowRecord] = [
+            OpenGluckLowRecord(id: UUID(), timestamp: Date(), sugarInGrams: sugarInGrams, deleted: false)
+        ]
+        _ = try await client.upload(lowRecords: lowRecords)
+    }
     
+    fileprivate func addLow(value: Double, sugarInGrams: Double, openGlückConnection: OpenGluckConnection, sheetStatusOptions: SheetStatusViewOptions) {
+        let valueString: String = abs(value - round(value)) < .ulpOfOne ? "\(Int(round(value)))" : "\(round(value * 10) / 10)"
+        let statusTask = Task {
+            do {
+                try await Task.sleep(for: .seconds(1))
+            } catch {
+                return
+            }
+            sheetStatusOptions.state = SheetStatusViewState.inProgress
+            sheetStatusOptions.status = self.formatValue!(valueString)
+            sheetStatusOptions.subStatus1 = "Preparing…"
+            sheetStatusOptions.state = .inProgress
+        }
+        Task {
+            defer {
+                statusTask.cancel()
+                sheetStatusOptions.state = SheetStatusViewState.complete
+            }
+            sheetStatusOptions.subStatus1 = "Adding…"
+            do {
+                print("upload to OG sugarInGrams=\(sugarInGrams)")
+                try await uploadLowToOpenGlück(openGlückConnection: openGlückConnection, sugarInGrams: sugarInGrams)
+                sheetStatusOptions.subStatus1 = "Done!"
+                NotificationCenter.default.post(name: Notification.Name.refreshOpenGlück, object: nil)
+            } catch {
+                sheetStatusOptions.pushError(message: error.localizedDescription)
+            }
+        }
+    }
+}
+
+struct AddLowButtonSnooze: View {
+    @ObservedObject var addLowButtonData: AddLowButtonData
+    @EnvironmentObject var openGlückConnection: OpenGluckConnection
+    @EnvironmentObject var sheetStatusOptions: SheetStatusViewOptions
+    let onOpen: () -> Void
+    
+    var body: some View {
+        Button {
+            onOpen()
+            addLowButtonData.addLow(value: 0, sugarInGrams: 0, openGlückConnection: openGlückConnection, sheetStatusOptions: sheetStatusOptions)
+        } label: {
+            Image(systemName: "flag")
+        }
+    }
 }
 
 struct AddLowButtonSugar: View {
@@ -80,44 +134,14 @@ struct AddLowButtonInterface: View {
         self.addLowButtonData = addLowButtonData
         self.onClose = onClose
     }
-    
-    private func uploadLowToOpenGlück(sugarInGrams: Double) async throws {
-        guard let client = openGlückConnection.getClient() else {
-            fatalError("No client")
-        }
-        let lowRecords: [OpenGluckLowRecord] = [
-            OpenGluckLowRecord(id: UUID(), timestamp: Date(), sugarInGrams: sugarInGrams, deleted: false)
-        ]
-        _ = try await client.upload(lowRecords: lowRecords)
-    }
-    
-    private func addLow(value: Double) {
-        let valueString: String = abs(value - round(value)) < .ulpOfOne ? "\(Int(round(value)))" : "\(round(value * 10) / 10)"
-        let sugarInGrams: Double = addLowButtonData.getSugarFromValue!(Double(valueString)!)
-        let statusTask = Task {
-            do {
-                try await Task.sleep(for: .seconds(1))
-            } catch {
-                return
-            }
-            sheetStatusOptions.state = SheetStatusViewState.inProgress
-            sheetStatusOptions.status = addLowButtonData.formatValue!(valueString)
-            sheetStatusOptions.subStatus1 = "Preparing…"
-            sheetStatusOptions.state = .inProgress
-        }
-        Task {
-            defer {
-                statusTask.cancel()
-                sheetStatusOptions.state = SheetStatusViewState.complete
-            }
-            sheetStatusOptions.subStatus1 = "Adding…"
-            do {
-                try await uploadLowToOpenGlück(sugarInGrams: sugarInGrams)
-                sheetStatusOptions.subStatus1 = "Done!"
-                NotificationCenter.default.post(name: Notification.Name.refreshOpenGlück, object: nil)
-            } catch {
-                sheetStatusOptions.pushError(message: error.localizedDescription)
-            }
+        
+    func addLowValue() async {
+        await Task.yield()
+        if let value = Double(addLowButtonData.valueString) {
+            let sugarInGrams: Double = addLowButtonData.getSugarFromValue!(value)
+            addLowButtonData.addLow(value: value, sugarInGrams: sugarInGrams, openGlückConnection: openGlückConnection, sheetStatusOptions: sheetStatusOptions)
+        } else {
+            addLowButtonData.addLow(value: 0, sugarInGrams: 0, openGlückConnection: openGlückConnection, sheetStatusOptions: sheetStatusOptions)
         }
     }
     
@@ -130,12 +154,7 @@ struct AddLowButtonInterface: View {
                      style: .decimal,
                      onClose: self.onClose, onConfirm: {
             Task {
-                await Task.yield()
-                if let valueString = Double(addLowButtonData.valueString) {
-                    addLow(value: valueString)
-                } else {
-                    addLow(value: 0)
-                }
+                await addLowValue()
             }
         })
     }
@@ -210,6 +229,13 @@ struct AddLowButtonMulti: View {
                     isPresented = false
                 }
             }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    AddLowButtonSnooze(addLowButtonData: addLowButtonData) {
+                        isPresented = false
+                    }
+                }
+            }
         }
     }
 }
@@ -232,6 +258,8 @@ fileprivate struct Preview: View {
                 }
             }
         }
+        .environmentObject(SheetStatusViewOptions())
+        .environmentObject(OpenGluckConnection())
     }
 }
 
