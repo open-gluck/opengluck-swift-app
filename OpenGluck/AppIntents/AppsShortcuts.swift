@@ -38,6 +38,23 @@ struct AppsShortcuts: AppShortcutsProvider {
         )
 
         AppShortcut(
+            intent: AddSnoozedLowAppIntent(),
+            phrases: [
+                "\(.applicationName) no sugar",
+                "\(.applicationName) snooze sugar",
+                "no sugar in \(.applicationName)",
+                "zero gram of sugar in \(.applicationName)",
+                "zero grams of sugar in \(.applicationName)",
+                "\(.applicationName) zero gram",
+                "\(.applicationName) zero grams",
+                "no \(.applicationName)",
+                "zero gram \(.applicationName)",
+                "zero grams \(.applicationName)",
+            ],
+            shortTitle: "Snooze low",
+            systemImageName: "flag"
+        )
+        AppShortcut(
             intent: AddLowAppIntent(),
             phrases: [
                 "\(.applicationName) record sugar",
@@ -50,7 +67,7 @@ struct AppsShortcuts: AppShortcutsProvider {
                 "\(\.$sugarInGramsEnum) grams \(.applicationName)",
             ],
             shortTitle: "Add sugar",
-            systemImageName: "takeoutbag.and.cup.and.straw"
+            systemImageName: "teddybear"
         )
         AppShortcut(
             intent: GetCurrentBloodGlucoseAppIntent(),
