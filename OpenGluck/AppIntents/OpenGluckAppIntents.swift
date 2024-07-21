@@ -86,7 +86,7 @@ struct AddInsulinAppIntent: AppIntent {
         let insulinRecord = OpenGluckInsulinRecord(id: UUID(), timestamp: Date(), units: units, deleted: false)
         let _ = try await client.upload(insulinRecords: [insulinRecord])
         return .result(
-            dialog: "\(units == 1 ? "Noted 1 insulin unit." : "Noted \(units) insulin units.")",
+            dialog: "\(units == 1 ? "1 insulin unit. Noted." : "\(units) insulin units. Noted.")",
             view: InsulinRecordSnippet(insulinRecord: insulinRecord)
         )
     }
@@ -125,13 +125,33 @@ struct AddInsulinShotAppIntent: AppIntent {
         let insulinRecord = OpenGluckInsulinRecord(id: UUID(), timestamp: Date(), units: units.units, deleted: false)
         let _ = try await client.upload(insulinRecords: [insulinRecord])
         return .result(
-            dialog: "\(units.units == 1 ? "Noted 1 insulin unit." : "Noted \(units.units)  insulin units.")",
+            dialog: "\(units.units == 1 ? "1 insulin unit. Noted." : "\(units.units)  insulin units. Noted.")",
             view: InsulinRecordSnippet(insulinRecord: insulinRecord)
         )
     }
 }
 #endif
 
+
+struct AddSnoozedLowAppIntent: AppIntent {
+    static var title: LocalizedStringResource = "Snooze Sugar"
+    static var description: LocalizedStringResource = "Snooze low."
+
+    @MainActor
+    func perform() async throws -> some IntentResult & ProvidesDialog & ShowsSnippetView {
+        let connection = OpenGluckConnection()
+        guard let client = connection.getClient() else {
+            throw AppIntentError.message("Could not get a client, have you configured a valid OpenGlück server and token in the app?")
+        }
+        
+        let lowRecord = OpenGluckLowRecord(id: UUID(), timestamp: Date(), sugarInGrams: 0, deleted: false)
+        let _ = try await client.upload(lowRecords: [lowRecord])
+        return .result(
+            dialog: "Low snoozed.",
+            view: LowRecordSnippet(lowRecord: lowRecord)
+        )
+    }
+}
 
 struct AddLowAppIntent: AppIntent {
     static var title: LocalizedStringResource = "Record Sugar"
@@ -169,7 +189,7 @@ struct AddLowAppIntent: AppIntent {
         let _ = try await client.upload(lowRecords: [lowRecord])
         let sugarInGramsString = abs(round(sugarInGrams) - sugarInGrams) < Double.ulpOfOne ? "\(Int(round(sugarInGrams)))" : "\(sugarInGrams)"
         return .result(
-            dialog: "\(abs(sugarInGrams - 1.0) < Double.ulpOfOne ? "Noted 1 gram of sugar." : "Noted \(sugarInGramsString) grams of sugar.")",
+            dialog: "\(abs(sugarInGrams - 1.0) < Double.ulpOfOne ? "1 gram of sugar. Noted." : "\(sugarInGramsString) grams of sugar. Noted.")",
             view: LowRecordSnippet(lowRecord: lowRecord)
         )
     }
@@ -192,7 +212,7 @@ struct DeleteLastInsulinAppIntent: ForegroundContinuableIntent {
         }
         let last = try await client.getLastData()
         guard let lastInsulinRecord = last?.insulinRecords?.sorted(by: { $0.timestamp > $1.timestamp }).filter({ !$0.deleted }).first else {
-            return .result(dialog: "Found no insulin records recently.")
+            return .result(dialog: "No recent insulin record found.")
 
         }
         let elapsed = lastInsulinRecord.timestamp.timeIntervalSinceNow
@@ -202,7 +222,7 @@ struct DeleteLastInsulinAppIntent: ForegroundContinuableIntent {
 
         let deletedRecord: OpenGluckInsulinRecord = OpenGluckInsulinRecord(id: lastInsulinRecord.id, timestamp: lastInsulinRecord.timestamp, units: lastInsulinRecord.units, deleted: true)
         let _ = try await client.upload(insulinRecords: [deletedRecord])
-        return .result(dialog: "Deleted insulin record.", view: InsulinRecordSnippet(insulinRecord: deletedRecord))
+        return .result(dialog: "Insulin record deleted.", view: InsulinRecordSnippet(insulinRecord: deletedRecord))
     }
 }
 
@@ -223,7 +243,7 @@ struct DeleteLastLowAppIntent: ForegroundContinuableIntent {
         }
         let last = try await client.getLastData()
         guard let lastLowRecord = last?.lowRecords?.sorted(by: { $0.timestamp > $1.timestamp }).filter({ !$0.deleted }).first else {
-            return .result(dialog: "Found no sugar recently.")
+            return .result(dialog: "No recent sugar found.")
 
         }
         let elapsed = lastLowRecord.timestamp.timeIntervalSinceNow
@@ -233,7 +253,7 @@ struct DeleteLastLowAppIntent: ForegroundContinuableIntent {
 
         let deletedRecord: OpenGluckLowRecord = OpenGluckLowRecord(id: lastLowRecord.id, timestamp: lastLowRecord.timestamp, sugarInGrams: lastLowRecord.sugarInGrams, deleted: true)
         let _ = try await client.upload(lowRecords: [deletedRecord])
-        return .result(dialog: "Deleted sugar.", view: LowRecordSnippet(lowRecord: deletedRecord))
+        return .result(dialog: "Sugar deleted.", view: LowRecordSnippet(lowRecord: deletedRecord))
     }
 }
 
@@ -254,7 +274,7 @@ struct GetCurrentBloodGlucoseAppIntent: ForegroundContinuableIntent {
         }
         let last = try await client.getLastData()
         guard let lastGlucoseRecord = last?.glucoseRecords?.sorted(by: { $0.timestamp > $1.timestamp }).first else {
-            return .result(dialog: "I found no recent blood glucose.")
+            return .result(dialog: "No recent blood glucose found.")
         }
         let elapsed = lastGlucoseRecord.timestamp.timeIntervalSinceNow
         guard -elapsed < 10*60 else {
