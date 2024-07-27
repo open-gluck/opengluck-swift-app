@@ -86,7 +86,7 @@ struct AddInsulinAppIntent: AppIntent {
         let insulinRecord = OpenGluckInsulinRecord(id: UUID(), timestamp: Date(), units: units, deleted: false)
         let _ = try await client.upload(insulinRecords: [insulinRecord])
         return .result(
-            dialog: "\(units == 1 ? "1 insulin unit. Noted." : "\(units) insulin units. Noted.")",
+            dialog: "\(units == 1 ? "Insulin one unit. Noted." : "Insulin \(units) units. Noted.")",
             view: InsulinRecordSnippet(insulinRecord: insulinRecord)
         )
     }
@@ -125,7 +125,7 @@ struct AddInsulinShotAppIntent: AppIntent {
         let insulinRecord = OpenGluckInsulinRecord(id: UUID(), timestamp: Date(), units: units.units, deleted: false)
         let _ = try await client.upload(insulinRecords: [insulinRecord])
         return .result(
-            dialog: "\(units.units == 1 ? "1 insulin unit. Noted." : "\(units.units)  insulin units. Noted.")",
+            dialog: "\(units.units == 1 ? "Insulin one unit. Noted." : "Insulin \(units.units) units. Noted.")",
             view: InsulinRecordSnippet(insulinRecord: insulinRecord)
         )
     }
@@ -189,7 +189,7 @@ struct AddLowAppIntent: AppIntent {
         let _ = try await client.upload(lowRecords: [lowRecord])
         let sugarInGramsString = abs(round(sugarInGrams) - sugarInGrams) < Double.ulpOfOne ? "\(Int(round(sugarInGrams)))" : "\(sugarInGrams)"
         return .result(
-            dialog: "\(abs(sugarInGrams - 1.0) < Double.ulpOfOne ? "1 gram of sugar. Noted." : "\(sugarInGramsString) grams of sugar. Noted.")",
+            dialog: "\(abs(sugarInGrams - 1.0) < Double.ulpOfOne ? "Sugar 1 gram. Noted." : "Sugar \(sugarInGramsString) grams. Noted.")",
             view: LowRecordSnippet(lowRecord: lowRecord)
         )
     }
