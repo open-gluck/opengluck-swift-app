@@ -94,6 +94,14 @@ struct AddLowBrick: View {
                 .contextMenu(ContextMenu(menuItems: {
                     NavigationLink("Custom…", value: PhoneNavigationData.PathAddLow())
                     Divider()
+                    Button {
+                        Task {
+                            await interactiveAdd(sugarInGrams: 0)
+                        }
+                    } label: {
+                        // Catalyst doesn't render the image (yet?)
+                        Label("Snooze", systemImage: "flag")
+                    }
                     ForEach(Array(stride(from: 10.0, through: 30.0, by: 5)), id: \.self) { g in
                         Button("\(Int(round(g)))g") {
                             Task {
