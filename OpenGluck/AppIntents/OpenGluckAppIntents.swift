@@ -76,7 +76,7 @@ struct AddInsulinAppIntent: AppIntent {
             throw AppIntentError.message("Could not get a client, have you configured a valid OpenGlück server and token in the app?")
         }
         let units = if let value = self.unitsEnum?.rawValue {
-            value
+            Int(value)!
         } else if let unitsInt {
             unitsInt
         } else {
@@ -178,7 +178,7 @@ struct AddLowAppIntent: AppIntent {
             throw AppIntentError.message("Could not get a client, have you configured a valid OpenGlück server and token in the app?")
         }
         let sugarInGrams = if let value = self.sugarInGramsEnum?.rawValue {
-            value
+            Double(value)!
         } else if let sugarInGramsDouble {
             sugarInGramsDouble
         } else {
