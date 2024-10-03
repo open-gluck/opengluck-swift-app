@@ -37,9 +37,9 @@ struct CheckConnectionHasClient<C: View, SetupC: View, TimeoutC: View, Exception
     
     init(
         content: @escaping () -> C,
-        setupContent: @escaping () -> SetupC = { CheckConnectionHasClientDefaultSetupContent() },
-        timeoutContent: @escaping () -> TimeoutC = { CheckConnectionHasClientDefaultTimeoutContent() },
-        exceptionContent: @escaping () -> ExceptionC = { CheckConnectionHasClientDefaultExceptionContent() }
+        setupContent: @escaping @MainActor () -> SetupC = { CheckConnectionHasClientDefaultSetupContent() },
+        timeoutContent: @escaping @MainActor () -> TimeoutC = { CheckConnectionHasClientDefaultTimeoutContent() },
+        exceptionContent: @escaping @MainActor () -> ExceptionC = { CheckConnectionHasClientDefaultExceptionContent() }
     ) {
         self.content = content
         self.setupContent = setupContent
@@ -48,7 +48,7 @@ struct CheckConnectionHasClient<C: View, SetupC: View, TimeoutC: View, Exception
     }
     
     var body: some View {
-        Group {
+        ZStack {
             if !hasCompletedSetup {
                 setupContent()
             } else if environment.hasTimedOut {
