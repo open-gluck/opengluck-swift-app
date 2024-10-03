@@ -23,6 +23,7 @@ struct CurrentDataGauge: View {
     @State private var instantColorText: Color? = nil
     @State private var instantText: String? = nil
     @State private var animatedInstantMgDl: Int? = nil
+    @State private var numberOfAnimations: Int = 0
 
     var body: some View {
         let (color, colorText, string, systemName): (Color, Color, String?, String?) = {
@@ -132,6 +133,7 @@ struct CurrentDataGauge: View {
                 if instantText != nil && self.instantText == nil, !isAnimatingOut {
                     instantMgDlAngle = getInstantMgDlAngle()
                 }
+                numberOfAnimations = numberOfAnimations + 1
                 withAnimation(animation) {
                     self.instantColorBackground = instantColorBackground
                     self.instantColorText = instantColorText
@@ -139,16 +141,53 @@ struct CurrentDataGauge: View {
                     self.animatedInstantMgDl = instantMgDl
 
                     instantMgDlAngle = getInstantMgDlAngle()
+                } completion: {
+                    numberOfAnimations = numberOfAnimations - 1
                 }
             } else {
-                self.isAnimatingOut = true
+                let wasAnimatingOut = self.isAnimatingOut
+                if !wasAnimatingOut {
+                    self.isAnimatingOut = true
+                }
+                numberOfAnimations = numberOfAnimations + 1
                 withAnimation(animation) {
                     self.instantColorBackground = nil
                     self.instantColorText = nil
                     self.instantText = nil
                 } completion: {
                     self.animatedInstantMgDl = nil
-                    self.isAnimatingOut = false
+                    if !wasAnimatingOut {
+                        self.isAnimatingOut = false
+                    }
+                    numberOfAnimations = numberOfAnimations - 1
+                }
+            }
+        }
+        .task(id: "\(numberOfAnimations);\(String(describing: instantMgDl));\(String(describing: mgDl))") {
+            if numberOfAnimations == 0 {
+                // fallback, just to make sure we are in sync (sometimes animations get mangled and we're not)
+                if let instantMgDl {
+                    let (instantColorBackground, instantColorText, instantText, _) = CurrentDataColors.getInfo(forMgDl: instantMgDl, hasCgmRealTimeData: true)
+                    let instantMgDlAngle = getInstantMgDlAngle()
+
+                    if self.instantText != instantText {
+                        print("Glitch self.instantText=\(String(describing: self.instantText)), instantText=\(String(describing: instantText))")
+                    }
+                    if self.instantMgDlAngle != instantMgDlAngle {
+                        print("Glitch self.instantMgDlAngle=\(self.instantMgDlAngle), instantMgDlAngle=\(instantMgDlAngle)")
+                    }
+
+                    self.instantColorBackground = instantColorBackground
+                    self.instantColorText = instantColorText
+                    self.instantText = instantText
+                    self.animatedInstantMgDl = instantMgDl
+                    
+                    self.instantMgDlAngle = instantMgDlAngle
+                } else {
+                    self.instantColorBackground = nil
+                    self.instantColorText = nil
+                    self.instantText = nil
+                    self.animatedInstantMgDl = nil
                 }
             }
         }
