@@ -4,37 +4,39 @@ import AppIntents
  For some reasons Siri won't parse integers in intents but is glad to parse an enum, so here we go.
  */
 
-enum SugarInGramsEnum: Double, AppEnum {
-    case value1 = 1
-    case value2 = 2
-    case value3 = 3
-    case value4 = 4
-    case value5 = 5
-    case value6 = 6
-    case value7 = 7
-    case value8 = 8
-    case value9 = 9
-    case value10 = 10
-    case value11 = 11
-    case value12 = 12
-    case value13 = 13
-    case value14 = 14
-    case value15 = 15
-    case value16 = 16
-    case value17 = 17
-    case value18 = 18
-    case value19 = 19
-    case value20 = 20
-    case value21 = 21
-    case value22 = 22
-    case value23 = 23
-    case value24 = 24
-    case value25 = 25
-    case value26 = 26
-    case value27 = 27
-    case value28 = 28
-    case value29 = 29
+enum SugarInGramsEnum: String, Codable, Sendable {
+    case value1 = "1"
+    case value2 = "2"
+    case value3 = "3"
+    case value4 = "4"
+    case value5 = "5"
+    case value6 = "6"
+    case value7 = "7"
+    case value8 = "8"
+    case value9 = "9"
+    case value10 = "10"
+    case value11 = "11"
+    case value12 = "12"
+    case value13 = "13"
+    case value14 = "14"
+    case value15 = "15"
+    case value16 = "16"
+    case value17 = "17"
+    case value18 = "18"
+    case value19 = "19"
+    case value20 = "20"
+    case value21 = "21"
+    case value22 = "22"
+    case value23 = "23"
+    case value24 = "24"
+    case value25 = "25"
+    case value26 = "26"
+    case value27 = "27"
+    case value28 = "28"
+    case value29 = "29"
+}
 
+extension SugarInGramsEnum: AppEnum {
     static var typeDisplayRepresentation: TypeDisplayRepresentation = TypeDisplayRepresentation(stringLiteral: "Sugar in grams")
     
     static var caseDisplayRepresentations: [SugarInGramsEnum : DisplayRepresentation] = [
@@ -69,6 +71,35 @@ enum SugarInGramsEnum: Double, AppEnum {
         .value29 : DisplayRepresentation(stringLiteral: "29"),
     ]
     
-    static var allCases: [SugarInGramsEnum] = (1...29).map { SugarInGramsEnum(rawValue: Double($0))! }
+    static var allCases: [SugarInGramsEnum] = [
+        .value1,
+        .value2,
+        .value3,
+        .value4,
+        .value5,
+        .value6,
+        .value7,
+        .value8,
+        .value9,
+        .value10,
+        .value11,
+        .value12,
+        .value13,
+        .value14,
+        .value15,
+        .value16,
+        .value17,
+        .value18,
+        .value19,
+        .value20,
+        .value21,
+        .value22,
+        .value23,
+        .value24,
+        .value25,
+        .value26,
+        .value27,
+        .value28,
+        .value29
+    ]
 }
-
