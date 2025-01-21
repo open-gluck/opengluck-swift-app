@@ -35,6 +35,7 @@ class OpenGluckEnvironment: ObservableObject
         self.lastInsulinRecords = nil
         self.lastLowRecords = nil
         self.revision = nil
+        self.lastAttemptAt = nil
     }
     
     var hasException: Bool {
