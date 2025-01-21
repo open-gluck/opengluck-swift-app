@@ -4,6 +4,7 @@ import UserNotifications
 import WatchConnectivity
 import os
 import OG
+import WidgetKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
@@ -110,12 +111,20 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
 
         NotificationCenter.default.addObserver(forName:UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { (_) in
             print("NotificationCenter.default.didBecomeActiveNotification")
-            OpenGluckEnvironment.enableAutoUpdate = true
+            Task {
+                await MainActor.run {
+                    OpenGluckEnvironment.enableAutoUpdate = true
+                }
+            }
         }
         NotificationCenter.default.addObserver(forName:UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { (_) in
             print("NotificationCenter.default.addObserver")
-            OpenGluckEnvironment.enableAutoUpdate = false
-            self.scheduleBackgroundTask()
+            Task {
+                await MainActor.run {
+                    OpenGluckEnvironment.enableAutoUpdate = false
+                    self.scheduleBackgroundTask()
+                }
+            }
         }
 
         let session = WCSession.default
@@ -188,7 +197,7 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
 
 // Conform to UNUserNotificationCenterDelegate to show local notification in foreground
 extension PhoneAppDelegate: UNUserNotificationCenterDelegate {
-    private func parseNotificationsUserInfo(userInfo: [AnyHashable:Any]) -> (Date?, Int?, Bool?, Episode?, Date?) {
+    private func parseNotificationsUserInfo(userInfo: [AnyHashable:Any]) -> (Date?, Int?, Bool?, Episode?, Date?, Bool?) {
         print(userInfo.debugDescription)
         let timestampStr: String? = userInfo["timestamp"] as? String
         let timestamp: Date? = timestampStr != nil ? ISO8601DateFormatter().date(from: timestampStr!.replacingOccurrences(of: "\\.\\d+", with: "", options: .regularExpression)) : nil
@@ -196,10 +205,11 @@ extension PhoneAppDelegate: UNUserNotificationCenterDelegate {
         if let mgDl, let aps = userInfo["aps"] as? [String:Any], let badge = aps["badge"] as? Int {
             guard mgDl == badge else {
                 Self.logger.warning("Mismatch mgDl=\(mgDl), badge=\(badge)")
-                return (nil, nil, nil, nil, nil)
+                return (nil, nil, nil, nil, nil, nil)
             }
         }
         let hasRealTime: Bool? = userInfo["hasRealTime"] as? Bool
+        let isNewScanOrHistoric: Bool? = userInfo["isNewScanOrHistoric"] as? Bool
 
         let episode: Episode?
         let episodeTimestamp: Date?
@@ -214,12 +224,16 @@ extension PhoneAppDelegate: UNUserNotificationCenterDelegate {
             episode = nil
             episodeTimestamp = nil
         }
-        return (timestamp, mgDl, hasRealTime, episode, episodeTimestamp)
+        return (timestamp, mgDl, hasRealTime, episode, episodeTimestamp, isNewScanOrHistoric)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) async -> UIBackgroundFetchResult {
-        let (timestamp, mgDl, hasRealTime, episode, episodeTimestamp) = parseNotificationsUserInfo(userInfo: userInfo)
-        Self.logger.info("Received remote notification => timestamp=\(String(describing: timestamp)) mgDl=\(String(describing: mgDl)), userInfo=\(userInfo), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp))")
+        let (timestamp, mgDl, hasRealTime, episode, episodeTimestamp, isNewScanOrHistoric) = parseNotificationsUserInfo(userInfo: userInfo)
+        Self.logger.info("Received remote notification => timestamp=\(String(describing: timestamp)) mgDl=\(String(describing: mgDl)), userInfo=\(userInfo), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp)), isNewScanOrHistoric=\(String(describing: isNewScanOrHistoric))")
+        if let isNewScanOrHistoric, isNewScanOrHistoric {
+            await openGlückConnection.getClient()?.recordLog("did receive notification, reload all timelines")
+            WidgetCenter.shared.reloadAllTimelines()
+        }
 #if OPENGLUCK_CONTACT_TRICK_IS_YES
         await openGlückConnection.contactsUpdater.updateMgDl(mgDl: mgDl, timestamp: timestamp, hasCgmRealTimeData: hasRealTime, episode: episode, episodeTimestamp: episodeTimestamp, becauseUpdateOf: "didReceiveRemoteNotification")
 #endif
@@ -229,8 +243,12 @@ extension PhoneAppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         // showing notification with app active
         let userInfo = notification.request.content.userInfo
-        let (timestamp, mgDl, hasRealTime, episode, episodeTimestamp) = parseNotificationsUserInfo(userInfo: userInfo)
-        Self.logger.info("Received user notification while app in foreground => timestamp=\(String(describing: timestamp)) mgDl=\(String(describing: mgDl)), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp)), userInfo=\(userInfo), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp))")
+        let (timestamp, mgDl, hasRealTime, episode, episodeTimestamp, isNewScanOrHistoric) = parseNotificationsUserInfo(userInfo: userInfo)
+        Self.logger.info("Received user notification while app in foreground => timestamp=\(String(describing: timestamp)) mgDl=\(String(describing: mgDl)), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp)), userInfo=\(userInfo), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp)), isNewScanOrHistoric=\(String(describing: isNewScanOrHistoric))")
+        if let isNewScanOrHistoric, isNewScanOrHistoric {
+            await openGlückConnection.getClient()?.recordLog("present notification, reload all timelines")
+            WidgetCenter.shared.reloadAllTimelines()
+        }
 #if OPENGLUCK_CONTACT_TRICK_IS_YES
         await openGlückConnection.contactsUpdater.updateMgDl(mgDl: mgDl, timestamp: timestamp, hasCgmRealTimeData: hasRealTime, episode: episode, episodeTimestamp: episodeTimestamp, becauseUpdateOf: "userNotificationCenter.willPresent")
 #endif

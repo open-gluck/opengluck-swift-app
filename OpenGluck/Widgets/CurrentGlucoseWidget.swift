@@ -46,7 +46,12 @@ fileprivate class CurrentGlucoseWidgetConfiguration: BaseWidgetConfiguration {
     static let description = "Shows the current glucose."
     
     static func getRefreshTimelineAfter() -> Date {
+//#if os(iOS)
+//        // It looks like iOS 18 is not eager to refresh as often as iOS 17. Since we don't really need to refresh every minute, we'll just keep it down, just in case
+//        return Date().addingTimeInterval(6*60)
+//#else
         return Date().addingTimeInterval(60)
+//#endif
     }
 
     static func getDataStartingDate(_ data: CurrentGlucoseWidgetData) -> Date? {
@@ -106,10 +111,16 @@ fileprivate class CurrentGlucoseWidgetConfiguration: BaseWidgetConfiguration {
                 await openGlückConnection.getClient()?.recordLog("getData(forTimelineDate:date:) got error WidgetError.noClientConfiguration")
                 return CurrentGlucoseWidgetData(state: .error(error: WidgetError.noClientConfiguration))
             }
+#if os(iOS)
+            await client.recordLog("will get data")
+#endif
             guard let currentData = try await client.getCurrentData() else {
                 await openGlückConnection.getClient()?.recordLog("getData(forTimelineDate:date:) got error WidgetError.noData")
                 return CurrentGlucoseWidgetData(state: .error(error: WidgetError.noData))
             }
+            #if os(iOS)
+            await client.recordLog("getData(forTimelineDate:date:) got data, currentInstantGlucoseRecord?.timestamp=\(String(describing: currentData.currentInstantGlucoseRecord?.timestamp)), currentGlucoseRecord?.timestamp=\(String(describing: currentData.currentGlucoseRecord?.timestamp))")
+            #endif
             return CurrentGlucoseWidgetData(state: .ok(currentData: currentData))
         } catch {
             await openGlückConnection.getClient()?.recordLog("getData(forTimelineDate:date:) got error \(error)")

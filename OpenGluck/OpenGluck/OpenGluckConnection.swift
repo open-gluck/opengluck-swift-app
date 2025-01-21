@@ -74,17 +74,20 @@ class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate {
         } else {
             nil
         }
-        if enableUpdateBadgeCount {
 #if os(iOS)
-            if let mostRecentTimestamp, -mostRecentTimestamp.timeIntervalSinceNow >= OpenGluckUI.maxGlucoseFreshnessTimeInterval {
-                try await UNUserNotificationCenter.current().setBadgeCount(0)
-            } else if let mgDl: Int = currentData.currentGlucoseRecord?.mgDl {
+        if let mostRecentTimestamp, -mostRecentTimestamp.timeIntervalSinceNow >= OpenGluckUI.maxGlucoseFreshnessTimeInterval {
+            try await UNUserNotificationCenter.current().setBadgeCount(0)
+        } else if let mgDl: Int = currentData.currentGlucoseRecord?.mgDl {
+            if enableUpdateBadgeCount {
                 try await UNUserNotificationCenter.current().setBadgeCount(instantMgDl ?? mgDl)
             }
-#endif
         }
+#endif
 #if !os(tvOS)
-        WidgetCenter.shared.reloadAllTimelines()
+        if let client = getClient() {
+            await client.recordLog("reloading all timelines because of \(becauseUpdateOf)")
+            WidgetCenter.shared.reloadAllTimelines()
+        }
 #endif
         return currentData
     }

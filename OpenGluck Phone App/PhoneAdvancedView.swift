@@ -89,8 +89,8 @@ struct PhoneAdvancedView: View {
     @AppStorage(WKDataKeys.phoneDeviceToken.keyValue, store: OpenGluckManager.userDefaults) var phoneDeviceToken: String = ""
     @AppStorage(WKDataKeys.watchDeviceToken.keyValue, store: OpenGluckManager.userDefaults) var watchDeviceToken: String = ""
     @AppStorage(WKDataKeys.enableUpdateBadgeCount.keyValue, store: OpenGluckManager.userDefaults) var enableUpdateBadgeCount: Bool = false
-#if OPENGLUCK_CONTACT_TRICK_IS_YES
     @EnvironmentObject var openGlückConnection: OpenGluckConnection
+#if OPENGLUCK_CONTACT_TRICK_IS_YES
     @AppStorage(WKDataKeys.enableContactTrick.keyValue, store: OpenGluckManager.userDefaults) var enableContactTrick: Bool = false
     @AppStorage(WKDataKeys.enableContactTrickDebug.keyValue, store: OpenGluckManager.userDefaults) var enableContactTrickDebug: Bool = false
 #endif
