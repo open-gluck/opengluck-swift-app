@@ -35,6 +35,7 @@ class OpenGluckEnvironment: ObservableObject
         self.lastInsulinRecords = nil
         self.lastLowRecords = nil
         self.revision = nil
+        self.lastAttemptAt = nil
     }
     
     var hasException: Bool {
@@ -147,6 +148,7 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
             }
             .onReceive(NotificationCenter.default.publisher(for: WKApplication.willResignActiveNotification)) { _ in
                 print("WKApplication.willResignActiveNotification")
+                environment.clear()
             }
 #endif
     }

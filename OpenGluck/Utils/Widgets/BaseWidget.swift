@@ -99,7 +99,12 @@ class BaseWidgetProvider<Configuration, WidgetView> where Configuration: BaseWid
                     refreshTimelineAfter = in30m
                 }
 #endif
+//                #if os(iOS)
+//                // iOS 18 is very relunctant to refresh, even when we have enabled WidgetKit developer mode
+//                let timeline = Timeline(entries: try await entries, policy: .atEnd)
+//                #else
                 let timeline = Timeline(entries: try await entries, policy: .after(refreshTimelineAfter))
+//                #endif
                 completion(timeline)
             }
         }
