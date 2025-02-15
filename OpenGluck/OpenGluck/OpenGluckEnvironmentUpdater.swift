@@ -18,16 +18,18 @@ class OpenGluckEnvironment: ObservableObject
     @Published var lastSuccessAt: Date? = nil
     @Published var lastAttemptAt: Date? = nil
     
-    init(currentGlucoseRecord: OpenGluckGlucoseRecord? = nil, currentInstantGlucoseRecord: OpenGluckInstantGlucoseRecord? = nil, lastHistoricGlucoseRecord: OpenGluckGlucoseRecord? = nil, lastGlucoseRecords: [OpenGluckGlucoseRecord]? = nil, lastInsulinRecords: [OpenGluckInsulinRecord]? = nil, lastLowRecords: [OpenGluckLowRecord]? = nil) {
+    init(currentGlucoseRecord: OpenGluckGlucoseRecord? = nil, currentInstantGlucoseRecord: OpenGluckInstantGlucoseRecord? = nil, lastHistoricGlucoseRecord: OpenGluckGlucoseRecord? = nil, lastGlucoseRecords: [OpenGluckGlucoseRecord]? = nil, lastInsulinRecords: [OpenGluckInsulinRecord]? = nil, lastLowRecords: [OpenGluckLowRecord]? = nil, lastSuccessAt: Date? = nil, lastAttemptAt: Date? = nil) {
         self.currentGlucoseRecord = currentGlucoseRecord
         self.currentInstantGlucoseRecord = currentInstantGlucoseRecord
         self.lastHistoricGlucoseRecord = lastHistoricGlucoseRecord
         self.lastGlucoseRecords = lastGlucoseRecords
         self.lastInsulinRecords = lastInsulinRecords
         self.lastLowRecords = lastLowRecords
+        self.lastSuccessAt = lastSuccessAt
+        self.lastAttemptAt = lastAttemptAt
     }
 
-    func clear() {
+    func clear(hideInterface: Bool) {
         self.currentGlucoseRecord = nil
         self.currentInstantGlucoseRecord = nil
         self.lastHistoricGlucoseRecord = nil
@@ -35,11 +37,17 @@ class OpenGluckEnvironment: ObservableObject
         self.lastInsulinRecords = nil
         self.lastLowRecords = nil
         self.revision = nil
-        self.lastAttemptAt = nil
+        if hideInterface {
+            self.lastAttemptAt = nil
+        }
     }
     
     var hasException: Bool {
         lastAttemptAt != nil && lastSuccessAt == nil
+    }
+    
+    static func timedOutEnvironment(now: Date) -> OpenGluckEnvironment {
+        OpenGluckEnvironment(lastSuccessAt: now, lastAttemptAt: now)
     }
 }
 
@@ -68,6 +76,10 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
     private func log(_ message: String) {
         logText += "\(message)\n"
     }
+    
+#if os(watchOS)
+    @Environment(\.isLuminanceReduced) var isLuminanceReduced
+#endif
     
     @ViewBuilder
     var bodyContent: some View {
@@ -114,9 +126,21 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
         
     var body: some View {
         ZStack {
-            bodyContent
+            // We use a TimelineView(.animation) as a hack to make sure that watchOS
+            // will re-render our view as fast is it can. Since it displays information
+            // about our glucose levels, we don't want this view to be stale.
+            TimelineView(.animation) { context in
+                let currentGlucoseRecord = environment.currentGlucoseRecord
+                let freshnessLevel: Double? = if let currentGlucoseRecord { 1.0 - (-currentGlucoseRecord.timestamp.timeIntervalSince(context.date) / OpenGluckUI.maxGlucoseFreshnessTimeInterval) } else { nil }
+                if let freshnessLevel, freshnessLevel < 0 {
+                    bodyContent
+                        .environmentObject(OpenGluckEnvironment.timedOutEnvironment(now: context.date))
+                } else {
+                    bodyContent
+                        .environmentObject(environment)
+                }
+            }
         }
-            .environmentObject(environment)
             .onReceive(timer) { _ in
                 if OpenGluckEnvironment.enableAutoUpdate {
                     refreshUnlessStartedRecently()
@@ -142,14 +166,27 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
             }
 #endif
 #if os(watchOS)
+            .task(id: isLuminanceReduced) {
+                print("isLuminanceReduced=\(isLuminanceReduced)")
+                if(!isLuminanceReduced) {
+                    refreshUnlessStartedRecently()
+                }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: WKApplication.didEnterBackgroundNotification)) { _ in
+                print("WKApplication.didEnterBackgroundNotification")
+                environment.clear(hideInterface: false)
+            }
+            .onReceive(NotificationCenter.default.publisher(for: WKApplication.willEnterForegroundNotification)) { _ in
+                print("WKApplication.willEnterForegroundNotification")
+                environment.clear(hideInterface: true)
+            }
             .onReceive(NotificationCenter.default.publisher(for: WKApplication.didBecomeActiveNotification)) { _ in
                 print("WKApplication.didBecomeActiveNotification")
                 refresh()
             }
             .onReceive(NotificationCenter.default.publisher(for: WKApplication.willResignActiveNotification)) { _ in
                 print("WKApplication.willResignActiveNotification")
-                environment.clear()
-            }
+}
 #endif
     }
     
