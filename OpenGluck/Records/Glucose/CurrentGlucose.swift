@@ -23,10 +23,27 @@ struct CurrentGlucose: View {
 #else
             let freshnessLevel = 1.0 - (-currentGlucoseRecord.timestamp.timeIntervalSince(now) / OpenGluckUI.maxGlucoseFreshnessTimeInterval)
             let currentInstantIsFresh = if let timestamp = currentInstantGlucoseRecord?.timestamp { -timestamp.timeIntervalSince(now) < OpenGluckUI.maxGlucoseFreshnessTimeInterval } else { false }
-            CurrentDataGauge(timestamp: .constant(currentGlucoseRecord.timestamp), mgDl: .constant(currentGlucoseRecord.mgDl), instantMgDl: .constant(currentInstantIsFresh ? currentInstantGlucoseRecord?.mgDl : nil), hasCgmRealTimeData: .constant(openGlückEnvironment.cgmHasRealTimeData), episode: .constant(nil), episodeTimestamp: .constant(nil), freshnessLevel: .constant(freshnessLevel))
+            if freshnessLevel <= 0 {
+                CurrentDataGauge(timestamp: .constant(nil), mgDl: .constant(nil), instantMgDl: .constant(nil), hasCgmRealTimeData: .constant(openGlückEnvironment.cgmHasRealTimeData), episode: .constant(.disconnected), episodeTimestamp: .constant(now), freshnessLevel: .constant(freshnessLevel))
+            } else {
+                CurrentDataGauge(timestamp: .constant(currentGlucoseRecord.timestamp), mgDl: .constant(currentGlucoseRecord.mgDl), instantMgDl: .constant(currentInstantIsFresh ? currentInstantGlucoseRecord?.mgDl : nil), hasCgmRealTimeData: .constant(openGlückEnvironment.cgmHasRealTimeData), episode: .constant(nil), episodeTimestamp: .constant(nil), freshnessLevel: .constant(freshnessLevel))
+            }
 #endif
         }
     }
+}
+
+#Preview {
+    OpenGluckEnvironmentUpdater {
+        Grid {
+            GridRow {
+                TimelineView(.everyMinute) { context in
+                    CurrentGlucose(now: context.date)
+                }
+            }
+        }
+    }
+    .environmentObject(OpenGluckConnection())
 }
 
 /*
