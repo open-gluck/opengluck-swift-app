@@ -37,7 +37,7 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
     let openGlückConnection = OpenGluckConnection()
     let sheetStatusOptions: SheetStatusViewOptions = SheetStatusViewOptions()
     private var deviceToken: String?
-
+    
     var notificationsGranted: Bool = false
     override init() {
         super.init()
@@ -82,7 +82,7 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
             task.setTaskCompleted(success: true)
         }
     }
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         guard ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != "1" else {
             print("skip didFinishLaunchingWithOptions in preview")
@@ -103,6 +103,9 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
                 }
             }
         }
+        
+        setupNotificationActions()
+        
 
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Bundle.main.bundleIdentifier!, using: nil) { (task) in
             print("Running task!")
@@ -254,9 +257,9 @@ extension PhoneAppDelegate: UNUserNotificationCenterDelegate {
 #endif
         return [.banner, .badge, .sound]
     }
-
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
-        print("userNotificationCenter didReceive")
+        await handleAction(response: response)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -265,3 +268,60 @@ extension PhoneAppDelegate: UNUserNotificationCenterDelegate {
     }
 }
 
+/* handle custom actions */
+extension PhoneAppDelegate {
+    private enum NotificationActions: String {
+        case SNOOZE_LOW_ACTION
+    }
+
+    private func setupNotificationActions() {
+        let center = UNUserNotificationCenter.current()
+
+        let snoozeLowAction = UNNotificationAction(identifier: NotificationActions.SNOOZE_LOW_ACTION.rawValue,
+                                                   title: "Snooze Low",
+                                                   options: [])
+        let lowCategory = UNNotificationCategory(identifier: "LOW",
+                                                 actions: [snoozeLowAction],
+                                                 intentIdentifiers: [],
+                                                 hiddenPreviewsBodyPlaceholder: "",
+                                                 options: [])
+        
+        center.setNotificationCategories([lowCategory])
+    }
+    
+    private func reportErrorUsingNotification(title: String, error: Error) async {
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = error.localizedDescription
+        content.sound = .default
+        
+        let request = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: nil  // Will show immediately
+        )
+        
+        do {
+            try await UNUserNotificationCenter.current().add(request)
+        } catch {
+            print("Failed to schedule confirmation: \(error.localizedDescription)")
+        }
+
+    }
+
+    private func handleAction(response: UNNotificationResponse) async {
+        let action: NotificationActions? = NotificationActions(rawValue: response.actionIdentifier)
+        guard let action else {
+            return
+        }
+        switch action {
+        case NotificationActions.SNOOZE_LOW_ACTION:
+            let intent = AddSnoozedLowAppIntent()
+            do {
+                let _ = try await intent.perform()
+            } catch {
+                await reportErrorUsingNotification(title: "Could Not Snooze Low", error: error)
+            }
+        }
+    }
+}
