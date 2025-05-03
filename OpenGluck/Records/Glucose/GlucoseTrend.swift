@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct GlucoseTrend: View {
+    let now: Date
     let graphGeometry: CGSize?
     @EnvironmentObject var openGlückEnvironment: OpenGluckEnvironment
 
@@ -9,6 +10,7 @@ struct GlucoseTrend: View {
             if let lastHistoricGlucoseRecord = openGlückEnvironment.lastHistoricGlucoseRecord {
                 HStack {
                     GlucoseView(
+                        now: now,
                         glucoseRecord: .constant(lastHistoricGlucoseRecord),
                         hasCgmRealTimeData: .constant(openGlückEnvironment.cgmHasRealTimeData),
                         font: .system(size: 16),

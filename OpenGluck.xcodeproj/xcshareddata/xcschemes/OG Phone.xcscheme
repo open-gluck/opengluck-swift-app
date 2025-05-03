@@ -72,18 +72,9 @@
             BlueprintIdentifier = "9D50EBA629C79E2300CF69E6"
             BuildableName = "OG Phone.app"
             BlueprintName = "OG Phone"
-            ReferencedContainer = "container:OpenGlu&#x308;ck.xcodeproj">
+            ReferencedContainer = "container:OpenGluck.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9D50EBA629C79E2300CF69E6"
-            BuildableName = "OG Phone.app"
-            BlueprintName = "OG Phone"
-            ReferencedContainer = "container:OpenGlu&#x308;ck.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

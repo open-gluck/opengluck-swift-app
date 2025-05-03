@@ -23,6 +23,7 @@ struct OpenGluckPhoneApp: App {
             }
             .environmentObject(appDelegate.navigationData)
             .onAppear {
+                print("Reloading all timelines…")
                 WidgetCenter.shared.reloadAllTimelines()
             }
 #if OPENGLUCK_CONTACT_TRICK_IS_YES

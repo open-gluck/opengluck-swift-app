@@ -163,7 +163,7 @@ struct GraphWidget: Widget {
 #endif
                         
                         PrivacySensitiveWidgetGroup {
-                            GlucoseGraph.Impl(
+                            GlucoseGraphImpl(
                                 now: entry.date,
                                 glucoseRecords: lastData.glucoseRecords ?? [],
                                 insulinRecords: lastData.insulinRecords ?? [],

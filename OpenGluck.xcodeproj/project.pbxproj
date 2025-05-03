@@ -187,6 +187,8 @@
 		9D973C4B2B416E63002EE231 /* LowRecordSnippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D973C4A2B416E63002EE231 /* LowRecordSnippet.swift */; };
 		9D973C4C2B416EAC002EE231 /* LowRecordSnippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D973C4A2B416E63002EE231 /* LowRecordSnippet.swift */; };
 		9D9EB07229E1DD91005FCD1C /* HTTPSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D50EBD029C7A7A300CF69E6 /* HTTPSClient.swift */; };
+		9DA328812DACFA63006DD9F5 /* RobustTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA328802DACFA5F006DD9F5 /* RobustTimelineView.swift */; };
+		9DA328822DACFA63006DD9F5 /* RobustTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA328802DACFA5F006DD9F5 /* RobustTimelineView.swift */; };
 		9DA6CF6529E34EB30075CC4C /* HTTPSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D50EBD029C7A7A300CF69E6 /* HTTPSClient.swift */; };
 		9DA6CF6629E34EBF0075CC4C /* PhoneContactUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D192C8B29C8EAD00047E40E /* PhoneContactUpdater.swift */; };
 		9DA6CF6A29E34F2A0075CC4C /* PhoneWidgetTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA6CF6929E34F2A0075CC4C /* PhoneWidgetTarget.swift */; };
@@ -406,6 +408,7 @@
 		9D973C442B416AFF002EE231 /* InsulinRecordSnippet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinRecordSnippet.swift; sourceTree = "<group>"; };
 		9D973C472B416B16002EE231 /* RecordSnippet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSnippet.swift; sourceTree = "<group>"; };
 		9D973C4A2B416E63002EE231 /* LowRecordSnippet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LowRecordSnippet.swift; sourceTree = "<group>"; };
+		9DA328802DACFA5F006DD9F5 /* RobustTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobustTimelineView.swift; sourceTree = "<group>"; };
 		9DA6CF6929E34F2A0075CC4C /* PhoneWidgetTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneWidgetTarget.swift; sourceTree = "<group>"; };
 		9DA6CF6C29E355720075CC4C /* CurrentBloodGlucoseTimestampWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentBloodGlucoseTimestampWidget.swift; sourceTree = "<group>"; };
 		9DA7CCA72B290AB80006EC91 /* InsulinRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinRecordView.swift; sourceTree = "<group>"; };
@@ -820,6 +823,7 @@
 		9DB1DD2F2B07CD0A007ED12B /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				9DA328802DACFA5F006DD9F5 /* RobustTimelineView.swift */,
 				9DB1DD302B07CD3E007ED12B /* BloodGlucose.swift */,
 				9DA7CCA92B290B070006EC91 /* InsulinUnit.swift */,
 				9DA7CCAE2B290DB00006EC91 /* SnackGram.swift */,
@@ -1159,6 +1163,7 @@
 				9D50EBAB29C79E2300CF69E6 /* OpenGluckPhoneApp.swift in Sources */,
 				9D50EBD429C7A7F200CF69E6 /* CurrentGlucoseView.swift in Sources */,
 				9D2DFED729D0EF1000545193 /* PhoneAppTabs.swift in Sources */,
+				9DA328822DACFA63006DD9F5 /* RobustTimelineView.swift in Sources */,
 				9DCAE26729CCED0F005973F8 /* OpenGluckCredentials.swift in Sources */,
 				9DB783682B3B79810039C578 /* InsulinUnitEnum.swift in Sources */,
 				9D8AD5FB2A3CB058006FEAE0 /* WidgetKinds.swift in Sources */,
@@ -1252,6 +1257,7 @@
 				9DCAE26829CCED0F005973F8 /* OpenGluckCredentials.swift in Sources */,
 				9D39BB0C2A043C180037AB00 /* WKDataKeys.swift in Sources */,
 				9DB1DD332B07CD3E007ED12B /* BloodGlucose.swift in Sources */,
+				9DA328812DACFA63006DD9F5 /* RobustTimelineView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1385,6 +1391,7 @@
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 17.0;
@@ -1420,6 +1427,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 17.0;
@@ -1491,6 +1499,7 @@
 				OTHER_SWIFT_FLAGS = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
@@ -1552,6 +1561,7 @@
 				OTHER_SWIFT_FLAGS = "";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
@@ -1588,6 +1598,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
@@ -1625,6 +1636,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
@@ -1669,6 +1681,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1711,6 +1724,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1746,6 +1760,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
@@ -1781,6 +1796,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
@@ -1817,6 +1833,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1851,6 +1868,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

@@ -8,24 +8,25 @@ struct PhoneAppTabs: View {
 #endif
     @EnvironmentObject var navigationData: PhoneNavigationData
     @State var graphGeometry: CGSize?
-
+    
     var body: some View {
         NavigationStack(path: $navigationData.path) {
             TabView(selection: $navigationData.currentTab) {
                 CheckConnectionHasClient {
-                    TimelineView(.everyMinute) { context in
+                    RobustTimelineView(.everyMinute) { context in
+                        let now = context.date
                         Grid {
                             GridRow {
                                 AddLowBrick()
                                 AddInsulinBrick()
                             }
                             GridRow {
-                                CurrentGlucoseView(now: context.date, mode: .graphBrick, graphGeometry: $graphGeometry)
+                                CurrentGlucoseView(now: now, mode: .graphBrick, graphGeometry: $graphGeometry)
                                     .gridCellColumns(2)
                             }
                             GridRow {
-                                GlucoseTrendBrick(graphGeometry: graphGeometry)
-                                CurrentGlucoseBrick(now: context.date)
+                                GlucoseTrendBrick(now: now, graphGeometry: graphGeometry)
+                                CurrentGlucoseBrick(now: now)
                             }
                         }
                     }
@@ -37,7 +38,9 @@ struct PhoneAppTabs: View {
                 }
                 CheckConnectionHasClient {
                     List {
-                        LastRecordsView()
+                        RobustTimelineView(.everyMinute) { context in
+                            LastRecordsView(now: context.date)
+                        }
                     }
                 }
                 .tag(PhoneNavigationData.Tabs.records)
@@ -60,7 +63,7 @@ struct PhoneAppTabs: View {
 struct AppTabs_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            OpenGluckEnvironmentUpdater {
+            OpenGluckEnvironmentUpdaterView {
                 PhoneAppTabs()
             }
         }

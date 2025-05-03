@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct TimestampView: View {
+    let now: Date
     @State var mode: Mode
     @Binding var timestamp: Date
     
@@ -64,17 +65,18 @@ struct TimestampView: View {
     }
     
     var body: some View {
-        TimelineView(.everyMinute) { context in
-            Impl(mode: mode, timestamp: timestamp, date: context.date)
-        }
+//        TimelineView(.everyMinute) { context in
+            Impl(mode: mode, timestamp: timestamp, date: now)
+//        }
     }
 }
 
 struct TimestampView_Previews: PreviewProvider {
     static var previews: some View {
-        TimestampView(mode: .minutesToText, timestamp: .constant(Date().addingTimeInterval(-55)))
+        let now = Date()
+        TimestampView(now: now, mode: .minutesToText, timestamp: .constant(Date().addingTimeInterval(-55)))
             .previewDisplayName("minutesToText")
-        TimestampView(mode: .secondsToTextAgo, timestamp: .constant(Date().addingTimeInterval(-55)))
+        TimestampView(now: now, mode: .secondsToTextAgo, timestamp: .constant(Date().addingTimeInterval(-55)))
             .previewDisplayName("secondsToTextAgo")
     }
 }

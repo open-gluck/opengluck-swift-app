@@ -5,7 +5,7 @@ struct InsulinRecordSnippet: View {
     let insulinRecord: OpenGluckInsulinRecord
     var body: some View {
         RecordSnippet {
-            InsulinRecordView(insulinRecord: .constant(insulinRecord))
+            InsulinRecordView(now: Date(), insulinRecord: .constant(insulinRecord))
                 .font(.title)
                 .strikethrough(insulinRecord.deleted)
         }

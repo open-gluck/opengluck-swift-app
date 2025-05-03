@@ -27,7 +27,7 @@ struct WatchContentView: View {
             ZStack {
                 AddInsulinButton.Interface(addInsulinButtonData: addInsulinButtonData)
                 
-                OpenGluckEnvironmentUpdater {
+                OpenGluckEnvironmentUpdaterView {
                     NavigationStack {
                         TabView(selection: $pageNumber) {
                             ZStack {
@@ -38,22 +38,23 @@ struct WatchContentView: View {
                                     }
                                     .padding(.trailing)
                                     .padding(.bottom, 15)
-                                    .containerBackground(GlucoseGraph.Background.gradient, for: .tabView)
+                                    .containerBackground(GlucoseGraphBackground.gradient, for: .tabView)
                                 }
                             }
                             .safeAreaInset(edge: .bottom) {
                                 let bottomInsetHeight: CGFloat = 20.0
                                 CheckConnectionHasClient {
                                     HStack(spacing: 0) {
-                                        GlucoseTrend(graphGeometry: graphGeometry)
-                                            .frame(width: 55)
-                                            .offset(x: 10, y: 0)
-                                        Spacer()
                                         TimelineView(.everyMinute) { context in
-                                            CurrentGlucose(now: context.date)
+                                            let now = context.date
+                                            GlucoseTrend(now: now, graphGeometry: graphGeometry)
+                                                .frame(width: 55)
+                                                .offset(x: 10, y: 0)
+                                            Spacer()
+                                            CurrentGlucose(now: now)
                                         }
+                                        .frame(maxWidth: 162)
                                     }
-                                    .frame(maxWidth: 162)
                                 } setupContent: {
                                     Image(systemName: CheckConnectionHasClientDefaultSetupContent.systemImage)
                                 } timeoutContent: {
@@ -70,7 +71,10 @@ struct WatchContentView: View {
 
                             CheckConnectionHasClient {
                                 List {
-                                    LastRecordsView()
+                                    TimelineView(.everyMinute) { context in
+                                        let now = context.date
+                                        LastRecordsView(now: now)
+                                    }
                                 }
                             }
                             .tag(Page.records.rawValue)

@@ -112,20 +112,20 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
             self.handleAppRefresh(task: task as! BGAppRefreshTask)
         }
 
-        NotificationCenter.default.addObserver(forName:UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { (_) in
-            print("NotificationCenter.default.didBecomeActiveNotification")
-            Task {
-                await MainActor.run {
-                    OpenGluckEnvironment.enableAutoUpdate = true
+        if !ProcessInfo.processInfo.isiOSAppOnMac {
+            NotificationCenter.default.addObserver(forName:UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { (_) in
+                Task {
+                    await MainActor.run {
+                        OpenGluckEnvironment.enableAutoUpdate = true
+                    }
                 }
             }
-        }
-        NotificationCenter.default.addObserver(forName:UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { (_) in
-            print("NotificationCenter.default.addObserver")
-            Task {
-                await MainActor.run {
-                    OpenGluckEnvironment.enableAutoUpdate = false
-                    self.scheduleBackgroundTask()
+            NotificationCenter.default.addObserver(forName:UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { (_) in
+                Task {
+                    await MainActor.run {
+                        OpenGluckEnvironment.enableAutoUpdate = false
+                        self.scheduleBackgroundTask()
+                    }
                 }
             }
         }

@@ -5,11 +5,14 @@ struct PhoneContentView: View {
 
     var body: some View {
         AppDataAutoFetch {
-            OpenGluckEnvironmentUpdater {
-                VStack {
-                    SheetStatusView()
-                    //WKDataDebugView()
-                    PhoneAppTabs()
+            let _ = Self._printChanges()
+            OpenGluckEnvironmentUpdaterRootView {
+                OpenGluckEnvironmentUpdaterView {
+                    VStack {
+                        SheetStatusView()
+                        //WKDataDebugView()
+                        PhoneAppTabs()
+                    }
                 }
             }
         }

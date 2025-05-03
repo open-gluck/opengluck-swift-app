@@ -3,6 +3,7 @@ import OG
 import OGUI
 
 struct GlucoseView: View {
+    let now: Date
     @Binding var glucoseRecord: OpenGluckGlucoseRecord
     @Binding var hasCgmRealTimeData: Bool?
     let font: Font
@@ -17,7 +18,8 @@ struct GlucoseView: View {
     }
     let mode: Mode
     
-    init(glucoseRecord: Binding<OpenGluckGlucoseRecord>, hasCgmRealTimeData: Binding<Bool?>, font: Font = .body, captionFont: Font = .caption, mode: Mode = .transparent) {
+    init(now: Date, glucoseRecord: Binding<OpenGluckGlucoseRecord>, hasCgmRealTimeData: Binding<Bool?>, font: Font = .body, captionFont: Font = .caption, mode: Mode = .transparent) {
+        self.now = now
         self._glucoseRecord = glucoseRecord
         self._hasCgmRealTimeData = hasCgmRealTimeData
         self.font = font
@@ -59,7 +61,7 @@ struct GlucoseView: View {
     
     @ViewBuilder func agoSmall(forDate date: Date) -> some View {
         HStack(spacing: 0) {
-            TimestampView(mode: .minutesToText, timestamp: .constant(glucoseRecord.timestamp))
+            TimestampView(now: now, mode: .minutesToText, timestamp: .constant(glucoseRecord.timestamp))
             if tooOld(forDate: date) {
                 Text("⚠️")
             }
@@ -69,7 +71,7 @@ struct GlucoseView: View {
     
     @ViewBuilder func ago(forDate date: Date) -> some View {
         HStack(spacing: 0) {
-            TimestampView(mode: .secondsToTextAgo, timestamp: .constant(glucoseRecord.timestamp))
+            TimestampView(now: now, mode: .secondsToTextAgo, timestamp: .constant(glucoseRecord.timestamp))
             if tooOld(forDate: date) {
                 Text("⚠️")
             }
@@ -97,31 +99,44 @@ struct GlucoseView: View {
         .background(mode != .coloredBackground ? Color.black.opacity(0) : backgroundColor(forDate: date))
     }
     
-    var body: some View {
-        TimelineView(.everyMinute) { context in
-            if mode != .coloredBackground {
-                content(forDate: context.date)
-            } else {
-                content(forDate: context.date)
-                    .clipShape(Capsule())
-            }
+    // FIXME try not to use a TimelineView on macOs, to counter a bug
+    // where the timeline sometimes stops being updated
+    @ViewBuilder
+    func body(forDate date: Date) -> some View {
+        if mode != .coloredBackground {
+            content(forDate: date)
+        } else {
+            content(forDate: date)
+                .clipShape(Capsule())
         }
+
+    }
+    
+    var body: some View {
+//        if ProcessInfo.processInfo.isiOSAppOnMac {
+//            body(forDate: Date())
+//        } else {
+//            TimelineView(.everyMinute) { context in
+                body(forDate: now)
+//            }
+//        }
     }
 }
 
 struct GlucoseView_Previews: PreviewProvider {
     static var previews: some View {
-        GlucoseView(glucoseRecord: .constant(OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-300*60), mgDl: 123)), hasCgmRealTimeData: .constant(true))
+        let now = Date()
+        GlucoseView(now: now, glucoseRecord: .constant(OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-300*60), mgDl: 123)), hasCgmRealTimeData: .constant(true))
             .previewDisplayName("Old")
-        GlucoseView(glucoseRecord: .constant(OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-12*60), mgDl: 123)), hasCgmRealTimeData: .constant(true))
+        GlucoseView(now: now, glucoseRecord: .constant(OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-12*60), mgDl: 123)), hasCgmRealTimeData: .constant(true))
             .previewDisplayName("Normal")
-        GlucoseView(glucoseRecord: .constant(OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-12*60), mgDl: 58)), hasCgmRealTimeData: .constant(true))
+        GlucoseView(now: now, glucoseRecord: .constant(OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-12*60), mgDl: 58)), hasCgmRealTimeData: .constant(true))
             .previewDisplayName("Low")
-        GlucoseView(glucoseRecord: .constant(OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-12*60), mgDl: 190)), hasCgmRealTimeData: .constant(true), mode: .coloredBackground)
+        GlucoseView(now: now, glucoseRecord: .constant(OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-12*60), mgDl: 190)), hasCgmRealTimeData: .constant(true), mode: .coloredBackground)
             .previewDisplayName("High, Colored")
-        GlucoseView(glucoseRecord: .constant(OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-12*60), mgDl: 190)), hasCgmRealTimeData: .constant(true))
+        GlucoseView(now: now, glucoseRecord: .constant(OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-12*60), mgDl: 190)), hasCgmRealTimeData: .constant(true))
             .previewDisplayName("High")
-        GlucoseView(glucoseRecord: .constant(OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-12*60), mgDl: 290)), hasCgmRealTimeData: .constant(true))
+        GlucoseView(now: now, glucoseRecord: .constant(OpenGluckGlucoseRecord(timestamp: Date().addingTimeInterval(-12*60), mgDl: 290)), hasCgmRealTimeData: .constant(true))
             .previewDisplayName("Very High")
     }
 }

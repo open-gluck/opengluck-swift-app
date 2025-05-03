@@ -2,11 +2,12 @@ import SwiftUI
 import OG
 
 struct GlucoseTrendBrick: View {
+    let now: Date
     let graphGeometry: CGSize?
 
     var body: some View {
         Brick(title: "Trend") {
-            GlucoseTrend(graphGeometry: graphGeometry)
+            GlucoseTrend(now: now, graphGeometry: graphGeometry)
                 .frame(maxWidth: 75)
         }
         .frame(maxHeight: BrickUI.smallHeight)
@@ -15,10 +16,10 @@ struct GlucoseTrendBrick: View {
 }
 
 #Preview("TrendBrick") {
-    OpenGluckEnvironmentUpdater {
+    OpenGluckEnvironmentUpdaterView {
         Grid {
             GridRow {
-                GlucoseTrendBrick(graphGeometry: CGSize(width: 300, height: 200))
+                GlucoseTrendBrick(now: Date(), graphGeometry: CGSize(width: 300, height: 200))
             }
         }
     }
