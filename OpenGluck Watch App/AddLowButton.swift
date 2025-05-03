@@ -188,7 +188,6 @@ struct AddLowButton<LabelContent: View>: View {
     }
     
     var body: some View {
-        let _ = Self._printChanges()
         Button {
             open()
         } label: {

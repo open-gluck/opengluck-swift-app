@@ -381,7 +381,6 @@ struct OpenGluckEnvironmentUpdaterView<Content>: View where Content: View {
     @ViewBuilder
     var bodyContent: some View {
         VStack {
-            let debugLastGlucoseRecord = environment.lastGlucoseRecords?.sorted(by: { $0.timestamp > $1.timestamp }).first
             if !environment.hasTimedOut && environment.lastAttemptAt == nil && environment.currentGlucoseRecord == nil && OpenGluckConnection.client != nil {
                 VStack {
                     Spacer()

@@ -5,7 +5,6 @@ struct PhoneContentView: View {
 
     var body: some View {
         AppDataAutoFetch {
-            let _ = Self._printChanges()
             OpenGluckEnvironmentUpdaterRootView {
                 OpenGluckEnvironmentUpdaterView {
                     VStack {

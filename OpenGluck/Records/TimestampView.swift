@@ -9,7 +9,7 @@ struct TimestampView: View {
         case minutesToText
         case secondsToTextAgo
     }
-
+    
     struct Impl: View {
         var mode: Mode
         var timestamp: Date
@@ -32,7 +32,7 @@ struct TimestampView: View {
         
         private var elapsedMinutes: Int {
             Int(-elapsed / 60)
-
+            
         }
         
         private var whenMinutesToText: String {
@@ -65,9 +65,7 @@ struct TimestampView: View {
     }
     
     var body: some View {
-//        TimelineView(.everyMinute) { context in
-            Impl(mode: mode, timestamp: timestamp, date: now)
-//        }
+        Impl(mode: mode, timestamp: timestamp, date: now)
     }
 }
 

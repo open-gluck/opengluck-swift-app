@@ -838,7 +838,6 @@ struct GlucoseGraphImpl: View, Equatable {
     
     @ViewBuilder
     var body: some View {
-        let _ = Self._printChanges()
         let minTimestamp = now.addingTimeInterval(-GlucoseGraph.maxLookbehindInterval)
         let maxTimestamp = now
 //        if rerender.uuidString.isEmpty {} // force re-render on appear, to make sure thresholds are OK

@@ -31,10 +31,10 @@ struct GlucoseView: View {
         guard let hasCgmRealTimeData, hasCgmRealTimeData else {
             return false
         }
-
+        
         let elapsed = glucoseRecord.timestamp.timeIntervalSince(date)
         let elapsedMinutes = Int(-elapsed / 60)
-
+        
         return elapsedMinutes >= 30
     }
     
@@ -109,17 +109,11 @@ struct GlucoseView: View {
             content(forDate: date)
                 .clipShape(Capsule())
         }
-
+        
     }
     
     var body: some View {
-//        if ProcessInfo.processInfo.isiOSAppOnMac {
-//            body(forDate: Date())
-//        } else {
-//            TimelineView(.everyMinute) { context in
-                body(forDate: now)
-//            }
-//        }
+        body(forDate: now)
     }
 }
 
