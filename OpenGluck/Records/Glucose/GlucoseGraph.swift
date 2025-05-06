@@ -13,6 +13,7 @@ fileprivate struct GlucoseGraphUI {
 #endif
 }
 
+@MainActor
 class InsulinCollapser {
     enum ItemTextPlacement {
         case unknown
