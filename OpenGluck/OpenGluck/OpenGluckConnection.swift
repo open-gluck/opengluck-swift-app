@@ -3,7 +3,7 @@ import SwiftUI
 #if !os(tvOS)
 import WidgetKit
 #endif
-import OG
+@preconcurrency import OG // FIXME LATER TODO upgrade lib
 import OGUI
 
 class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate {

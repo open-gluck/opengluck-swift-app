@@ -1,5 +1,5 @@
 import SwiftUI
-import OG
+@preconcurrency import OG // FIXME LATER TODO upgrade lib
 import OGUI
 
 #if OPENGLUCK_CONTACT_TRICK_IS_YES

@@ -1,6 +1,6 @@
 import Foundation
 import SwiftUI
-import OG
+@preconcurrency import OG // FIXME LATER TODO upgrade lib
 
 @MainActor
 class OpenGluckEnvironment: ObservableObject
