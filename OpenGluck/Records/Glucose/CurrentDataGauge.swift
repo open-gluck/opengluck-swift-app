@@ -57,7 +57,7 @@ struct CurrentDataGauge: View {
             guard UIColor(color).getRed(&r, green: &g, blue: &b, alpha: &a) else {
                 return .white
             }
-            func f(_ x: CGFloat) -> CGFloat {
+            @MainActor func f(_ x: CGFloat) -> CGFloat {
                 return 1 - ((1 - x) * freshnessColorOpacity)
             }
             return Color(red: f(r), green: f(g), blue: f(b))
@@ -243,7 +243,6 @@ fileprivate struct CurrentDataGaugePreview: View {
                     mgDl = .random(in: 50...250)
                     instantMgDl = .random(in: 50...250)
                 }
-                .previewDisplayName("Random")
         }
     }
 
@@ -285,7 +284,6 @@ fileprivate struct CurrentDataGaugePreview: View {
 #endif
                 CurrentDataGaugePreview(timestamp: .constant(Date()), mgDl: $mgDl, instantMgDl: $instantMgDl, hasCgmRealTimeData: .constant(true), episode: .constant(nil), episodeTimestamp: .constant(nil))
             }
-                .previewDisplayName("Random")
                 .task(id: instant) {
                     instantMgDl = switch (instant) {
                     case .none: nil

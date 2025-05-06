@@ -2,6 +2,7 @@ import SwiftUI
 import OGUI
 import OG
 
+@MainActor
 class CurrentDataColors {
     private init() {}
     

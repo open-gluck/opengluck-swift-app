@@ -1,9 +1,9 @@
 import Foundation
 import OG
 
-class WKDefaults {
+final class WKDefaults: Sendable {
     private init() {}
-    static var shared = WKDefaults()
+    static let shared = WKDefaults()
     
     var currentMeasurementMgDl: Int? {
         get {
