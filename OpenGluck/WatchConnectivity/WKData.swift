@@ -47,7 +47,6 @@ class WKData: ObservableObject {
 
     private func sanityCheck() throws {
         guard WCSession.isSupported() else {
-            print("WCSession is not supported")
             throw WKDataError.notSupported
         }
     }

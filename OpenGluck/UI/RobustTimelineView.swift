@@ -25,10 +25,8 @@ fileprivate struct NaiveTimelineView<Schedule: TimelineSchedule, Content: View>:
             .task {
                 let startDate = Date().addingTimeInterval(-0.001)
                 for date in schedule.entries(from: startDate, mode: TimelineScheduleMode.normal) {
-                    print("DEBUG SLEEP UNTIL", date)
                     try? await Task.sleep(nanoseconds: UInt64(max(0, date.timeIntervalSinceNow) * 1_000_000_000))
                     guard !Task.isCancelled else { return }
-                    print("DEBUG SLEEP awp aken", Date())
                     context = NaiveTimelineViewContext(date: date)
                 }
             }

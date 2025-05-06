@@ -270,13 +270,6 @@ struct OpenGluckEnvironmentUpdaterRootView<Content: View>: View {
     @State var debugContentId: String = "\(UUID())"
     var body: some View {
         content()
-#if os(iOS)
-            .onReceive(NotificationCenter.default.publisher(for: UIScene.didActivateNotification)) { _ in
-                // FIXME we have a weird bug where this does not filre on some occation. When this bug occur, then
-                // the interface is frozen.
-                print("DEBUG UIScene.didActivateNotification for some scene (maybe not ours) FROM GeometryReader")
-            }
-#endif
             .environmentObject(environmentCopy)
             .onReceive(environment.$revision) { newValue in
                 handleReceivedEnvironment()
