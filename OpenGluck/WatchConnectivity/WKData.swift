@@ -8,6 +8,7 @@ import WatchConnectivity
  * sendMessage here when a value is updated, so that the other part knows it.
  */
 
+@MainActor
 class WKData: ObservableObject {
     enum WKDataError: Error {
         case notSupported

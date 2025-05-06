@@ -15,11 +15,11 @@ struct CurrentBloodGlucoseTimestampProvider: TimelineProvider {
     }
     
     
-    func getSnapshot(in context: Context, completion: @escaping (CurrentBloodGlucoseTimestampTimelineEntry) -> ()) {
+    @preconcurrency func getSnapshot(in context: Self.Context, completion: @escaping @Sendable (Self.Entry) -> Void) {
         completion(CurrentBloodGlucoseTimestampTimelineEntry.current())
     }
     
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
+    @preconcurrency func getTimeline(in context: Self.Context, completion: @escaping @Sendable (Timeline<Self.Entry>) -> Void) {
         Self.logger.debug("CurrentBloodGlucoseTimestampProvider.getTimeline()")
         Task {
             let entries: [CurrentBloodGlucoseTimestampTimelineEntry] = [
