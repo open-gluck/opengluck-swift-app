@@ -45,7 +45,7 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
 
     var openglückUrl: String {
         get {
-            return WKData.default.get(key: WKDataKeys.openglückUrl) as! String? ?? ""
+            return WKData.default.get(key: WKDataKeys.openglückUrl) ?? ""
         }
         set {
             try? WKData.default.set(key: WKDataKeys.openglückUrl, value: newValue)
@@ -55,7 +55,7 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
 
     var openglückToken: String {
         get {
-            return WKData.default.get(key: WKDataKeys.openglückToken) as! String? ?? ""
+            return WKData.default.get(key: WKDataKeys.openglückToken) ?? ""
         }
         set {
             try? WKData.default.set(key: WKDataKeys.openglückToken, value: newValue)
@@ -174,27 +174,38 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
         registerDeviceTokenWithOpenGluck()
     }
 
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        try? WKData.default.flush()
+    nonisolated func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        Task { @MainActor in
+            try? WKData.default.flush()
+        }
     }
 
-    func sessionDidBecomeInactive(_ session: WCSession) {
+    nonisolated func sessionDidBecomeInactive(_ session: WCSession) {
     }
 
-    func sessionDidDeactivate(_ session: WCSession) {
+    nonisolated func sessionDidDeactivate(_ session: WCSession) {
     }
 
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        WKData.default.didReceive(userInfo: message)
+    nonisolated func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        let sendableMessage = message as! [String:WKData.ValueType]
+        Task { @MainActor in
+            WKData.default.didReceive(userInfo: sendableMessage)
+        }
     }
 
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-        WKData.default.didReceive(userInfo: message)
+    nonisolated func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+        let sendableMessage = message as! [String:WKData.ValueType]
+        Task { @MainActor in
+            WKData.default.didReceive(userInfo: sendableMessage)
+        }
         replyHandler([:])
     }
     
-    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
-        WKData.default.didReceive(userInfo: userInfo)
+    nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+        let sendableUserInfo = userInfo as! [String:WKData.ValueType]
+        Task { @MainActor in
+            WKData.default.didReceive(userInfo: sendableUserInfo)
+        }
     }
 }
 

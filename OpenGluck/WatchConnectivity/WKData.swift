@@ -10,6 +10,8 @@ import WatchConnectivity
 
 @MainActor
 class WKData: ObservableObject {
+    typealias ValueType = String
+    
     enum WKDataError: Error {
         case notSupported
         case notActive
@@ -52,21 +54,21 @@ class WKData: ObservableObject {
         }
     }
 
-    func transferUserInfo(_ userInfo: [String:Any], replyHandler: (([String : Any]) -> Void)? = nil) throws {
+    func transferUserInfo(_ userInfo: [String:ValueType], replyHandler: (([String : Any]) -> Void)? = nil) throws {
         try sanityCheck()
         let message = Message(mode: .transferUserInfo, userInfo: userInfo, replyHandler: replyHandler, errorHandler: nil)
         messagesQueue.append(message)
         try flush()
     }
 
-    func sendMessage(_ userInfo: [String:Any], errorHandler: ((Error) -> Void)? = nil) throws {
+    func sendMessage(_ userInfo: [String:ValueType], errorHandler: ((Error) -> Void)? = nil) throws {
         try sanityCheck()
         let message = Message(mode: .sendMessage, userInfo: userInfo, replyHandler: nil, errorHandler: errorHandler)
         messagesQueue.append(message)
         try flush()
     }
 
-    func sendMessage(_ userInfo: [String:Any], replyHandler: (([String : Any]) -> Void)?, errorHandler: ((Error) -> Void)? = nil) throws {
+    func sendMessage(_ userInfo: [String:ValueType], replyHandler: (([String : Any]) -> Void)?, errorHandler: ((Error) -> Void)? = nil) throws {
         try sanityCheck()
         let message = Message(mode: .sendMessage, userInfo: userInfo, replyHandler: replyHandler, errorHandler: errorHandler)
         messagesQueue.append(message)
@@ -74,7 +76,7 @@ class WKData: ObservableObject {
     }
 
     #if os(iOS)
-    func transferCurrentComplicationUserInfo(_ userInfo: [String:Any], replyHandler: (([String : Any]) -> Void)? = nil) throws {
+    func transferCurrentComplicationUserInfo(_ userInfo: [String:ValueType], replyHandler: (([String : Any]) -> Void)? = nil) throws {
         try sanityCheck()
         let message = Message(mode: .transferCurrentComplicationUserInfo, userInfo: userInfo, replyHandler: replyHandler, errorHandler: nil)
         messagesQueue.append(message)
@@ -148,7 +150,7 @@ class WKData: ObservableObject {
         }
     }
     
-    func didReceive(userInfo: [String:Any]) {
+    func didReceive(userInfo: [String:ValueType]) {
         for (rawValue, value) in userInfo {
             guard let key = WKDataKeys(rawValue: rawValue) else {
                 print("🚨 Unknow key, ignoring: \(rawValue)")
@@ -159,16 +161,25 @@ class WKData: ObservableObject {
         OpenGluckManager.userDefaults.synchronize()
     }
 
-    func get(key: WKDataKeys) -> Any? {
-        return OpenGluckManager.userDefaults.value(forKey: key.keyValue)
+    func get(key: WKDataKeys) -> ValueType? {
+        guard let result = OpenGluckManager.userDefaults.value(forKey: key.keyValue) else {
+            return nil
+        }
+        if let stringValue = result as? String {
+            return stringValue
+        }
+        if let intValue = result as? Int {
+            return "\(intValue)"
+        }
+        fatalError("Don't know how to handle \(result)")
     }
 
-    func set(key: WKDataKeys, value: Any) throws {
+    func set(key: WKDataKeys, value: ValueType) throws {
         OpenGluckManager.userDefaults.setValue(value, forKey: key.keyValue)
         try sendToOther(key: key, value: value)
     }
 
-    private func sendToOther(key: WKDataKeys, value: Any) throws {
+    private func sendToOther(key: WKDataKeys, value: ValueType) throws {
         let userInfo = [key.rawValue: value]
         do {
             print("Transfering key \(key)=\(value)")
