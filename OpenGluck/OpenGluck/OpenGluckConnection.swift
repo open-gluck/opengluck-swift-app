@@ -3,8 +3,8 @@ import SwiftUI
 #if !os(tvOS)
 import WidgetKit
 #endif
-@preconcurrency import OG // FIXME LATER TODO upgrade lib
-@preconcurrency import OGUI // FIXME LATER TODO upgrade lib
+import OG
+import OGUI
 
 @MainActor class OpenGluckConnectionEnablers {
 #if OPENGLUCK_CONTACT_TRICK_IS_YES

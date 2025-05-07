@@ -3,7 +3,7 @@ import BackgroundTasks
 import UserNotifications
 import WatchConnectivity
 import os
-@preconcurrency import OG // FIXME LATER TODO upgrade lib
+import OG
 import WidgetKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
