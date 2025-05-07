@@ -72,6 +72,7 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
     private func handleAppRefresh(task: BGAppRefreshTask) {
         self.scheduleBackgroundTask()
         
+        let openGlückConnection = openGlückConnection
         Task {
             // as a last resort, try to update one last time
             try? _ = await openGlückConnection.getCurrentData(becauseUpdateOf: "Background App Refresh")
@@ -211,14 +212,16 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
 
 // Conform to UNUserNotificationCenterDelegate to show local notification in foreground
 extension PhoneAppDelegate: UNUserNotificationCenterDelegate {
-    private func parseNotificationsUserInfo(userInfo: [AnyHashable:Any]) -> (Date?, Int?, Bool?, Episode?, Date?, Bool?) {
+    nonisolated private func parseNotificationsUserInfo(userInfo: [AnyHashable:Any]) -> (Date?, Int?, Bool?, Episode?, Date?, Bool?) {
         print(userInfo.debugDescription)
         let timestampStr: String? = userInfo["timestamp"] as? String
         let timestamp: Date? = timestampStr != nil ? ISO8601DateFormatter().date(from: timestampStr!.replacingOccurrences(of: "\\.\\d+", with: "", options: .regularExpression)) : nil
         let mgDl: Int? = userInfo["mgDl"] as? Int
         if let mgDl, let aps = userInfo["aps"] as? [String:Any], let badge = aps["badge"] as? Int {
             guard mgDl == badge else {
-                Self.logger.warning("Mismatch mgDl=\(mgDl), badge=\(badge)")
+                Task { @MainActor in
+                    Self.logger.warning("Mismatch mgDl=\(mgDl), badge=\(badge)")
+                }
                 return (nil, nil, nil, nil, nil, nil)
             }
         }
@@ -254,11 +257,11 @@ extension PhoneAppDelegate: UNUserNotificationCenterDelegate {
         return .newData
     }
 
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         // showing notification with app active
         let userInfo = notification.request.content.userInfo
         let (timestamp, mgDl, hasRealTime, episode, episodeTimestamp, isNewScanOrHistoric) = parseNotificationsUserInfo(userInfo: userInfo)
-        Self.logger.info("Received user notification while app in foreground => timestamp=\(String(describing: timestamp)) mgDl=\(String(describing: mgDl)), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp)), userInfo=\(userInfo), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp)), isNewScanOrHistoric=\(String(describing: isNewScanOrHistoric))")
+        await Self.logger.info("Received user notification while app in foreground => timestamp=\(String(describing: timestamp)) mgDl=\(String(describing: mgDl)), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp)), userInfo=\(userInfo), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp)), isNewScanOrHistoric=\(String(describing: isNewScanOrHistoric))")
         if let isNewScanOrHistoric, isNewScanOrHistoric {
             await openGlückConnection.getClient()?.recordLog("present notification, reload all timelines")
             WidgetCenter.shared.reloadAllTimelines()
@@ -269,7 +272,7 @@ extension PhoneAppDelegate: UNUserNotificationCenterDelegate {
         return [.banner, .badge, .sound]
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         await handleAction(response: response)
     }
 
@@ -320,7 +323,7 @@ extension PhoneAppDelegate {
 
     }
 
-    private func handleAction(response: UNNotificationResponse) async {
+    private nonisolated func handleAction(response: UNNotificationResponse) async {
         let action: NotificationActions? = NotificationActions(rawValue: response.actionIdentifier)
         guard let action else {
             return

@@ -27,6 +27,7 @@ protocol BaseWidgetConfiguration {
     static func getData(forTimelineDate timelineDate: Date, date: Date) async throws -> Data
 }
 
+@MainActor
 class BaseWidgetProvider<Configuration, WidgetView> where Configuration: BaseWidgetConfiguration, WidgetView: View {
     let content: (Entry) -> WidgetView
     

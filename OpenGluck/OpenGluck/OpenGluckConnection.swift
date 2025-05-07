@@ -4,20 +4,26 @@ import SwiftUI
 import WidgetKit
 #endif
 @preconcurrency import OG // FIXME LATER TODO upgrade lib
-import OGUI
+@preconcurrency import OGUI // FIXME LATER TODO upgrade lib
 
-class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate {
+@MainActor class OpenGluckConnectionEnablers {
+#if OPENGLUCK_CONTACT_TRICK_IS_YES
+    @AppStorage(WKDataKeys.enableContactTrick.keyValue, store: OpenGluckManager.userDefaults) var enableContactTrick: Bool = false
+#endif
+    @AppStorage(WKDataKeys.enableUpdateBadgeCount.keyValue, store: OpenGluckManager.userDefaults) var enableUpdateBadgeCount: Bool = false
+    
+    static let `default` = OpenGluckConnectionEnablers()
+}
+
+final class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate, Sendable {
     private let syncClient: OpenGluckSyncClient
     #if OPENGLUCK_CONTACT_TRICK_IS_YES
     let contactsUpdater = ContactUpdater()
-    @AppStorage(WKDataKeys.enableContactTrick.keyValue, store: OpenGluckManager.userDefaults) var enableContactTrick: Bool = false
     #endif
-    @AppStorage(WKDataKeys.enableUpdateBadgeCount.keyValue, store: OpenGluckManager.userDefaults) var enableUpdateBadgeCount: Bool = false
-    let thresholdsDelegate = OpenGluckThreholdsDelegate()
 
     init() {
         syncClient = OpenGluckSyncClient()
-        OGUI.thresholdsDelegate = thresholdsDelegate
+        OGUI.thresholdsDelegate = OpenGluckThreholdsDelegate() // thresholdsDelegate
     }
     
     static var client: OpenGluckClient? {
@@ -57,7 +63,7 @@ class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate {
             let episode = currentData.currentEpisode
             let episodeTimestamp = currentData.currentEpisodeTimestamp
 #if OPENGLUCK_CONTACT_TRICK_IS_YES
-            if enableContactTrick {
+            if await OpenGluckConnectionEnablers.default.enableContactTrick {
                 await contactsUpdater.updateMgDl(mgDl: currentGlucoseRecord.mgDl, timestamp: currentGlucoseRecord.timestamp, hasCgmRealTimeData: hasCgmRealTimeData, episode: episode, episodeTimestamp: episodeTimestamp, becauseUpdateOf: becauseUpdateOf, force: force)
             }
 #endif
@@ -78,7 +84,7 @@ class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate {
         if let mostRecentTimestamp, -mostRecentTimestamp.timeIntervalSinceNow >= OpenGluckUI.maxGlucoseFreshnessTimeInterval {
             try await UNUserNotificationCenter.current().setBadgeCount(0)
         } else if let mgDl: Int = currentData.currentGlucoseRecord?.mgDl {
-            if enableUpdateBadgeCount {
+            if await OpenGluckConnectionEnablers.default.enableUpdateBadgeCount {
                 try await UNUserNotificationCenter.current().setBadgeCount(instantMgDl ?? mgDl)
             }
         }

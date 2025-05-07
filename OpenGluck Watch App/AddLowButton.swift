@@ -1,9 +1,8 @@
 import SwiftUI
 import OG
 
-class AddLowButtonData: ObservableObject, CustomStringConvertible {
-    var description: String { "isShow=\(isShown), valueString=\(valueString)" }
-    
+@MainActor
+class AddLowButtonData: ObservableObject {
     @Published var valueString: String = ""
     @Published var isShown: Bool = false
     @Published var getSugarFromValue: ((Double) -> Double)? = nil

@@ -180,6 +180,7 @@ struct PhoneAdvancedView: View {
                         enableUpdateBadgeCount
                     }, set: { newValue in
                         enableUpdateBadgeCount = newValue
+                        let openGlückConnection = openGlückConnection
                         if newValue {
                             Task {
                                 // this will update the badge count

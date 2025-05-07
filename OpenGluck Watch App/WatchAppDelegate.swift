@@ -28,7 +28,7 @@ class WatchAppDelegate: NSObject, WKApplicationDelegate, WCSessionDelegate, Obse
     }
     
     // Conform to UNUserNotificationCenterDelegate to show local notification in foreground
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         //print("COMPLETION HANDLER")
         return [.banner, .badge, .sound]
     }
