@@ -69,7 +69,7 @@ fileprivate class GraphWidgetConfiguration: BaseWidgetConfiguration {
     
     static func getData(forTimelineDate timelineDate: Date, date: Date) async throws -> GraphWidgetData {
         do {
-            let openGlückConnection = OpenGluckConnection()
+            let openGlückConnection = await OpenGluckConnection()
             guard let client = openGlückConnection.getClient() else {
                 return GraphWidgetData(state: .error(error: WidgetError.noClientConfiguration))
             }

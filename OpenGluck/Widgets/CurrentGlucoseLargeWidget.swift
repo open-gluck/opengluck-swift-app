@@ -101,7 +101,7 @@ fileprivate class CurrentGlucoseLargeWidgetConfiguration: BaseWidgetConfiguratio
     
     static func getData(forTimelineDate timelineDate: Date, date: Date) async throws -> CurrentGlucoseLargeWidgetData {
         do {
-            let openGlückConnection = OpenGluckConnection()
+            let openGlückConnection = await OpenGluckConnection()
             guard let client = openGlückConnection.getClient() else {
                 return CurrentGlucoseLargeWidgetData(state: .error(error: WidgetError.noClientConfiguration))
             }

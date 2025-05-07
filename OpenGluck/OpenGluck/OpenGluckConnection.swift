@@ -15,6 +15,7 @@ import OGUI
     static let `default` = OpenGluckConnectionEnablers()
 }
 
+@MainActor
 final class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate, Sendable {
     private let syncClient: OpenGluckSyncClient
     #if OPENGLUCK_CONTACT_TRICK_IS_YES
@@ -26,7 +27,7 @@ final class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate, 
         OGUI.thresholdsDelegate = OpenGluckThreholdsDelegate() // thresholdsDelegate
     }
     
-    static var client: OpenGluckClient? {
+    nonisolated static var client: OpenGluckClient? {
         guard let url = OpenGluckManager.openglückUrl, let token = OpenGluckManager.openglückToken, !url.isEmpty, !token.isEmpty else {
             return nil
             
@@ -37,7 +38,7 @@ final class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate, 
         return OpenGluckClient(hostname: url, token: token, target: OpenGluckManager.target)
     }
     
-    func getClient() -> OpenGluckClient? {
+    nonisolated func getClient() -> OpenGluckClient? {
         Self.client
     }
     
@@ -84,7 +85,7 @@ final class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate, 
         if let mostRecentTimestamp, -mostRecentTimestamp.timeIntervalSinceNow >= OpenGluckUI.maxGlucoseFreshnessTimeInterval {
             try await UNUserNotificationCenter.current().setBadgeCount(0)
         } else if let mgDl: Int = currentData.currentGlucoseRecord?.mgDl {
-            if await OpenGluckConnectionEnablers.default.enableUpdateBadgeCount {
+            if OpenGluckConnectionEnablers.default.enableUpdateBadgeCount {
                 try await UNUserNotificationCenter.current().setBadgeCount(instantMgDl ?? mgDl)
             }
         }

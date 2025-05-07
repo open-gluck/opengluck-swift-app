@@ -336,6 +336,7 @@ struct GlucoseGraphImpl: View, Equatable {
         }
     }
     
+    @MainActor
     enum GlucoseRange: String, Plottable {
         case low
         case normal
@@ -408,6 +409,7 @@ struct GlucoseGraphImpl: View, Equatable {
         return "\(hours)h"
     }
     
+    @MainActor
     private struct CachedOGUIColorGetter {
         // we cache the thresholds so as not to hammer SwiftUI with reading from app storage
         

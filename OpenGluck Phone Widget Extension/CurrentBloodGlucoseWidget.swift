@@ -29,7 +29,7 @@ struct CurrentBloodGlucoseProvider: TimelineProvider {
         Task {
             let currentData: CurrentData?
             do {
-                let openGlückConnection = OpenGluckConnection()
+                let openGlückConnection = await OpenGluckConnection()
                 currentData = try await openGlückConnection.getCurrentData(becauseUpdateOf: "CurrentBloodGlucoseProvider.getTimeline")
                 print("Got current: \(currentData!)")
             } catch {

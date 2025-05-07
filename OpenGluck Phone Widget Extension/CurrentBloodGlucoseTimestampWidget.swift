@@ -8,7 +8,6 @@ struct CurrentBloodGlucoseTimestampProvider: TimelineProvider {
         subsystem: Bundle.main.bundleIdentifier!,
         category: String(describing: CurrentBloodGlucoseTimestampProvider.self)
     )
-    static let openGlückConnection = OpenGluckConnection()
     
     func placeholder(in context: Context) -> CurrentBloodGlucoseTimestampTimelineEntry {
         CurrentBloodGlucoseTimestampTimelineEntry(date: Date(), mgDl: 142, timestamp: Date().addingTimeInterval(-158))
