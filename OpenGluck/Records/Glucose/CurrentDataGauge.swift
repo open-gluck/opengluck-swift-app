@@ -63,7 +63,7 @@ struct CurrentDataGauge: View {
             return Color(red: f(r), green: f(g), blue: f(b))
         }()
         ZStack {
-            Gauge(value: freshnessLevel ?? 0, in: 0...1) {
+            Gauge(value: max(freshnessLevel ?? 0, 0), in: 0...1) {
                 if let systemName {
                     Image(systemName: systemName)
                         .resizable()
