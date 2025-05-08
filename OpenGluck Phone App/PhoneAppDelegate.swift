@@ -173,6 +173,7 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
         try? WKData.default.set(key: WKDataKeys.phoneDeviceToken, value: deviceToken)
         self.deviceToken = deviceToken
         registerDeviceTokenWithOpenGluck()
+        print("Registered for remote notifications with token", deviceToken)
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: any Error) {
