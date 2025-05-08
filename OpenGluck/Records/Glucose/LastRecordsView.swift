@@ -147,13 +147,11 @@ struct LastRecordsView: View {
     }
 }
 
-struct LastRecordsView_Previews: PreviewProvider {
-    static var previews: some View {
-        OpenGluckEnvironmentUpdaterView {
-            List {
-                LastRecordsView(now: Date())
-            }
+#Preview {
+    OpenGluckEnvironmentUpdaterRootView {
+        List {
+            LastRecordsView(now: Date())
         }
-        .environmentObject(OpenGluckConnection())
     }
+    .environmentObject(OpenGluckConnection())
 }

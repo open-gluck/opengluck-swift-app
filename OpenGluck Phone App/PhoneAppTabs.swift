@@ -37,8 +37,8 @@ struct PhoneAppTabs: View {
                     Text("Home")
                 }
                 CheckConnectionHasClient {
-                    List {
-                        RobustTimelineView(.everyMinute) { context in
+                    RobustTimelineView(.everyMinute) { context in
+                        List {
                             LastRecordsView(now: context.date)
                         }
                     }
@@ -60,15 +60,11 @@ struct PhoneAppTabs: View {
     }
 }
 
-struct AppTabs_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            OpenGluckEnvironmentUpdaterView {
-                PhoneAppTabs()
-            }
-        }
-        .environmentObject(PhoneAppDelegate())
-        .environmentObject(OpenGluckConnection())
-        .environmentObject(PhoneNavigationData())
+#Preview {
+    OpenGluckEnvironmentUpdaterRootView {
+        PhoneAppTabs()
     }
+    .environmentObject(PhoneAppDelegate())
+    .environmentObject(OpenGluckConnection())
+    .environmentObject(PhoneNavigationData())
 }
