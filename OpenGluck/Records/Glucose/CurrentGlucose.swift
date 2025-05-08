@@ -34,7 +34,7 @@ struct CurrentGlucose: View {
 }
 
 #Preview {
-    OpenGluckEnvironmentUpdaterView {
+    OpenGluckEnvironmentUpdaterRootView {
         Grid {
             GridRow {
                 CurrentGlucose(now: Date())
