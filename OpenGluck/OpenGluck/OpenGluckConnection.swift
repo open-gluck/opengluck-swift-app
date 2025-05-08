@@ -5,6 +5,7 @@ import WidgetKit
 #endif
 import OG
 import OGUI
+import UserNotifications
 
 @MainActor class OpenGluckConnectionEnablers {
 #if OPENGLUCK_CONTACT_TRICK_IS_YES
@@ -81,6 +82,18 @@ final class OpenGluckConnection: ObservableObject, OpenGluckSyncClientDelegate, 
         } else {
             nil
         }
+#if !os(watchOS)
+        if let currentGlucoseRecord = currentData.currentGlucoseRecord {
+            let freshnessLevel = min(1.0, 1.0 - (-currentGlucoseRecord.timestamp.timeIntervalSinceNow / OpenGluckUI.maxGlucoseFreshnessTimeInterval))
+            if freshnessLevel < 0 {
+                try? await UNUserNotificationCenter.current().setBadgeCount(0)
+            } else {
+                try? await UNUserNotificationCenter.current().setBadgeCount(currentGlucoseRecord.mgDl)
+            }
+        } else {
+            try? await UNUserNotificationCenter.current().setBadgeCount(0)
+        }
+#endif
 #if os(iOS)
         if let mostRecentTimestamp, -mostRecentTimestamp.timeIntervalSinceNow >= OpenGluckUI.maxGlucoseFreshnessTimeInterval {
             try await UNUserNotificationCenter.current().setBadgeCount(0)
