@@ -37,12 +37,12 @@ struct CurrentDataGauge: View {
                 if let mgDl {
                     return CurrentDataColors.getInfo(forMgDl: mgDl, hasCgmRealTimeData: hasCgmRealTimeData)
                 } else {
-                    return CurrentDataColors.getInfo(forEpisode: .disconnected)
+                    return CurrentDataColors.getInfo(forEpisode: .unknown)
                 }
             } else if episodeTimestamp != nil {
                 return CurrentDataColors.getInfo(forEpisode: episode!)
             } else {
-                return CurrentDataColors.getInfo(forEpisode: .disconnected)
+                return CurrentDataColors.getInfo(forEpisode: .unknown)
             }
         }()
         let backgroundColor = widgetRenderingMode == .fullColor ? color : .white.opacity(0)
