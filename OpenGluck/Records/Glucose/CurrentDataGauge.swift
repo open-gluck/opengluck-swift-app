@@ -298,6 +298,11 @@ fileprivate struct CurrentDataGaugePreview: View {
     return Preview()
 }
 
+#Preview("Expired") {
+    CurrentDataGauge(enableInstantGlucose: false, timestamp: .constant(nil), mgDl: .constant(nil), instantMgDl: .constant(nil), hasCgmRealTimeData: .constant(true), episode: .constant(.unknown), episodeTimestamp: .constant(Date()), freshnessLevel: .constant(nil))
+
+}
+
 
 /*
 struct CurrentDataGaugeFreshnessPreview: View {
