@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -76,7 +76,7 @@
 		9D50EBAD29C79E2300CF69E6 /* PhoneContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D50EBAC29C79E2300CF69E6 /* PhoneContentView.swift */; };
 		9D50EBAF29C79E2400CF69E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D50EBAE29C79E2400CF69E6 /* Assets.xcassets */; };
 		9D50EBB229C79E2400CF69E6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D50EBB129C79E2400CF69E6 /* Preview Assets.xcassets */; };
-		9D50EBB829C79E2400CF69E6 /* OG Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 9D50EBB729C79E2400CF69E6 /* OG Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9D50EBB829C79E2400CF69E6 /* OG Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 9D50EBB729C79E2400CF69E6 /* OG Watch.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9D50EBBF29C79E2400CF69E6 /* WatchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D50EBBE29C79E2400CF69E6 /* WatchContentView.swift */; };
 		9D50EBC129C79E2500CF69E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D50EBC029C79E2500CF69E6 /* Assets.xcassets */; };
 		9D50EBC429C79E2500CF69E6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D50EBC329C79E2500CF69E6 /* Preview Assets.xcassets */; };
@@ -378,6 +378,7 @@
 		9D973C442B416AFF002EE231 /* InsulinRecordSnippet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinRecordSnippet.swift; sourceTree = "<group>"; };
 		9D973C472B416B16002EE231 /* RecordSnippet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSnippet.swift; sourceTree = "<group>"; };
 		9D973C4A2B416E63002EE231 /* LowRecordSnippet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LowRecordSnippet.swift; sourceTree = "<group>"; };
+		9D99381D2DFC72CE0011F5E3 /* OG-Mac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "OG-Mac-Info.plist"; sourceTree = "<group>"; };
 		9DA328802DACFA5F006DD9F5 /* RobustTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobustTimelineView.swift; sourceTree = "<group>"; };
 		9DA6CF6929E34F2A0075CC4C /* PhoneWidgetTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneWidgetTarget.swift; sourceTree = "<group>"; };
 		9DA6CF6C29E355720075CC4C /* CurrentBloodGlucoseTimestampWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentBloodGlucoseTimestampWidget.swift; sourceTree = "<group>"; };
@@ -412,6 +413,11 @@
 		9DF375DE29D254990043CAA6 /* OpenGluckManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGluckManager.swift; sourceTree = "<group>"; };
 		9DF375E129D256740043CAA6 /* LastRecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastRecordsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		9D99379B2DFC6ECA0011F5E3 /* OG MacTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "OG MacTests"; sourceTree = "<group>"; };
+		9D9937A52DFC6ECA0011F5E3 /* OG MacUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "OG MacUITests"; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		9D22687B2AF29B2700437FAC /* Frameworks */ = {
@@ -544,6 +550,7 @@
 		9D50EB9E29C79E2300CF69E6 = {
 			isa = PBXGroup;
 			children = (
+				9D99381D2DFC72CE0011F5E3 /* OG-Mac-Info.plist */,
 				9DD650462B14AB6D00C6A417 /* Config.xcconfig */,
 				9D0B4BA42AFFF07100D2C773 /* Development.xcconfig */,
 				9D0B4BA52AFFF07100D2C773 /* Production.xcconfig */,
@@ -553,6 +560,8 @@
 				9D50EBBB29C79E2400CF69E6 /* Watch */,
 				9D50EBE929C7BC8D00CF69E6 /* Watch Widget Extension */,
 				9D22687F2AF29B2700437FAC /* TV */,
+				9D99379B2DFC6ECA0011F5E3 /* OG MacTests */,
+				9D9937A52DFC6ECA0011F5E3 /* OG MacUITests */,
 				9D50EBE429C7BC8D00CF69E6 /* Frameworks */,
 				9D50EBA829C79E2300CF69E6 /* Products */,
 			);
@@ -958,7 +967,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					9D22687D2AF29B2700437FAC = {
@@ -1287,6 +1296,7 @@
 /* Begin PBXTargetDependency section */
 		9D50EBBA29C79E2400CF69E6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 9D50EBB629C79E2400CF69E6 /* OG Watch */;
 			targetProxy = 9D50EBB929C79E2400CF69E6 /* PBXContainerItemProxy */;
 		};
@@ -1619,6 +1629,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
@@ -1661,6 +1674,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
@@ -1770,6 +1786,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
@@ -1805,6 +1822,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;

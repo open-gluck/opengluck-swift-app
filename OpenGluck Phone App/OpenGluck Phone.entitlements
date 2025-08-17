@@ -6,11 +6,15 @@
 	<string>development</string>
 	<key>com.apple.developer.usernotifications.time-sensitive</key>
 	<true/>
+	<key>com.apple.security.app-sandbox</key>
+	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>group.open-gluck.github.io.ios</string>
 	</array>
 	<key>com.apple.security.network.client</key>
+	<true/>
+	<key>com.apple.security.personal-information.addressbook</key>
 	<true/>
 </dict>
 </plist>
