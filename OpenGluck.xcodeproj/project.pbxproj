@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -414,11 +414,6 @@
 		9DF375E129D256740043CAA6 /* LastRecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastRecordsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		9D99379B2DFC6ECA0011F5E3 /* OG MacTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "OG MacTests"; sourceTree = "<group>"; };
-		9D9937A52DFC6ECA0011F5E3 /* OG MacUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "OG MacUITests"; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
 		9D22687B2AF29B2700437FAC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -560,8 +555,6 @@
 				9D50EBBB29C79E2400CF69E6 /* Watch */,
 				9D50EBE929C7BC8D00CF69E6 /* Watch Widget Extension */,
 				9D22687F2AF29B2700437FAC /* TV */,
-				9D99379B2DFC6ECA0011F5E3 /* OG MacTests */,
-				9D9937A52DFC6ECA0011F5E3 /* OG MacUITests */,
 				9D50EBE429C7BC8D00CF69E6 /* Frameworks */,
 				9D50EBA829C79E2300CF69E6 /* Products */,
 			);
