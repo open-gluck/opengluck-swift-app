@@ -389,7 +389,7 @@ struct DecreaseLastInsulinByAppIntent: ForegroundContinuableIntent {
 
         let newUnits = lastInsulinRecord.units - units
         guard newUnits > 0 else {
-            return .result(dialog: "Insulin record could not be updated. Units needs be to be greater than zero.", view: InsulinRecordSnippet(insulinRecord: lastInsulinRecord))
+            return .result(dialog: "Insulin record could not be updated. Units need to be greater than zero.", view: InsulinRecordSnippet(insulinRecord: lastInsulinRecord))
         }
         let updatedRecord: OpenGluckInsulinRecord = OpenGluckInsulinRecord(id: lastInsulinRecord.id, timestamp: lastInsulinRecord.timestamp, units: newUnits, deleted: lastInsulinRecord.deleted)
         let _ = try await client.upload(insulinRecords: [updatedRecord])
