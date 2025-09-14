@@ -359,7 +359,7 @@ struct DecreaseLastInsulinByAppIntent: ForegroundContinuableIntent {
     var unitsInt: Int?
 
     static var parameterSummary: some ParameterSummary {
-        Summary("Remove \(\.$unitsInt) units of insulin to the last record.") {
+        Summary("Remove \(\.$unitsInt) units of insulin from the last record.") {
         }
     }
     
