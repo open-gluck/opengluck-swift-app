@@ -39,8 +39,9 @@ struct AppsShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: IncreaseLastInsulinByAppIntent(),
             phrases: [
+                "\(.applicationName) add \(\.$unitsEnum) unit",
                 "\(.applicationName) add \(\.$unitsEnum) units",
-                "\(.applicationName) augment \(\.$unitsEnum) unit",
+                "\(.applicationName) augment \(\.$unitsEnum) units",
                 "\(.applicationName) increase \(\.$unitsEnum) units",
             ],
             shortTitle: "Increase last insulin",
@@ -49,8 +50,9 @@ struct AppsShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: DecreaseLastInsulinByAppIntent(),
             phrases: [
+                "\(.applicationName) remove \(\.$unitsEnum) unit",
                 "\(.applicationName) remove \(\.$unitsEnum) units",
-                "\(.applicationName) decrease \(\.$unitsEnum) unit",
+                "\(.applicationName) decrease \(\.$unitsEnum) units",
             ],
             shortTitle: "Decrease last insulin",
             systemImageName: "cross.vial"
