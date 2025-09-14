@@ -36,6 +36,25 @@ struct AppsShortcuts: AppShortcutsProvider {
             shortTitle: "Add insulin",
             systemImageName: "cross.vial"
         )
+        AppShortcut(
+            intent: IncreaseLastInsulinByAppIntent(),
+            phrases: [
+                "\(.applicationName) add \(\.$unitsEnum) units",
+                "\(.applicationName) augment \(\.$unitsEnum) unit",
+                "\(.applicationName) increase \(\.$unitsEnum) units",
+            ],
+            shortTitle: "Increase last insulin",
+            systemImageName: "cross.vial"
+        )
+        AppShortcut(
+            intent: DecreaseLastInsulinByAppIntent(),
+            phrases: [
+                "\(.applicationName) remove \(\.$unitsEnum) units",
+                "\(.applicationName) decrease \(\.$unitsEnum) unit",
+            ],
+            shortTitle: "Decrease last insulin",
+            systemImageName: "cross.vial"
+        )
 
         AppShortcut(
             intent: AddSnoozedLowAppIntent(),
@@ -73,8 +92,10 @@ struct AppsShortcuts: AppShortcutsProvider {
             intent: GetCurrentBloodGlucoseAppIntent(),
             phrases: [
                 "\(.applicationName) get current blood glucose",
+                "\(.applicationName) what's my blood glucose",
                 "\(.applicationName) what's my current blood glucose",
                 "what's my current blood glucose in \(.applicationName)",
+                "what's my blood glucose in \(.applicationName)",
                 "\(.applicationName) get",
                 "get \(.applicationName)",
             ],

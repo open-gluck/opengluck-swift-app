@@ -295,3 +295,105 @@ struct GetCurrentBloodGlucoseAppIntent: ForegroundContinuableIntent {
         return .result(dialog: "\(dialog)", view: GlucoseRecordSnippet(glucoseRecord: lastGlucoseRecord))
     }
 }
+
+struct IncreaseLastInsulinByAppIntent: ForegroundContinuableIntent {
+    static let title: LocalizedStringResource = "Increase Last Insulin"
+    static let description: LocalizedStringResource = "Increase the last insulin by some units."
+
+    // We provide two parameters, one used only for AppShortcuts with a limited value of options,
+    // and an open value that can be used programatically with Shortcuts and also on the times that
+    // Siri fails to understand a value, to ask the user for something more precise.
+    @Parameter(title: "Units", description: "How many insulin to add?", requestValueDialog: "How much insulin?")
+    var unitsEnum: InsulinUnitEnum?
+
+    @Parameter(title: "Units", description: "How many insulin to add?")
+    var unitsInt: Int?
+
+    static var parameterSummary: some ParameterSummary {
+        Summary("Add \(\.$unitsInt) units of insulin to the last record.") {
+        }
+    }
+    
+    @MainActor
+    func perform() async throws -> some IntentResult & ProvidesDialog & ShowsSnippetView {
+        let connection = OpenGluckConnection()
+        guard let client = connection.getClient() else {
+            throw AppIntentError.message("Could not get a client, have you configured a valid OpenGlück server and token in the app?")
+        }
+        let last = try await client.getLastData()
+        guard let lastInsulinRecord = last?.insulinRecords?.sorted(by: { $0.timestamp > $1.timestamp }).filter({ !$0.deleted }).first else {
+            return .result(dialog: "No recent insulin record found.")
+
+        }
+        let elapsed = lastInsulinRecord.timestamp.timeIntervalSinceNow
+        guard -elapsed < 2*60 else {
+            throw needsToContinueInForegroundError("The last insulin record was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)) and needs to be updated manually.")
+        }
+
+        let units = if let value = self.unitsEnum?.rawValue {
+            Int(value)!
+        } else if let unitsInt {
+            unitsInt
+        } else {
+            try await self.$unitsInt.requestValue("How many insulin units?")
+        }
+
+        let newUnits = lastInsulinRecord.units + units
+        let updatedRecord: OpenGluckInsulinRecord = OpenGluckInsulinRecord(id: lastInsulinRecord.id, timestamp: lastInsulinRecord.timestamp, units: newUnits, deleted: lastInsulinRecord.deleted)
+        let _ = try await client.upload(insulinRecords: [updatedRecord])
+        return .result(dialog: "\(newUnits == 1 ? "Insulin record updated to \(newUnits) unit." : "Insulin record updated to \(newUnits) units.")", view: InsulinRecordSnippet(insulinRecord: updatedRecord))
+    }
+}
+
+struct DecreaseLastInsulinByAppIntent: ForegroundContinuableIntent {
+    static let title: LocalizedStringResource = "Decrease Last Insulin"
+    static let description: LocalizedStringResource = "Decrease the last insulin by some units."
+
+    // We provide two parameters, one used only for AppShortcuts with a limited value of options,
+    // and an open value that can be used programatically with Shortcuts and also on the times that
+    // Siri fails to understand a value, to ask the user for something more precise.
+    @Parameter(title: "Units", description: "How many insulin to remove?", requestValueDialog: "How much insulin?")
+    var unitsEnum: InsulinUnitEnum?
+
+    @Parameter(title: "Units", description: "How many insulin to remove?")
+    var unitsInt: Int?
+
+    static var parameterSummary: some ParameterSummary {
+        Summary("Remove \(\.$unitsInt) units of insulin to the last record.") {
+        }
+    }
+    
+    @MainActor
+    func perform() async throws -> some IntentResult & ProvidesDialog & ShowsSnippetView {
+        let connection = OpenGluckConnection()
+        guard let client = connection.getClient() else {
+            throw AppIntentError.message("Could not get a client, have you configured a valid OpenGlück server and token in the app?")
+        }
+        let last = try await client.getLastData()
+        guard let lastInsulinRecord = last?.insulinRecords?.sorted(by: { $0.timestamp > $1.timestamp }).filter({ !$0.deleted }).first else {
+            return .result(dialog: "No recent insulin record found.")
+
+        }
+        let elapsed = lastInsulinRecord.timestamp.timeIntervalSinceNow
+        guard -elapsed < 2*60 else {
+            throw needsToContinueInForegroundError("The last insulin record was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)) and needs to be updated manually.")
+        }
+
+        let units = if let value = self.unitsEnum?.rawValue {
+            Int(value)!
+        } else if let unitsInt {
+            unitsInt
+        } else {
+            try await self.$unitsInt.requestValue("How many insulin units?")
+        }
+
+        let newUnits = lastInsulinRecord.units - units
+        guard newUnits > 0 else {
+            return .result(dialog: "Insulin record could not be updated. Units needs be to be greater than zero.", view: InsulinRecordSnippet(insulinRecord: lastInsulinRecord))
+        }
+        let updatedRecord: OpenGluckInsulinRecord = OpenGluckInsulinRecord(id: lastInsulinRecord.id, timestamp: lastInsulinRecord.timestamp, units: newUnits, deleted: lastInsulinRecord.deleted)
+        let _ = try await client.upload(insulinRecords: [updatedRecord])
+        return .result(dialog: "\(newUnits == 1 ? "Insulin record updated to \(newUnits) unit." : "Insulin record updated to \(newUnits) units.")", view: InsulinRecordSnippet(insulinRecord: updatedRecord))
+    }
+}
+
