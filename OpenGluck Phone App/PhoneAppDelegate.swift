@@ -252,6 +252,9 @@ extension PhoneAppDelegate: UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) async -> UIBackgroundFetchResult {
         let (timestamp, mgDl, hasRealTime, episode, episodeTimestamp, isNewScanOrHistoric) = parseNotificationsUserInfo(userInfo: userInfo)
         Self.logger.info("Received remote notification => timestamp=\(String(describing: timestamp)) mgDl=\(String(describing: mgDl)), userInfo=\(userInfo), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp)), isNewScanOrHistoric=\(String(describing: isNewScanOrHistoric))")
+        if let mgDl {
+            try? await UNUserNotificationCenter.current().setBadgeCount(mgDl)
+        }
         if let isNewScanOrHistoric, isNewScanOrHistoric {
             await openGlückConnection.getClient()?.recordLog("did receive notification, reload all timelines")
             WidgetCenter.shared.reloadAllTimelines()
