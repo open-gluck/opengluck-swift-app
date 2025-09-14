@@ -20,16 +20,16 @@ struct CurrentBloodGlucoseProvider: TimelineProvider {
     }
     
     
-    func getSnapshot(in context: Context, completion: @escaping (CurrentBloodGlucoseTimelineEntry) -> ()) {
+    @preconcurrency func getSnapshot(in context: Self.Context, completion: @escaping @Sendable (Self.Entry) -> Void) {
         completion(CurrentBloodGlucoseTimelineEntry.current())
     }
     
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+    @preconcurrency func getTimeline(in context: Self.Context, completion: @escaping @Sendable (Timeline<Self.Entry>) -> Void) {
         Self.logger.debug("CurrentBloodGlucoseProvider.getTimeline()")
         Task {
             let currentData: CurrentData?
             do {
-                let openGlückConnection = OpenGluckConnection()
+                let openGlückConnection = await OpenGluckConnection()
                 currentData = try await openGlückConnection.getCurrentData(becauseUpdateOf: "CurrentBloodGlucoseProvider.getTimeline")
                 print("Got current: \(currentData!)")
             } catch {

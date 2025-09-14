@@ -2,6 +2,7 @@ import SwiftUI
 import OGUI
 import OG
 
+@MainActor
 class CurrentDataColors {
     private init() {}
     
@@ -17,12 +18,15 @@ class CurrentDataColors {
     static let veryHighColor = OGUI.veryHighColor
     static let veryHighColorText = OGUI.veryHighColorText
 
-    static let unknownColor = Color(red: 0x88 / 256, green: 0x88 / 256, blue: 0x88 / 256)
+    static let unknownColor = Color(red: 0x00 / 256, green: 0x00 / 256, blue: 0x00 / 256)
     static let unknownColorText = Color(red: 0xff / 256, green: 0xff / 256, blue: 0xff / 256)
+    
+    static let disconnectedColor = Color(red: 0x88 / 256, green: 0x88 / 256, blue: 0x88 / 256)
+    static let disconnectedColorText = Color(red: 0xff / 256, green: 0xff / 256, blue: 0xff / 256)
     
     static func getInfo(forEpisode episode: Episode) -> (Color, Color, String?, String?) {
         switch episode {
-        case .disconnected: return (unknownColor, unknownColorText, "—", nil)
+        case .disconnected: return (disconnectedColor, disconnectedColorText, "—", nil)
         case .unknown:      return (unknownColor, unknownColorText, "?", nil)
         case .error:        return (Color(UIColor.purple), unknownColorText, nil, "xmark.octagon.fill")
         case .low:          return (lowColor, lowColorText, nil, "octagon.fill")

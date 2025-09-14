@@ -36,10 +36,10 @@ public struct DigitButtonModifier: ViewModifier {
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 public extension Button {
-    func digitKeyFrame() -> some View {
+    @MainActor func digitKeyFrame() -> some View {
         self.modifier(DigitButtonModifier())
     }
-    func digitKeyTransparentFrame() -> some View {
+    @MainActor func digitKeyTransparentFrame() -> some View {
         self.modifier(DigitButtonModifier(transparent: true))
     }
 }

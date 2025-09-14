@@ -5,7 +5,7 @@ struct LowRecordSnippet: View {
     let lowRecord: OpenGluckLowRecord
     var body: some View {
         RecordSnippet {
-            LowRecordView(lowRecord: .constant(lowRecord))
+            LowRecordView(now: Date(), lowRecord: .constant(lowRecord))
                 .font(.title)
                 .strikethrough(lowRecord.deleted)
         }

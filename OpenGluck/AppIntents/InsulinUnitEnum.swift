@@ -38,9 +38,9 @@ enum InsulinUnitEnum: String, Codable, Sendable {
 }
 
 extension InsulinUnitEnum: AppEnum {
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = TypeDisplayRepresentation(stringLiteral: "Insulin Unit")
+    static let typeDisplayRepresentation: TypeDisplayRepresentation = TypeDisplayRepresentation(stringLiteral: "Insulin Unit")
     
-    static var caseDisplayRepresentations: [InsulinUnitEnum : DisplayRepresentation] = [
+    static let caseDisplayRepresentations: [InsulinUnitEnum : DisplayRepresentation] = [
         .value1 : DisplayRepresentation(stringLiteral: "1"),
         .value2 : DisplayRepresentation(stringLiteral: "2"),
         .value3 : DisplayRepresentation(stringLiteral: "3"),
@@ -72,7 +72,7 @@ extension InsulinUnitEnum: AppEnum {
         .value29 : DisplayRepresentation(stringLiteral: "29"),
     ]
     
-    static var allCases: [InsulinUnitEnum] = [
+    static let allCases: [InsulinUnitEnum] = [
         .value1,
         .value2,
         .value3,

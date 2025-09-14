@@ -37,12 +37,12 @@ struct CurrentDataGauge: View {
                 if let mgDl {
                     return CurrentDataColors.getInfo(forMgDl: mgDl, hasCgmRealTimeData: hasCgmRealTimeData)
                 } else {
-                    return CurrentDataColors.getInfo(forEpisode: .disconnected)
+                    return CurrentDataColors.getInfo(forEpisode: .unknown)
                 }
             } else if episodeTimestamp != nil {
                 return CurrentDataColors.getInfo(forEpisode: episode!)
             } else {
-                return CurrentDataColors.getInfo(forEpisode: .disconnected)
+                return CurrentDataColors.getInfo(forEpisode: .unknown)
             }
         }()
         let backgroundColor = widgetRenderingMode == .fullColor ? color : .white.opacity(0)
@@ -57,13 +57,13 @@ struct CurrentDataGauge: View {
             guard UIColor(color).getRed(&r, green: &g, blue: &b, alpha: &a) else {
                 return .white
             }
-            func f(_ x: CGFloat) -> CGFloat {
+            @MainActor func f(_ x: CGFloat) -> CGFloat {
                 return 1 - ((1 - x) * freshnessColorOpacity)
             }
             return Color(red: f(r), green: f(g), blue: f(b))
         }()
         ZStack {
-            Gauge(value: freshnessLevel ?? 0, in: 0...1) {
+            Gauge(value: max(freshnessLevel ?? 0, 0), in: 0...1) {
                 if let systemName {
                     Image(systemName: systemName)
                         .resizable()
@@ -243,7 +243,6 @@ fileprivate struct CurrentDataGaugePreview: View {
                     mgDl = .random(in: 50...250)
                     instantMgDl = .random(in: 50...250)
                 }
-                .previewDisplayName("Random")
         }
     }
 
@@ -285,7 +284,6 @@ fileprivate struct CurrentDataGaugePreview: View {
 #endif
                 CurrentDataGaugePreview(timestamp: .constant(Date()), mgDl: $mgDl, instantMgDl: $instantMgDl, hasCgmRealTimeData: .constant(true), episode: .constant(nil), episodeTimestamp: .constant(nil))
             }
-                .previewDisplayName("Random")
                 .task(id: instant) {
                     instantMgDl = switch (instant) {
                     case .none: nil
@@ -298,6 +296,11 @@ fileprivate struct CurrentDataGaugePreview: View {
     }
 
     return Preview()
+}
+
+#Preview("Expired") {
+    CurrentDataGauge(enableInstantGlucose: false, timestamp: .constant(nil), mgDl: .constant(nil), instantMgDl: .constant(nil), hasCgmRealTimeData: .constant(true), episode: .constant(.unknown), episodeTimestamp: .constant(Date()), freshnessLevel: .constant(nil))
+
 }
 
 

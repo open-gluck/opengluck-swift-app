@@ -105,7 +105,7 @@ fileprivate class CurrentGlucoseWidgetConfiguration: BaseWidgetConfiguration {
     }
     
     static func getData(forTimelineDate timelineDate: Date, date: Date) async throws -> CurrentGlucoseWidgetData {
-        let openGlückConnection = OpenGluckConnection()
+        let openGlückConnection = await OpenGluckConnection()
         do {
             guard let client = openGlückConnection.getClient() else {
                 await openGlückConnection.getClient()?.recordLog("getData(forTimelineDate:date:) got error WidgetError.noClientConfiguration")

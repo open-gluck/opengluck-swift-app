@@ -37,9 +37,9 @@ enum SugarInGramsEnum: String, Codable, Sendable {
 }
 
 extension SugarInGramsEnum: AppEnum {
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = TypeDisplayRepresentation(stringLiteral: "Sugar in grams")
+    static let typeDisplayRepresentation: TypeDisplayRepresentation = TypeDisplayRepresentation(stringLiteral: "Sugar in grams")
     
-    static var caseDisplayRepresentations: [SugarInGramsEnum : DisplayRepresentation] = [
+    static let caseDisplayRepresentations: [SugarInGramsEnum : DisplayRepresentation] = [
         .value1 : DisplayRepresentation(stringLiteral: "1"),
         .value2 : DisplayRepresentation(stringLiteral: "2"),
         .value3 : DisplayRepresentation(stringLiteral: "3"),
@@ -71,7 +71,7 @@ extension SugarInGramsEnum: AppEnum {
         .value29 : DisplayRepresentation(stringLiteral: "29"),
     ]
     
-    static var allCases: [SugarInGramsEnum] = [
+    static let allCases: [SugarInGramsEnum] = [
         .value1,
         .value2,
         .value3,

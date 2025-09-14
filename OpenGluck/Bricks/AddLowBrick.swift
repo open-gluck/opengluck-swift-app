@@ -88,9 +88,11 @@ struct AddLowBrick: View {
     var body: some View {
         Brick(title: nil, systemImage: nil) {
             HoldButton(label: "Record Sugar", systemImage: "takeoutbag.and.cup.and.straw")
+#if os(watchOS)
                 .navigationDestination(for: PhoneNavigationData.PathAddLow.self) { _ in
                     AddLowCustomView(add: { await interactiveAdd(sugarInGrams: $0) })
                 }
+#endif
                 .contextMenu(ContextMenu(menuItems: {
                     NavigationLink("Custom…", value: PhoneNavigationData.PathAddLow())
                     Divider()
@@ -110,7 +112,7 @@ struct AddLowBrick: View {
                         }
                     }
                 }))
-                .frame(width: .infinity)
+                .frame(maxWidth: .infinity)
         }
         .frame(maxHeight: BrickUI.extraSmallHeight)
     }

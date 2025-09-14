@@ -5,6 +5,8 @@ import OG
 @MainActor
 class OpenGluckEnvironment: ObservableObject
 {
+    let debugMode: Bool = false // if set to true at compile-time, enable additional logging, useful when debugging previews
+    
     static var enableAutoUpdate: Bool = true
     @Published var revision: Int64? = nil
     @Published var hasTimedOut: Bool = false
@@ -18,6 +20,27 @@ class OpenGluckEnvironment: ObservableObject
     @Published var lastSuccessAt: Date? = nil
     @Published var lastAttemptAt: Date? = nil
     
+    @Published var refreshing: Bool = false
+    @Published var lastRefreshStartedAt: Date? = nil
+    @Published var logText: String = "Log:\n"
+    @Published var refreshStep: String = ""
+    
+    var debugDescription: String {
+        "revision=\(revision == nil ? "nil" : "\(revision!)"), hasTimedOut=\(hasTimedOut), lastSuccessAt=\(lastSuccessAt ?? Date()), lastAttemptAt=\(lastAttemptAt ?? Date()), refreshing=\(refreshing), lastRefreshStartedAt=\(lastRefreshStartedAt == nil ? "nil" : "\(lastRefreshStartedAt!)") refreshStep=\(refreshStep)"
+    }
+    
+    var isRefreshStepShowable: Bool {
+        !self.hasTimedOut && self.lastAttemptAt == nil && self.currentGlucoseRecord == nil && OpenGluckConnection.client != nil
+    }
+    
+    var usableRefreshStep: String {
+        return if isRefreshStepShowable {
+            refreshStep
+        } else {
+            ""
+        }
+    }
+    
     init(currentGlucoseRecord: OpenGluckGlucoseRecord? = nil, currentInstantGlucoseRecord: OpenGluckInstantGlucoseRecord? = nil, lastHistoricGlucoseRecord: OpenGluckGlucoseRecord? = nil, lastGlucoseRecords: [OpenGluckGlucoseRecord]? = nil, lastInsulinRecords: [OpenGluckInsulinRecord]? = nil, lastLowRecords: [OpenGluckLowRecord]? = nil, lastSuccessAt: Date? = nil, lastAttemptAt: Date? = nil) {
         self.currentGlucoseRecord = currentGlucoseRecord
         self.currentInstantGlucoseRecord = currentInstantGlucoseRecord
@@ -28,7 +51,7 @@ class OpenGluckEnvironment: ObservableObject
         self.lastSuccessAt = lastSuccessAt
         self.lastAttemptAt = lastAttemptAt
     }
-
+    
     func clear(hideInterface: Bool) {
         self.currentGlucoseRecord = nil
         self.currentInstantGlucoseRecord = nil
@@ -42,6 +65,58 @@ class OpenGluckEnvironment: ObservableObject
         }
     }
     
+    func copy(to: OpenGluckEnvironment, madeChanges: inout Bool) {
+        madeChanges = false
+        
+        if to.revision != self.revision {
+            to.revision = self.revision; madeChanges = true
+        }
+        if to.hasTimedOut != self.hasTimedOut {
+            to.hasTimedOut = self.hasTimedOut; madeChanges = true
+        }
+        if to.currentGlucoseRecord != self.currentGlucoseRecord {
+            to.currentGlucoseRecord = self.currentGlucoseRecord; madeChanges = true
+        }
+        if to.currentInstantGlucoseRecord != self.currentInstantGlucoseRecord {
+            to.currentInstantGlucoseRecord = self.currentInstantGlucoseRecord; madeChanges = true
+        }
+        if to.lastHistoricGlucoseRecord != self.lastHistoricGlucoseRecord {
+            to.lastHistoricGlucoseRecord = self.lastHistoricGlucoseRecord; madeChanges = true
+        }
+        if to.lastGlucoseRecords != self.lastGlucoseRecords {
+            to.lastGlucoseRecords = self.lastGlucoseRecords; madeChanges = true
+        }
+        if to.cgmHasRealTimeData != self.cgmHasRealTimeData {
+            to.cgmHasRealTimeData = self.cgmHasRealTimeData; madeChanges = true
+        }
+        if to.lastInsulinRecords != self.lastInsulinRecords {
+            to.lastInsulinRecords = self.lastInsulinRecords; madeChanges = true
+        }
+        if to.lastLowRecords != self.lastLowRecords {
+            to.lastLowRecords = self.lastLowRecords; madeChanges = true
+        }
+        if to.lastSuccessAt != self.lastSuccessAt {
+            to.lastSuccessAt = self.lastSuccessAt; madeChanges = true
+        }
+        if to.lastAttemptAt != self.lastAttemptAt {
+            to.lastAttemptAt = self.lastAttemptAt; madeChanges = true
+        }
+        
+        if to.refreshing != self.refreshing {
+            to.refreshing = self.refreshing; madeChanges = true
+        }
+        if to.lastRefreshStartedAt != self.lastRefreshStartedAt {
+            to.lastRefreshStartedAt = self.lastRefreshStartedAt; madeChanges = true
+        }
+        if to.logText != self.logText {
+            to.logText = self.logText; madeChanges = true }
+        
+        let usableRefreshStep = self.usableRefreshStep
+        if to.refreshStep != usableRefreshStep {
+            to.refreshStep = usableRefreshStep; madeChanges = true
+        }
+    }
+    
     var hasException: Bool {
         lastAttemptAt != nil && lastSuccessAt == nil
     }
@@ -49,174 +124,60 @@ class OpenGluckEnvironment: ObservableObject
     static func timedOutEnvironment(now: Date) -> OpenGluckEnvironment {
         OpenGluckEnvironment(lastSuccessAt: now, lastAttemptAt: now)
     }
+    
+    func log(_ message: String) {
+        if debugMode {
+            print("DEBUG OpenGluckEnvironment log: \(message)")
+            logText += "\(message)\n"
+        }
+    }
 }
 
-extension Notification.Name {
-    static let refreshOpenGlück = Notification.Name("OpenGluckEnvironmentUpdater.refreshOpenGlück")
-}
-
-
-@MainActor
-struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
-    private let debugSimulateTimeouts: Bool = false
-
-    @ViewBuilder
-    let content: () -> Content
-    
-    @EnvironmentObject var openGlückConnection: OpenGluckConnection
-    @StateObject var environment: OpenGluckEnvironment = OpenGluckEnvironment()
-    @State var rerender = UUID()
-    let debugMode: Bool = false // if true, enable additional logging, useful when debugging previews
-    
+extension OpenGluckEnvironment {
     static var refreshInterval: TimeInterval { 5 }
-    let timer = Timer.publish(every: Self.refreshInterval, on: .main, in: .common).autoconnect()
+    private var debugSimulateTimeouts: Bool { false }
     
-    @State var refreshStep: String = ""
-    @State var logText: String = "Log:\n"
-    private func log(_ message: String) {
-        logText += "\(message)\n"
+    private var textsGotResults: [String] {
+        [
+            "Got results…",
+            "Diabeting…",
+            "Mining Info…",
+            "Excavating Data…",
+            "Digging Records…"
+        ]
     }
     
-#if os(watchOS)
-    @Environment(\.isLuminanceReduced) var isLuminanceReduced
-#endif
-    
-    @ViewBuilder
-    var bodyContent: some View {
-        VStack {
-            if debugMode {
-                ScrollView {
-                    Text("\(logText)")
-                }
-            }
-            if rerender.uuidString == "" { EmptyView() }
-            if !environment.hasTimedOut && environment.lastAttemptAt == nil && environment.currentGlucoseRecord == nil && OpenGluckConnection.client != nil {
-                VStack {
-                    Spacer()
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .padding()
-                    Text(refreshStep)
-                        .foregroundStyle(.secondary)
-                    Spacer()
-                }
-            } else {
-                self.content()
-            }
-        }
-        .onReceive(environment.$currentGlucoseRecord, perform: { _ in
-            rerender = UUID()
-        })
-        .onReceive(environment.$currentInstantGlucoseRecord, perform: { _ in
-            rerender = UUID()
-        })
+    func refreshUnlessStartedRecently(openGlückConnection: OpenGluckConnection) {
+        refresh(openGlückConnection: openGlückConnection, unlessStartedRecently: true)
     }
     
-    private func refreshUnlessStartedRecently() {
-        let runRefresh: Bool
-        if let elapsedSinceLastRefreshStarted = lastRefreshStartedAt?.timeIntervalSinceNow {
-            runRefresh = -elapsedSinceLastRefreshStarted > Self.refreshInterval
-        } else {
-            runRefresh = true
-        }
-        if runRefresh {
-            refresh()
-        }
-    }
-        
-    var body: some View {
-        ZStack {
-            // We use a TimelineView(.animation) as a hack to make sure that watchOS
-            // will re-render our view as fast is it can. Since it displays information
-            // about our glucose levels, we don't want this view to be stale.
-            TimelineView(.animation) { context in
-                let currentGlucoseRecord = environment.currentGlucoseRecord
-                let freshnessLevel: Double? = if let currentGlucoseRecord { 1.0 - (-currentGlucoseRecord.timestamp.timeIntervalSince(context.date) / OpenGluckUI.maxGlucoseFreshnessTimeInterval) } else { nil }
-                if let freshnessLevel, freshnessLevel < 0 {
-                    bodyContent
-                        .environmentObject(OpenGluckEnvironment.timedOutEnvironment(now: context.date))
-                } else {
-                    bodyContent
-                        .environmentObject(environment)
-                }
-            }
-        }
-            .onReceive(timer) { _ in
-                if OpenGluckEnvironment.enableAutoUpdate {
-                    refreshUnlessStartedRecently()
-                }
-                if refreshing && -(lastRefreshStartedAt?.timeIntervalSinceNow ?? 0) > Self.refreshInterval {
-                    refreshStep = "Still on it…"
-                }
-            }
-            .onAppear {
-                refreshUnlessStartedRecently()
-            }
-            .onReceive(NotificationCenter.default.publisher(for: Notification.Name.refreshOpenGlück)) { _ in
-                print("Notification.Name.refreshOpenGlück")
-                refresh()
-            }
-#if os(iOS)
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                print("UIApplication.didBecomeActiveNotification")
-                refresh()
-            }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-                print("UIApplication.willResignActiveNotification")
-            }
-#endif
-#if os(watchOS)
-            .task(id: isLuminanceReduced) {
-                print("isLuminanceReduced=\(isLuminanceReduced)")
-                if(!isLuminanceReduced) {
-                    refreshUnlessStartedRecently()
-                }
-            }
-            .onReceive(NotificationCenter.default.publisher(for: WKApplication.didEnterBackgroundNotification)) { _ in
-                print("WKApplication.didEnterBackgroundNotification")
-                environment.clear(hideInterface: false)
-            }
-            .onReceive(NotificationCenter.default.publisher(for: WKApplication.willEnterForegroundNotification)) { _ in
-                print("WKApplication.willEnterForegroundNotification")
-                environment.clear(hideInterface: true)
-            }
-            .onReceive(NotificationCenter.default.publisher(for: WKApplication.didBecomeActiveNotification)) { _ in
-                print("WKApplication.didBecomeActiveNotification")
-                refresh()
-            }
-            .onReceive(NotificationCenter.default.publisher(for: WKApplication.willResignActiveNotification)) { _ in
-                print("WKApplication.willResignActiveNotification")
-}
-#endif
-    }
-    
-    @State var refreshing: Bool = false
-    @State var lastRefreshStartedAt: Date? = nil
-    private func setRefreshing(refreshing: Bool) {
-        self.refreshing = refreshing
-    }
-    
-    private let textsGotResults = [
-        "Got results…",
-        "Diabeting…",
-        "Mining Info…",
-        "Excavating Data…",
-        "Digging Records…"
-    ]
-    
-    private func refresh() {
+    func refresh(openGlückConnection: OpenGluckConnection, unlessStartedRecently: Bool = false) {
         log("refresh()")
-        Task {
+        Task { @MainActor in
             guard !refreshing else { return }
             guard !debugSimulateTimeouts && OpenGluckManager.openglückUrl != nil && OpenGluckManager.openglückToken != nil else {
-                environment.hasTimedOut = true
+                hasTimedOut = true
                 return
             }
-            defer { Task { @MainActor in self.refreshing = false } }
+            if unlessStartedRecently {
+                let isNeeded: Bool = if let elapsedSinceLastRefreshStarted = lastRefreshStartedAt?.timeIntervalSinceNow {
+                    -elapsedSinceLastRefreshStarted > Self.refreshInterval
+                } else {
+                    true
+                }
+                guard isNeeded else {
+                    return
+                }
+            }
+            
+            lastRefreshStartedAt = Date()
             refreshStep = "Refreshing…"
             refreshing = true
-            lastRefreshStartedAt = Date()
-
+            
+            defer {
+                self.refreshing = false
+            }
+            
             let timeoutTask = Task {
                 // allow the modal to stay 5 seconds, if we still don't have data, surrender, and let the
                 // other view show a message telling the user this takes too much time
@@ -225,18 +186,18 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
                 } catch {
                     return
                 }
-                environment.hasTimedOut = true
+                hasTimedOut = true
             }
             
             defer { timeoutTask.cancel() }
-
+            
             if let currentData = try? await openGlückConnection.getCurrentData(becauseUpdateOf: "openGlück.getCurrentData() returned data") {
                 refreshStep = textsGotResults.randomElement()!
-                log("environment.revision=\(String(describing: environment.revision))")
-                if environment.revision == nil || currentData.revision != environment.revision! {
+                log("environment.revision=\(String(describing: self.revision))")
+                if self.revision == nil || currentData.revision != self.revision! {
                     let lastData: LastData?
                     let syncClient = await openGlückConnection.getSyncClient()
-                    if environment.revision == nil {
+                    if self.revision == nil {
                         log("Getting last data")
                         do {
                             lastData = try await syncClient.getLastData()
@@ -256,32 +217,180 @@ struct OpenGluckEnvironmentUpdater<Content>: View where Content: View {
                     if let lastData {
                         log("Got last data")
                         if let lastGlucoseRecords = lastData.glucoseRecords {
-                            environment.lastGlucoseRecords = lastGlucoseRecords
+                            self.lastGlucoseRecords = lastGlucoseRecords
                         }
                         if let lastInsulinRecords = lastData.insulinRecords {
-                            environment.lastInsulinRecords = lastInsulinRecords
+                            self.lastInsulinRecords = lastInsulinRecords
                         }
                         if let lastLowRecords = lastData.lowRecords {
-                            environment.lastLowRecords = lastLowRecords
+                            self.lastLowRecords = lastLowRecords
                         }
                     } else {
                         log("Could not get last data")
                     }
-
-                    environment.revision = currentData.revision
-                    environment.cgmHasRealTimeData = currentData.hasCgmRealTimeData
-                    environment.currentGlucoseRecord = currentData.currentGlucoseRecord
-                    environment.currentInstantGlucoseRecord = currentData.currentInstantGlucoseRecord
-                    environment.lastHistoricGlucoseRecord = currentData.lastHistoricGlucoseRecord
-                    environment.lastSuccessAt = Date()
-                    log("Now at revision \(String(describing: environment.revision)), with \(String(describing: environment.lastGlucoseRecords?.count)) glucose records")
+                    
+                    self.revision = currentData.revision
+                    self.cgmHasRealTimeData = currentData.hasCgmRealTimeData
+                    self.currentGlucoseRecord = currentData.currentGlucoseRecord
+                    self.currentInstantGlucoseRecord = currentData.currentInstantGlucoseRecord
+                    self.lastHistoricGlucoseRecord = currentData.lastHistoricGlucoseRecord
+                    self.lastSuccessAt = Date()
+                    log("Now at revision \(String(describing: self.revision)), with \(String(describing: self.lastGlucoseRecords?.count)) glucose records")
                 }
             } else {
                 log("openGlückConnection.getCurrentData() returned nil")
             }
-            environment.lastAttemptAt = Date()
-            environment.hasTimedOut = false
-            log("Refresh complete")
+            self.lastAttemptAt = Date()
+            self.hasTimedOut = false
+            log("refresh complete at \(Date())")
+        }
+    }
+}
+
+struct OpenGluckEnvironmentUpdaterRootView<Content: View>: View {
+    @ViewBuilder
+    var content: () -> Content
+    @StateObject var environment: OpenGluckEnvironment = OpenGluckEnvironment()
+    @StateObject var environmentCopy: OpenGluckEnvironment = OpenGluckEnvironment() // for some obscure reasons re-rendering the view does not re-render the children
+    @EnvironmentObject var openGlückConnection: OpenGluckConnection
+    let timer = Timer.publish(every: OpenGluckEnvironment.refreshInterval, on: .main, in: .common).autoconnect()
+    
+#if os(watchOS)
+    @Environment(\.isLuminanceReduced) var isLuminanceReduced
+#endif
+    
+    @MainActor
+    private func handleReceivedEnvironment() {
+        var madeChanges: Bool = false
+        withAnimation {
+            environment.copy(to: environmentCopy, madeChanges: &madeChanges)
+        }
+    }
+    var body: some View {
+        content()
+            .environmentObject(environmentCopy)
+            .onReceive(environment.$revision) { newValue in
+                handleReceivedEnvironment()
+            }
+            .onReceive(environment.$currentGlucoseRecord) { newValue in
+                handleReceivedEnvironment()
+            }
+            .onReceive(environment.$currentInstantGlucoseRecord) { newValue in
+                handleReceivedEnvironment()
+            }
+            .onReceive(environment.$cgmHasRealTimeData) { newValue in
+                handleReceivedEnvironment()
+            }
+            .onReceive(environment.$hasTimedOut) { newValue in
+                handleReceivedEnvironment()
+            }
+            .onReceive(environment.$lastAttemptAt) { newValue in
+                handleReceivedEnvironment()
+            }
+            .onReceive(environment.$lastGlucoseRecords) { newValue in
+                handleReceivedEnvironment()
+            }
+            .onReceive(environment.$lastInsulinRecords) { newValue in
+                handleReceivedEnvironment()
+            }
+            .onReceive(environment.$lastLowRecords) { newValue in
+                handleReceivedEnvironment()
+            }
+            .onReceive(environment.$lastRefreshStartedAt) { newValue in
+                handleReceivedEnvironment()
+            }
+            .onReceive(environment.$lastHistoricGlucoseRecord) { newValue in
+                handleReceivedEnvironment()
+            }
+            .onReceive(timer) { _ in
+                if OpenGluckEnvironment.enableAutoUpdate {
+                    environment.refreshUnlessStartedRecently(openGlückConnection: openGlückConnection)
+                }
+                if environment.refreshing && -(environment.lastRefreshStartedAt?.timeIntervalSinceNow ?? 0) > OpenGluckEnvironment.refreshInterval {
+                    environment.refreshStep = "Still on it…"
+                }
+            }
+            .onAppear {
+                environment.refreshUnlessStartedRecently(openGlückConnection: openGlückConnection)
+            }
+            .onReceive(NotificationCenter.default.publisher(for: Notification.Name.refreshOpenGlück)) { _ in
+                print("Notification.Name.refreshOpenGlück")
+                environment.refresh(openGlückConnection: openGlückConnection)
+            }
+#if os(iOS)
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                handleReceivedEnvironment()
+                environment.refresh(openGlückConnection: openGlückConnection)
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIScene.didActivateNotification)) { _ in
+                // FIXME we have a weird bug where this does not filre on some occasion. When this bug occur, then
+                // the interface is frozen.
+                environment.refresh(openGlückConnection: openGlückConnection)
+            }
+#endif
+#if os(watchOS)
+            .task(id: isLuminanceReduced) {
+                if(!isLuminanceReduced) {
+                    environment.refreshUnlessStartedRecently(openGlückConnection: openGlückConnection)
+                }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: WKApplication.didEnterBackgroundNotification)) { _ in
+                environment.clear(hideInterface: false)
+            }
+            .onReceive(NotificationCenter.default.publisher(for: WKApplication.willEnterForegroundNotification)) { _ in
+                environment.clear(hideInterface: true)
+            }
+            .onReceive(NotificationCenter.default.publisher(for: WKApplication.didBecomeActiveNotification)) { _ in
+                environment.refresh(openGlückConnection: openGlückConnection)
+            }
+#endif
+    }
+    
+    private func setRefreshing(refreshing: Bool) {
+        environment.refreshing = refreshing
+    }
+    
+    private func log(_ message: String) {
+        environment.log(message)
+    }
+    
+}
+
+extension Notification.Name {
+    static let refreshOpenGlück = Notification.Name("OpenGluckEnvironmentUpdater.refreshOpenGlück")
+}
+
+
+@MainActor
+struct OpenGluckEnvironmentUpdaterView<Content>: View where Content: View {
+    @ViewBuilder
+    let content: () -> Content
+    
+    // @State var rerender: Int = 0
+    @EnvironmentObject var environment: OpenGluckEnvironment
+    
+    @ViewBuilder
+    var bodyContent: some View {
+        VStack {
+            if !environment.hasTimedOut && environment.lastAttemptAt == nil && environment.currentGlucoseRecord == nil && OpenGluckConnection.client != nil {
+                VStack {
+                    Spacer()
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .padding()
+                    Text(environment.refreshStep)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                }
+            } else {
+                self.content()
+            }
+        }
+    }
+    
+    var body: some View {
+        ZStack {
+            bodyContent
         }
     }
 }
@@ -300,7 +409,7 @@ struct OpenGluckEnvironmentUpdater_Previews: PreviewProvider {
         }
     }
     static var previews: some View {
-        OpenGluckEnvironmentUpdater {
+        OpenGluckEnvironmentUpdaterView {
             VStack {
                 Preview()
             }

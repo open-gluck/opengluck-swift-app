@@ -7,14 +7,13 @@ struct TvContentView: View {
         case settings
     }
     
-    
     var body: some View {
         AppDataAutoFetch {
-            OpenGluckEnvironmentUpdater {
+            OpenGluckEnvironmentUpdaterView {
                 NavigationStack(path: $path) {
                     VStack(alignment: .center) {
                         TimelineView(.everyMinute) { context in
-                            CurrentGlucoseView(now: context.date, mode: .graph)
+                            CurrentGlucoseView(now: context.date, mode: .graph, graphGeometry: .constant(CGSize(width: 0, height: 0)))
                                 .clipped()
                             Spacer()
                             HStack {
@@ -22,7 +21,7 @@ struct TvContentView: View {
                                     path.append(PathItem.settings)
                                 }
                                 Spacer()
-                                CurrentGlucoseView(now: context.date, mode: .current)
+                                CurrentGlucoseView(now: context.date, mode: .graphBrick, graphGeometry: .constant(CGSize(width: 0, height: 0)))
                             }
                         }
                     }

@@ -16,11 +16,11 @@ struct AppLauncherWidget: Widget {
             SimpleEntry(date: Date())
         }
         
-        func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
+        @preconcurrency func getSnapshot(in context: Self.Context, completion: @escaping @Sendable (Self.Entry) -> Void) {
             completion(entry)
         }
         
-        func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
+        @preconcurrency func getTimeline(in context: Self.Context, completion: @escaping @Sendable (Timeline<Self.Entry>) -> Void) {
             let timeline = Timeline(entries: [entry], policy: .never)
             completion(timeline)
         }

@@ -28,7 +28,7 @@ class WatchAppDelegate: NSObject, WKApplicationDelegate, WCSessionDelegate, Obse
     }
     
     // Conform to UNUserNotificationCenterDelegate to show local notification in foreground
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         //print("COMPLETION HANDLER")
         return [.banner, .badge, .sound]
     }
@@ -49,8 +49,10 @@ class WatchAppDelegate: NSObject, WKApplicationDelegate, WCSessionDelegate, Obse
         }
     }
 
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        try? WKData.default.flush()
+    nonisolated func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        Task { @MainActor in
+            try? WKData.default.flush()
+        }
     }
     
     private func checkReloadTimelines(_ userInfoKeys: [String]) {
@@ -61,10 +63,12 @@ class WatchAppDelegate: NSObject, WKApplicationDelegate, WCSessionDelegate, Obse
         WidgetKinds.DebugWidget.reloadTimeline()
     }
 
-    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+    nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+        let sendableUserInfo = userInfo as! [String: WKData.ValueType]
         print("WatchAppDelegate.session \(userInfo.description)")
-        WKData.default.didReceive(userInfo: userInfo)
-        checkReloadTimelines([String](userInfo.keys))
-        WidgetKinds.DebugWidget.reloadTimeline()
+        Task { @MainActor in
+            WKData.default.didReceive(userInfo: sendableUserInfo)
+            WidgetKinds.DebugWidget.reloadTimeline()
+        }
     }
 }

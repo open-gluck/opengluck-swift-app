@@ -35,6 +35,14 @@ struct CheckConnectionHasClient<C: View, SetupC: View, TimeoutC: View, Exception
     @State var hasCompletedSetup: Bool = false
     @EnvironmentObject var environment: OpenGluckEnvironment
     
+    private enum CurrentContent {
+        case setup
+        case timeout
+        case exception
+        case normal
+    }
+    @State private var currentContent: CurrentContent? = nil
+    
     init(
         content: @escaping () -> C,
         setupContent: @escaping @MainActor () -> SetupC = { CheckConnectionHasClientDefaultSetupContent() },
@@ -47,20 +55,54 @@ struct CheckConnectionHasClient<C: View, SetupC: View, TimeoutC: View, Exception
         self.exceptionContent = exceptionContent
     }
     
+    private func updateCurrentContent() {
+        let newHasCompletedSetup = OpenGluckConnection.client != nil
+        if newHasCompletedSetup != hasCompletedSetup {
+            hasCompletedSetup = newHasCompletedSetup
+        }
+
+        currentContent = computeCurrentContent()
+    }
+    
+    private func computeCurrentContent() -> CurrentContent {
+        return if !hasCompletedSetup {
+            .setup
+        } else if environment.hasTimedOut {
+            .timeout
+        } else if environment.hasException {
+            .exception
+        } else {
+            .normal
+        }
+    }
+    
     var body: some View {
         ZStack {
-            if !hasCompletedSetup {
+            switch currentContent ?? computeCurrentContent() {
+            case .setup:
                 setupContent()
-            } else if environment.hasTimedOut {
+            case .timeout:
                 timeoutContent()
-            } else if environment.hasException {
+            case .exception:
                 exceptionContent()
-            } else {
+            case .normal:
                 content()
             }
         }
-        .onAppear {
-            hasCompletedSetup = OpenGluckConnection.client != nil
+        .task {
+            updateCurrentContent()
+        }
+        .task(id: OpenGluckConnection.client != nil) {
+            updateCurrentContent()
+        }
+        .onReceive(environment.$hasTimedOut) { _ in
+            updateCurrentContent()
+        }
+        .onReceive(environment.$lastAttemptAt) { _ in
+            updateCurrentContent()
+        }
+        .onReceive(environment.$lastSuccessAt) { _ in
+            updateCurrentContent()
         }
     }
 }

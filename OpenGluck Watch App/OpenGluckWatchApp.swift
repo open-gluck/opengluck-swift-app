@@ -36,7 +36,9 @@ struct OpenGluckWatchApp: App {
              }
              }
              */
-            WatchContentView()
+            OpenGluckEnvironmentUpdaterRootView {
+                WatchContentView()
+            }
                 .environmentObject(openGlückConnection)
                 .environmentObject(appDelegate)
                 .onAppear {

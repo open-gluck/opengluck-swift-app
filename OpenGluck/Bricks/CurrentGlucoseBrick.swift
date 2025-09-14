@@ -14,7 +14,7 @@ struct CurrentGlucoseBrick: View {
 }
 
 #Preview("TrendBrick") {
-    OpenGluckEnvironmentUpdater {
+    OpenGluckEnvironmentUpdaterView {
         Grid {
             GridRow {
                 CurrentGlucoseBrick(now: Date())

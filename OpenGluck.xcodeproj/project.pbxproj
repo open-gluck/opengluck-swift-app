@@ -9,16 +9,6 @@
 /* Begin PBXBuildFile section */
 		9D027CF52AF5877100B46980 /* DebugWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B2CB629DCBFBB004C6311 /* DebugWidget.swift */; };
 		9D027CF62AF59A2A00B46980 /* OpenGluckWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D50EBBC29C79E2400CF69E6 /* OpenGluckWatchApp.swift */; };
-		9D0B4BA62AFFF07100D2C773 /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9D0B4BA42AFFF07100D2C773 /* Development.xcconfig */; };
-		9D0B4BA72AFFF07100D2C773 /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9D0B4BA42AFFF07100D2C773 /* Development.xcconfig */; };
-		9D0B4BA82AFFF07100D2C773 /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9D0B4BA42AFFF07100D2C773 /* Development.xcconfig */; };
-		9D0B4BA92AFFF07100D2C773 /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9D0B4BA42AFFF07100D2C773 /* Development.xcconfig */; };
-		9D0B4BAA2AFFF07100D2C773 /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9D0B4BA42AFFF07100D2C773 /* Development.xcconfig */; };
-		9D0B4BAB2AFFF07100D2C773 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9D0B4BA52AFFF07100D2C773 /* Production.xcconfig */; };
-		9D0B4BAC2AFFF07100D2C773 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9D0B4BA52AFFF07100D2C773 /* Production.xcconfig */; };
-		9D0B4BAD2AFFF07100D2C773 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9D0B4BA52AFFF07100D2C773 /* Production.xcconfig */; };
-		9D0B4BAE2AFFF07100D2C773 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9D0B4BA52AFFF07100D2C773 /* Production.xcconfig */; };
-		9D0B4BAF2AFFF07100D2C773 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9D0B4BA52AFFF07100D2C773 /* Production.xcconfig */; };
 		9D0B4BB12AFFF21000D2C773 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0B4BB02AFFF21000D2C773 /* AppData.swift */; };
 		9D0B4BB52AFFF21000D2C773 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0B4BB02AFFF21000D2C773 /* AppData.swift */; };
 		9D0B4BB72B002F4700D2C773 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D0B4BB62B002F4700D2C773 /* Media.xcassets */; };
@@ -39,10 +29,7 @@
 		9D1EEE4A2AEF92DE009EA2AB /* OGUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9D1EEE492AEF92DE009EA2AB /* OGUI */; };
 		9D1EEE4C2AEF92E6009EA2AB /* OGUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9D1EEE4B2AEF92E6009EA2AB /* OGUI */; };
 		9D1EEE4E2AEF9F58009EA2AB /* DisplayPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1EEE4D2AEF9F58009EA2AB /* DisplayPreferencesView.swift */; };
-		9D1EEE502AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1EEE4F2AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift */; };
-		9D1EEE512AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1EEE4F2AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift */; };
 		9D1EEE522AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1EEE4F2AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift */; };
-		9D1EEE532AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1EEE4F2AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift */; };
 		9D1F6EB12B27404D0070D7A3 /* AddInsulinBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1F6EB02B27404D0070D7A3 /* AddInsulinBrick.swift */; };
 		9D1F6EB32B27417D0070D7A3 /* Brick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1F6EB22B27417D0070D7A3 /* Brick.swift */; };
 		9D1F6EB42B2741DD0070D7A3 /* Brick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1F6EB22B27417D0070D7A3 /* Brick.swift */; };
@@ -89,7 +76,7 @@
 		9D50EBAD29C79E2300CF69E6 /* PhoneContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D50EBAC29C79E2300CF69E6 /* PhoneContentView.swift */; };
 		9D50EBAF29C79E2400CF69E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D50EBAE29C79E2400CF69E6 /* Assets.xcassets */; };
 		9D50EBB229C79E2400CF69E6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D50EBB129C79E2400CF69E6 /* Preview Assets.xcassets */; };
-		9D50EBB829C79E2400CF69E6 /* OG Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 9D50EBB729C79E2400CF69E6 /* OG Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9D50EBB829C79E2400CF69E6 /* OG Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 9D50EBB729C79E2400CF69E6 /* OG Watch.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9D50EBBF29C79E2400CF69E6 /* WatchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D50EBBE29C79E2400CF69E6 /* WatchContentView.swift */; };
 		9D50EBC129C79E2500CF69E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D50EBC029C79E2500CF69E6 /* Assets.xcassets */; };
 		9D50EBC429C79E2500CF69E6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D50EBC329C79E2500CF69E6 /* Preview Assets.xcassets */; };
@@ -140,21 +127,12 @@
 		9D8C668B29E3386900EB40E4 /* OG Phone Widget Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9D8C667E29E3386800EB40E4 /* OG Phone Widget Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9D8C669029E33B2A00EB40E4 /* OpenGluckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF375DE29D254990043CAA6 /* OpenGluckManager.swift */; };
 		9D8C669129E33B3400EB40E4 /* WKDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D657A1D29DB1DE900791926 /* WKDefaults.swift */; };
-		9D9031F52C036883006130E3 /* OpenGluckConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9031F12C036883006130E3 /* OpenGluckConnection.swift */; };
-		9D9031F62C036883006130E3 /* OpenGluckConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9031F12C036883006130E3 /* OpenGluckConnection.swift */; };
-		9D9031F72C036883006130E3 /* OpenGluckConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9031F12C036883006130E3 /* OpenGluckConnection.swift */; };
-		9D9031F82C036883006130E3 /* OpenGluckConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9031F12C036883006130E3 /* OpenGluckConnection.swift */; };
-		9D9031F92C036883006130E3 /* OpenGluckConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9031F12C036883006130E3 /* OpenGluckConnection.swift */; };
 		9D9031FA2C036883006130E3 /* OpenGluckEnvironmentUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9031F22C036883006130E3 /* OpenGluckEnvironmentUpdater.swift */; };
-		9D9031FB2C036883006130E3 /* OpenGluckEnvironmentUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9031F22C036883006130E3 /* OpenGluckEnvironmentUpdater.swift */; };
-		9D9031FC2C036883006130E3 /* OpenGluckEnvironmentUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9031F22C036883006130E3 /* OpenGluckEnvironmentUpdater.swift */; };
 		9D9031FD2C036883006130E3 /* OpenGluckEnvironmentUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9031F22C036883006130E3 /* OpenGluckEnvironmentUpdater.swift */; };
 		9D9031FE2C036883006130E3 /* OpenGluckEnvironmentUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9031F22C036883006130E3 /* OpenGluckEnvironmentUpdater.swift */; };
 		9D9031FF2C036883006130E3 /* OpenGluckThresholdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9031F32C036883006130E3 /* OpenGluckThresholdsDelegate.swift */; };
 		9D9032002C036883006130E3 /* OpenGluckThresholdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9031F32C036883006130E3 /* OpenGluckThresholdsDelegate.swift */; };
-		9D9032012C036883006130E3 /* OpenGluckThresholdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9031F32C036883006130E3 /* OpenGluckThresholdsDelegate.swift */; };
 		9D9032022C036883006130E3 /* OpenGluckThresholdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9031F32C036883006130E3 /* OpenGluckThresholdsDelegate.swift */; };
-		9D9032032C036883006130E3 /* OpenGluckThresholdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9031F32C036883006130E3 /* OpenGluckThresholdsDelegate.swift */; };
 		9D9032052C0368A0006130E3 /* OpenGluckUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9032042C0368A0006130E3 /* OpenGluckUI.swift */; };
 		9D9032062C0368A0006130E3 /* OpenGluckUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9032042C0368A0006130E3 /* OpenGluckUI.swift */; };
 		9D9032072C0368A0006130E3 /* OpenGluckUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9032042C0368A0006130E3 /* OpenGluckUI.swift */; };
@@ -187,6 +165,8 @@
 		9D973C4B2B416E63002EE231 /* LowRecordSnippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D973C4A2B416E63002EE231 /* LowRecordSnippet.swift */; };
 		9D973C4C2B416EAC002EE231 /* LowRecordSnippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D973C4A2B416E63002EE231 /* LowRecordSnippet.swift */; };
 		9D9EB07229E1DD91005FCD1C /* HTTPSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D50EBD029C7A7A300CF69E6 /* HTTPSClient.swift */; };
+		9DA328812DACFA63006DD9F5 /* RobustTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA328802DACFA5F006DD9F5 /* RobustTimelineView.swift */; };
+		9DA328822DACFA63006DD9F5 /* RobustTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA328802DACFA5F006DD9F5 /* RobustTimelineView.swift */; };
 		9DA6CF6529E34EB30075CC4C /* HTTPSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D50EBD029C7A7A300CF69E6 /* HTTPSClient.swift */; };
 		9DA6CF6629E34EBF0075CC4C /* PhoneContactUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D192C8B29C8EAD00047E40E /* PhoneContactUpdater.swift */; };
 		9DA6CF6A29E34F2A0075CC4C /* PhoneWidgetTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA6CF6929E34F2A0075CC4C /* PhoneWidgetTarget.swift */; };
@@ -206,11 +186,8 @@
 		9DAD39252AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAD39212AF5AD4600C1304F /* OpenGluckConnection.swift */; };
 		9DAD39262AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAD39212AF5AD4600C1304F /* OpenGluckConnection.swift */; };
 		9DAD39272AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAD39212AF5AD4600C1304F /* OpenGluckConnection.swift */; };
-		9DAD39282AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAD39222AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift */; };
 		9DAD39292AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAD39222AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift */; };
 		9DAD392A2AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAD39222AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift */; };
-		9DAD392B2AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAD39222AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift */; };
-		9DAD392C2AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAD39222AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift */; };
 		9DB1DD2E2B0562B0007ED12B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D8C668629E3386900EB40E4 /* Assets.xcassets */; };
 		9DB1DD312B07CD3E007ED12B /* BloodGlucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB1DD302B07CD3E007ED12B /* BloodGlucose.swift */; };
 		9DB1DD322B07CD3E007ED12B /* BloodGlucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB1DD302B07CD3E007ED12B /* BloodGlucose.swift */; };
@@ -231,11 +208,6 @@
 		9DC4DF4C2B2F6C2F00BAF7C5 /* CurrentGlucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF492B2F6C2F00BAF7C5 /* CurrentGlucose.swift */; };
 		9DCAE26729CCED0F005973F8 /* OpenGluckCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCAE26629CCED0F005973F8 /* OpenGluckCredentials.swift */; };
 		9DCAE26829CCED0F005973F8 /* OpenGluckCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCAE26629CCED0F005973F8 /* OpenGluckCredentials.swift */; };
-		9DD650472B14AB6D00C6A417 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9DD650462B14AB6D00C6A417 /* Config.xcconfig */; };
-		9DD650482B14AB6D00C6A417 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9DD650462B14AB6D00C6A417 /* Config.xcconfig */; };
-		9DD650492B14AB6D00C6A417 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9DD650462B14AB6D00C6A417 /* Config.xcconfig */; };
-		9DD6504A2B14AB6D00C6A417 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9DD650462B14AB6D00C6A417 /* Config.xcconfig */; };
-		9DD6504B2B14AB6D00C6A417 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9DD650462B14AB6D00C6A417 /* Config.xcconfig */; };
 		9DD99DEA2B30F5A9003194B7 /* DigiPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD99DE82B30F4A0003194B7 /* DigiPadView.swift */; };
 		9DD99DEB2B30F98F003194B7 /* SheetStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */; };
 		9DDA74DB2A4391BD00451DF6 /* CurrentGlucoseLargeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDA74DA2A4391BD00451DF6 /* CurrentGlucoseLargeWidget.swift */; };
@@ -406,6 +378,8 @@
 		9D973C442B416AFF002EE231 /* InsulinRecordSnippet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinRecordSnippet.swift; sourceTree = "<group>"; };
 		9D973C472B416B16002EE231 /* RecordSnippet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSnippet.swift; sourceTree = "<group>"; };
 		9D973C4A2B416E63002EE231 /* LowRecordSnippet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LowRecordSnippet.swift; sourceTree = "<group>"; };
+		9D99381D2DFC72CE0011F5E3 /* OG-Mac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "OG-Mac-Info.plist"; sourceTree = "<group>"; };
+		9DA328802DACFA5F006DD9F5 /* RobustTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobustTimelineView.swift; sourceTree = "<group>"; };
 		9DA6CF6929E34F2A0075CC4C /* PhoneWidgetTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneWidgetTarget.swift; sourceTree = "<group>"; };
 		9DA6CF6C29E355720075CC4C /* CurrentBloodGlucoseTimestampWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentBloodGlucoseTimestampWidget.swift; sourceTree = "<group>"; };
 		9DA7CCA72B290AB80006EC91 /* InsulinRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinRecordView.swift; sourceTree = "<group>"; };
@@ -571,6 +545,7 @@
 		9D50EB9E29C79E2300CF69E6 = {
 			isa = PBXGroup;
 			children = (
+				9D99381D2DFC72CE0011F5E3 /* OG-Mac-Info.plist */,
 				9DD650462B14AB6D00C6A417 /* Config.xcconfig */,
 				9D0B4BA42AFFF07100D2C773 /* Development.xcconfig */,
 				9D0B4BA52AFFF07100D2C773 /* Production.xcconfig */,
@@ -820,6 +795,7 @@
 		9DB1DD2F2B07CD0A007ED12B /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				9DA328802DACFA5F006DD9F5 /* RobustTimelineView.swift */,
 				9DB1DD302B07CD3E007ED12B /* BloodGlucose.swift */,
 				9DA7CCA92B290B070006EC91 /* InsulinUnit.swift */,
 				9DA7CCAE2B290DB00006EC91 /* SnackGram.swift */,
@@ -984,8 +960,8 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					9D22687D2AF29B2700437FAC = {
 						CreatedOnToolsVersion = 15.0.1;
@@ -1035,10 +1011,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D0B4BBB2B002F4700D2C773 /* Media.xcassets in Resources */,
-				9D0B4BAA2AFFF07100D2C773 /* Development.xcconfig in Resources */,
-				9D0B4BAF2AFFF07100D2C773 /* Production.xcconfig in Resources */,
 				9D2268882AF29B2800437FAC /* Preview Assets.xcassets in Resources */,
-				9DD6504B2B14AB6D00C6A417 /* Config.xcconfig in Resources */,
 				9D2268852AF29B2800437FAC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1048,10 +1021,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D0B4BB72B002F4700D2C773 /* Media.xcassets in Resources */,
-				9D0B4BA62AFFF07100D2C773 /* Development.xcconfig in Resources */,
-				9D0B4BAB2AFFF07100D2C773 /* Production.xcconfig in Resources */,
 				9D50EBB229C79E2400CF69E6 /* Preview Assets.xcassets in Resources */,
-				9DD650472B14AB6D00C6A417 /* Config.xcconfig in Resources */,
 				9D50EBAF29C79E2400CF69E6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1061,10 +1031,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D0B4BB92B002F4700D2C773 /* Media.xcassets in Resources */,
-				9D0B4BA82AFFF07100D2C773 /* Development.xcconfig in Resources */,
-				9D0B4BAD2AFFF07100D2C773 /* Production.xcconfig in Resources */,
 				9D50EBC429C79E2500CF69E6 /* Preview Assets.xcassets in Resources */,
-				9DD650492B14AB6D00C6A417 /* Config.xcconfig in Resources */,
 				9D50EBC129C79E2500CF69E6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1073,11 +1040,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D0B4BA92AFFF07100D2C773 /* Development.xcconfig in Resources */,
-				9DD6504A2B14AB6D00C6A417 /* Config.xcconfig in Resources */,
 				9D50EBEE29C7BC8E00CF69E6 /* Assets.xcassets in Resources */,
 				9D0B4BBA2B002F4700D2C773 /* Media.xcassets in Resources */,
-				9D0B4BAE2AFFF07100D2C773 /* Production.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1085,11 +1049,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D0B4BA72AFFF07100D2C773 /* Development.xcconfig in Resources */,
-				9DD650482B14AB6D00C6A417 /* Config.xcconfig in Resources */,
 				9D0B4BB82B002F4700D2C773 /* Media.xcassets in Resources */,
 				9DB1DD2E2B0562B0007ED12B /* Assets.xcassets in Resources */,
-				9D0B4BAC2AFFF07100D2C773 /* Production.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1111,11 +1072,8 @@
 				9D22688C2AF29C7E00437FAC /* GlucoseGraph.swift in Sources */,
 				9D22689B2AF29DEB00437FAC /* TimestampView.swift in Sources */,
 				9D22689A2AF29DCF00437FAC /* TvAppTarget.swift in Sources */,
-				9D9032032C036883006130E3 /* OpenGluckThresholdsDelegate.swift in Sources */,
-				9DAD392C2AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift in Sources */,
 				9D2268982AF29D7B00437FAC /* WKDataKeys.swift in Sources */,
 				9D9032092C0368A0006130E3 /* OpenGluckUI.swift in Sources */,
-				9D9031F92C036883006130E3 /* OpenGluckConnection.swift in Sources */,
 				9D2268A42AF2B4FD00437FAC /* CurrentDataColors.swift in Sources */,
 				9D0B4BB52AFFF21000D2C773 /* AppData.swift in Sources */,
 				9D1F6EB72B2741DE0070D7A3 /* Brick.swift in Sources */,
@@ -1144,7 +1102,6 @@
 				9D192C8C29C8EAD00047E40E /* PhoneContactUpdater.swift in Sources */,
 				9D786CBF29CE3542008F9270 /* GlucoseGraph.swift in Sources */,
 				9D9031FF2C036883006130E3 /* OpenGluckThresholdsDelegate.swift in Sources */,
-				9D1EEE502AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */,
 				9D50EBDC29C7AB7800CF69E6 /* GlucoseView.swift in Sources */,
 				9DC4DF4A2B2F6C2F00BAF7C5 /* CurrentGlucose.swift in Sources */,
 				9DB7836C2B3B83CB0039C578 /* SugarInGramsEnum.swift in Sources */,
@@ -1159,6 +1116,7 @@
 				9D50EBAB29C79E2300CF69E6 /* OpenGluckPhoneApp.swift in Sources */,
 				9D50EBD429C7A7F200CF69E6 /* CurrentGlucoseView.swift in Sources */,
 				9D2DFED729D0EF1000545193 /* PhoneAppTabs.swift in Sources */,
+				9DA328822DACFA63006DD9F5 /* RobustTimelineView.swift in Sources */,
 				9DCAE26729CCED0F005973F8 /* OpenGluckCredentials.swift in Sources */,
 				9DB783682B3B79810039C578 /* InsulinUnitEnum.swift in Sources */,
 				9D8AD5FB2A3CB058006FEAE0 /* WidgetKinds.swift in Sources */,
@@ -1182,12 +1140,10 @@
 				9DB44C7B29DE31A0005BB7F8 /* WKComplicationDebugView.swift in Sources */,
 				9DA7CCAF2B290DB00006EC91 /* SnackGram.swift in Sources */,
 				9D1EEE4E2AEF9F58009EA2AB /* DisplayPreferencesView.swift in Sources */,
-				9DAD39282AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift in Sources */,
 				9D39BB0B2A043C180037AB00 /* WKDataKeys.swift in Sources */,
 				9D2DFED929D0EF8A00545193 /* PhoneAdvancedView.swift in Sources */,
 				9D192C8E29C8EFF00047E40E /* NumberImageView.swift in Sources */,
 				9DC4DF422B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift in Sources */,
-				9D9031F52C036883006130E3 /* OpenGluckConnection.swift in Sources */,
 				9DDB12932B38885900015F17 /* OpenGluckAppIntents.swift in Sources */,
 				9D1F6EB12B27404D0070D7A3 /* AddInsulinBrick.swift in Sources */,
 				9D1B2CB929DCC163004C6311 /* ComplicationDebugView.swift in Sources */,
@@ -1230,7 +1186,6 @@
 				9D657A2329DB614F00791926 /* WKDataDebugView.swift in Sources */,
 				9DF375E329D256740043CAA6 /* LastRecordsView.swift in Sources */,
 				9DAD392A2AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift in Sources */,
-				9D9032012C036883006130E3 /* OpenGluckThresholdsDelegate.swift in Sources */,
 				9D973C422B402629002EE231 /* OpenGluckAppIntents.swift in Sources */,
 				9D657A2629DB680200791926 /* WatchAppDelegate.swift in Sources */,
 				9D973C492B416B18002EE231 /* RecordSnippet.swift in Sources */,
@@ -1244,14 +1199,13 @@
 				9D924D3D2A3F3A0200B477AF /* CurrentDataColors.swift in Sources */,
 				9DF375DC29D254360043CAA6 /* GlucoseRecordView.swift in Sources */,
 				9D9443E52B52DF7C0088ACD8 /* GlucoseRecordSnippet.swift in Sources */,
-				9D9031FC2C036883006130E3 /* OpenGluckEnvironmentUpdater.swift in Sources */,
 				9DB44C7C29DE31C0005BB7F8 /* WKComplicationDebugView.swift in Sources */,
-				9D9031F72C036883006130E3 /* OpenGluckConnection.swift in Sources */,
 				9DF375E029D254990043CAA6 /* OpenGluckManager.swift in Sources */,
 				9D973C462B416B02002EE231 /* InsulinRecordSnippet.swift in Sources */,
 				9DCAE26829CCED0F005973F8 /* OpenGluckCredentials.swift in Sources */,
 				9D39BB0C2A043C180037AB00 /* WKDataKeys.swift in Sources */,
 				9DB1DD332B07CD3E007ED12B /* BloodGlucose.swift in Sources */,
+				9DA328812DACFA63006DD9F5 /* RobustTimelineView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1266,14 +1220,12 @@
 				9DAD39262AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */,
 				9D1B2CB729DCBFBB004C6311 /* DebugWidget.swift in Sources */,
 				9D1F6EB62B2741DE0070D7A3 /* Brick.swift in Sources */,
-				9D1EEE532AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */,
 				9D9032082C0368A0006130E3 /* OpenGluckUI.swift in Sources */,
 				9DE374852C0509DF00AA04DF /* LowIcon.swift in Sources */,
 				9D924D432A41DA9700B477AF /* GraphWidget.swift in Sources */,
 				9D27872C29E20CF1006B647F /* WatchComplicationTarget.swift in Sources */,
 				9D924D3E2A3F3A0200B477AF /* CurrentDataColors.swift in Sources */,
 				9D9031FD2C036883006130E3 /* OpenGluckEnvironmentUpdater.swift in Sources */,
-				9D9031F82C036883006130E3 /* OpenGluckConnection.swift in Sources */,
 				9D8AD5FE2A3DE431006FEAE0 /* NumberImageView.swift in Sources */,
 				9D332E2B29D6130B002613F6 /* WKData.swift in Sources */,
 				9D657A1B29DAF00C00791926 /* WatchUpdater.swift in Sources */,
@@ -1285,7 +1237,6 @@
 				9D8AD5EB2A39C14D006FEAE0 /* TimelineDebugWidget.swift in Sources */,
 				9D1B2CB529DCBC71004C6311 /* AppLauncherWidget.swift in Sources */,
 				9D2F2FAD2A3075140025A3D3 /* TimestampView.swift in Sources */,
-				9DAD392B2AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift in Sources */,
 				9D50EBEB29C7BC8D00CF69E6 /* OpenGluckWatchWidgetExtension.swift in Sources */,
 				9D8AD5EE2A3B1054006FEAE0 /* WidgetPreviewEnvironment.swift in Sources */,
 				9D9EB07229E1DD91005FCD1C /* HTTPSClient.swift in Sources */,
@@ -1309,9 +1260,7 @@
 				9D8C668529E3386800EB40E4 /* CurrentBloodGlucoseWidget.swift in Sources */,
 				9D8AD5FA2A3CB053006FEAE0 /* WidgetKinds.swift in Sources */,
 				9D2F2FAB2A3075140025A3D3 /* TimestampView.swift in Sources */,
-				9D1EEE512AEF9FC2009EA2AB /* OpenGluckThresholdsDelegate.swift in Sources */,
 				9DDA74DB2A4391BD00451DF6 /* CurrentGlucoseLargeWidget.swift in Sources */,
-				9D9031F62C036883006130E3 /* OpenGluckConnection.swift in Sources */,
 				9D027CF52AF5877100B46980 /* DebugWidget.swift in Sources */,
 				9DAD39292AF5AD4700C1304F /* OpenGluckEnvironmentUpdater.swift in Sources */,
 				9DA6CF6E29E3575E0075CC4C /* CurrentBloodGlucoseTimestampWidget.swift in Sources */,
@@ -1322,7 +1271,6 @@
 				9D8AD5F22A3C5CA0006FEAE0 /* WidgetPreviewEnvironment.swift in Sources */,
 				9D9032062C0368A0006130E3 /* OpenGluckUI.swift in Sources */,
 				9D8C669029E33B2A00EB40E4 /* OpenGluckManager.swift in Sources */,
-				9D9031FB2C036883006130E3 /* OpenGluckEnvironmentUpdater.swift in Sources */,
 				9D924D422A41DA9700B477AF /* GraphWidget.swift in Sources */,
 				9DA6CF6529E34EB30075CC4C /* HTTPSClient.swift in Sources */,
 				9D8AD5F52A3C5D08006FEAE0 /* BaseWidget.swift in Sources */,
@@ -1341,6 +1289,7 @@
 /* Begin PBXTargetDependency section */
 		9D50EBBA29C79E2400CF69E6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 9D50EBB629C79E2400CF69E6 /* OG Watch */;
 			targetProxy = 9D50EBB929C79E2400CF69E6 /* PBXContainerItemProxy */;
 		};
@@ -1379,15 +1328,17 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENGLUCK_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 17.0;
+				TVOS_DEPLOYMENT_TARGET = 18.0;
 			};
 			name = Debug;
 		};
@@ -1414,15 +1365,17 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENGLUCK_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 17.0;
+				TVOS_DEPLOYMENT_TARGET = 18.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1491,6 +1444,7 @@
 				OTHER_SWIFT_FLAGS = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
@@ -1552,6 +1506,7 @@
 				OTHER_SWIFT_FLAGS = "";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
@@ -1561,7 +1516,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9D0B4BA42AFFF07100D2C773 /* Development.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "OpenGluck Watch App/OpenGluck Watch.entitlements";
@@ -1580,7 +1534,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENGLUCK_BUNDLE_IDENTIFIER).watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1588,9 +1542,10 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Debug;
 		};
@@ -1598,7 +1553,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9D0B4BA52AFFF07100D2C773 /* Production.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "OpenGluck Watch App/OpenGluck Watch.entitlements";
@@ -1617,7 +1571,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENGLUCK_BUNDLE_IDENTIFIER).watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1625,10 +1579,11 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Release;
 		};
@@ -1636,7 +1591,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9D0B4BA42AFFF07100D2C773 /* Development.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "OpenGluck Phone App/OpenGluck Phone.entitlements";
@@ -1656,19 +1610,23 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.1.1;
 				OTHER_SWIFT_FLAGS = "-DOPENGLUCK_CONTACT_TRICK_IS_$(OPENGLUCK_CONTACT_TRICK)";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENGLUCK_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1678,7 +1636,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9D0B4BA52AFFF07100D2C773 /* Production.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "OpenGluck Phone App/OpenGluck Phone.entitlements";
@@ -1698,19 +1655,23 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.1.1;
 				OTHER_SWIFT_FLAGS = "-DOPENGLUCK_CONTACT_TRICK_IS_$(OPENGLUCK_CONTACT_TRICK)";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENGLUCK_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1738,7 +1699,7 @@
 					"@executable_path/../../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENGLUCK_BUNDLE_IDENTIFIER).watchkitapp.Watch-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1746,9 +1707,10 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Debug;
 		};
@@ -1773,7 +1735,7 @@
 					"@executable_path/../../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENGLUCK_BUNDLE_IDENTIFIER).watchkitapp.Watch-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1781,10 +1743,11 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Release;
 		};
@@ -1803,20 +1766,22 @@
 				INFOPLIST_FILE = "OpenGluck Phone Widget Extension/OpenGluck-Phone-Widget-Extension-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OpenGluck Phone Widget Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENGLUCK_BUNDLE_IDENTIFIER).Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1837,20 +1802,22 @@
 				INFOPLIST_FILE = "OpenGluck Phone Widget Extension/OpenGluck-Phone-Widget-Extension-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OpenGluck Phone Widget Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENGLUCK_BUNDLE_IDENTIFIER).Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

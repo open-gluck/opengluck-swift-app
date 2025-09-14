@@ -2,6 +2,7 @@ import SwiftUI
 import OG
 
 struct LastRecordsView: View {
+    let now: Date
     @EnvironmentObject var openGlückUpdater: OpenGluckEnvironment
     @EnvironmentObject var openGlückConnection: OpenGluckConnection
 #if os(iOS)
@@ -115,12 +116,12 @@ struct LastRecordsView: View {
                 ForEach(Array(records), id: \.id) { record in
                     switch record {
                     case .glucose(_, glucoseRecord: let glucoseRecord):
-                        GlucoseRecordView(glucoseRecord: .constant(glucoseRecord))
+                        GlucoseRecordView(now: now, glucoseRecord: .constant(glucoseRecord))
                             .deleteDisabled(true)
                     case .insulin(_, insulinRecord: let insulinRecord):
-                        InsulinRecordView(insulinRecord: .constant(insulinRecord))
+                        InsulinRecordView(now: now, insulinRecord: .constant(insulinRecord))
                     case .low(_, lowRecord: let lowRecord):
-                        LowRecordView(lowRecord: .constant(lowRecord))
+                        LowRecordView(now: now, lowRecord: .constant(lowRecord))
                     }
                 }
                 .onDelete(perform: { indexSet in
@@ -146,13 +147,11 @@ struct LastRecordsView: View {
     }
 }
 
-struct LastRecordsView_Previews: PreviewProvider {
-    static var previews: some View {
-        OpenGluckEnvironmentUpdater {
-            List {
-                LastRecordsView()
-            }
+#Preview {
+    OpenGluckEnvironmentUpdaterRootView {
+        List {
+            LastRecordsView(now: Date())
         }
-        .environmentObject(OpenGluckConnection())
     }
+    .environmentObject(OpenGluckConnection())
 }

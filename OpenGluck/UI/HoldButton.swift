@@ -32,7 +32,7 @@ struct HoldButton: View {
             }
             Spacer()
         }
-        .frame(width: .infinity)
+        .frame(maxWidth: .infinity)
         .onTapGesture {
             withAnimation {
                 pleaseHold = true

@@ -5,7 +5,7 @@ struct GlucoseRecordSnippet: View {
     let glucoseRecord: OpenGluckGlucoseRecord
     var body: some View {
         RecordSnippet {
-            GlucoseRecordView(glucoseRecord: .constant(glucoseRecord))
+            GlucoseRecordView(now: Date(), glucoseRecord: .constant(glucoseRecord))
                 .font(.title2)
         }
     }

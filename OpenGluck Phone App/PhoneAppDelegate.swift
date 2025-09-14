@@ -45,7 +45,7 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
 
     var openglückUrl: String {
         get {
-            return WKData.default.get(key: WKDataKeys.openglückUrl) as! String? ?? ""
+            return WKData.default.get(key: WKDataKeys.openglückUrl) ?? ""
         }
         set {
             try? WKData.default.set(key: WKDataKeys.openglückUrl, value: newValue)
@@ -55,7 +55,7 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
 
     var openglückToken: String {
         get {
-            return WKData.default.get(key: WKDataKeys.openglückToken) as! String? ?? ""
+            return WKData.default.get(key: WKDataKeys.openglückToken) ?? ""
         }
         set {
             try? WKData.default.set(key: WKDataKeys.openglückToken, value: newValue)
@@ -72,6 +72,7 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
     private func handleAppRefresh(task: BGAppRefreshTask) {
         self.scheduleBackgroundTask()
         
+        let openGlückConnection = openGlückConnection
         Task {
             // as a last resort, try to update one last time
             try? _ = await openGlückConnection.getCurrentData(becauseUpdateOf: "Background App Refresh")
@@ -113,7 +114,6 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
         }
 
         NotificationCenter.default.addObserver(forName:UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { (_) in
-            print("NotificationCenter.default.didBecomeActiveNotification")
             Task {
                 await MainActor.run {
                     OpenGluckEnvironment.enableAutoUpdate = true
@@ -121,7 +121,6 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
             }
         }
         NotificationCenter.default.addObserver(forName:UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { (_) in
-            print("NotificationCenter.default.addObserver")
             Task {
                 await MainActor.run {
                     OpenGluckEnvironment.enableAutoUpdate = false
@@ -172,42 +171,60 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
         try? WKData.default.set(key: WKDataKeys.phoneDeviceToken, value: deviceToken)
         self.deviceToken = deviceToken
         registerDeviceTokenWithOpenGluck()
+        print("Registered for remote notifications with token", deviceToken)
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: any Error) {
+        print("Failed to register for remote notifications", error)
     }
 
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        try? WKData.default.flush()
+    nonisolated func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        Task { @MainActor in
+            try? WKData.default.flush()
+        }
     }
 
-    func sessionDidBecomeInactive(_ session: WCSession) {
+    nonisolated func sessionDidBecomeInactive(_ session: WCSession) {
     }
 
-    func sessionDidDeactivate(_ session: WCSession) {
+    nonisolated func sessionDidDeactivate(_ session: WCSession) {
     }
 
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        WKData.default.didReceive(userInfo: message)
+    nonisolated func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        let sendableMessage = message as! [String:WKData.ValueType]
+        Task { @MainActor in
+            WKData.default.didReceive(userInfo: sendableMessage)
+        }
     }
 
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-        WKData.default.didReceive(userInfo: message)
+    nonisolated func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+        let sendableMessage = message as! [String:WKData.ValueType]
+        Task { @MainActor in
+            WKData.default.didReceive(userInfo: sendableMessage)
+        }
         replyHandler([:])
     }
     
-    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
-        WKData.default.didReceive(userInfo: userInfo)
+    nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+        let sendableUserInfo = userInfo as! [String:WKData.ValueType]
+        Task { @MainActor in
+            WKData.default.didReceive(userInfo: sendableUserInfo)
+        }
     }
 }
 
 // Conform to UNUserNotificationCenterDelegate to show local notification in foreground
 extension PhoneAppDelegate: UNUserNotificationCenterDelegate {
-    private func parseNotificationsUserInfo(userInfo: [AnyHashable:Any]) -> (Date?, Int?, Bool?, Episode?, Date?, Bool?) {
+    nonisolated private func parseNotificationsUserInfo(userInfo: [AnyHashable:Any]) -> (Date?, Int?, Bool?, Episode?, Date?, Bool?) {
         print(userInfo.debugDescription)
         let timestampStr: String? = userInfo["timestamp"] as? String
         let timestamp: Date? = timestampStr != nil ? ISO8601DateFormatter().date(from: timestampStr!.replacingOccurrences(of: "\\.\\d+", with: "", options: .regularExpression)) : nil
         let mgDl: Int? = userInfo["mgDl"] as? Int
         if let mgDl, let aps = userInfo["aps"] as? [String:Any], let badge = aps["badge"] as? Int {
             guard mgDl == badge else {
-                Self.logger.warning("Mismatch mgDl=\(mgDl), badge=\(badge)")
+                Task { @MainActor in
+                    Self.logger.warning("Mismatch mgDl=\(mgDl), badge=\(badge)")
+                }
                 return (nil, nil, nil, nil, nil, nil)
             }
         }
@@ -233,6 +250,9 @@ extension PhoneAppDelegate: UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) async -> UIBackgroundFetchResult {
         let (timestamp, mgDl, hasRealTime, episode, episodeTimestamp, isNewScanOrHistoric) = parseNotificationsUserInfo(userInfo: userInfo)
         Self.logger.info("Received remote notification => timestamp=\(String(describing: timestamp)) mgDl=\(String(describing: mgDl)), userInfo=\(userInfo), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp)), isNewScanOrHistoric=\(String(describing: isNewScanOrHistoric))")
+        if let mgDl {
+            try? await UNUserNotificationCenter.current().setBadgeCount(mgDl)
+        }
         if let isNewScanOrHistoric, isNewScanOrHistoric {
             await openGlückConnection.getClient()?.recordLog("did receive notification, reload all timelines")
             WidgetCenter.shared.reloadAllTimelines()
@@ -243,11 +263,11 @@ extension PhoneAppDelegate: UNUserNotificationCenterDelegate {
         return .newData
     }
 
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         // showing notification with app active
         let userInfo = notification.request.content.userInfo
         let (timestamp, mgDl, hasRealTime, episode, episodeTimestamp, isNewScanOrHistoric) = parseNotificationsUserInfo(userInfo: userInfo)
-        Self.logger.info("Received user notification while app in foreground => timestamp=\(String(describing: timestamp)) mgDl=\(String(describing: mgDl)), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp)), userInfo=\(userInfo), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp)), isNewScanOrHistoric=\(String(describing: isNewScanOrHistoric))")
+        await Self.logger.info("Received user notification while app in foreground => timestamp=\(String(describing: timestamp)) mgDl=\(String(describing: mgDl)), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp)), userInfo=\(userInfo), episode=\(String(describing: episode)), episodeTimestamp=\(String(describing: episodeTimestamp)), isNewScanOrHistoric=\(String(describing: isNewScanOrHistoric))")
         if let isNewScanOrHistoric, isNewScanOrHistoric {
             await openGlückConnection.getClient()?.recordLog("present notification, reload all timelines")
             WidgetCenter.shared.reloadAllTimelines()
@@ -258,7 +278,7 @@ extension PhoneAppDelegate: UNUserNotificationCenterDelegate {
         return [.banner, .badge, .sound]
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         await handleAction(response: response)
     }
 
@@ -309,7 +329,7 @@ extension PhoneAppDelegate {
 
     }
 
-    private func handleAction(response: UNNotificationResponse) async {
+    private nonisolated func handleAction(response: UNNotificationResponse) async {
         let action: NotificationActions? = NotificationActions(rawValue: response.actionIdentifier)
         guard let action else {
             return

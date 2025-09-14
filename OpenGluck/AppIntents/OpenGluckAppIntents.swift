@@ -15,8 +15,8 @@ enum AppIntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
 
 #if !os(watchOS)
 struct GoAddLowAppIntent: AppIntent {
-    static var title: LocalizedStringResource = "Open Add Low"
-    static var description: LocalizedStringResource = "Open the Add Sugar screen."
+    static let title: LocalizedStringResource = "Open Add Low"
+    static let description: LocalizedStringResource = "Open the Add Sugar screen."
     static let openAppWhenRun = true
     
     @MainActor
@@ -27,8 +27,8 @@ struct GoAddLowAppIntent: AppIntent {
 }
 
 struct GoAddInsulinAppIntent: AppIntent {
-    static var title: LocalizedStringResource = "Open Add Insulin"
-    static var description: LocalizedStringResource = "Open the Add Insulin screen."
+    static let title: LocalizedStringResource = "Open Add Insulin"
+    static let description: LocalizedStringResource = "Open the Add Insulin screen."
     static let openAppWhenRun = true
     
     @MainActor
@@ -39,8 +39,8 @@ struct GoAddInsulinAppIntent: AppIntent {
 }
 
 struct GoRecordsAppIntent: AppIntent {
-    static var title: LocalizedStringResource = "Open Records Tab"
-    static var description: LocalizedStringResource = "Open the Records tab."
+    static let title: LocalizedStringResource = "Open Records Tab"
+    static let description: LocalizedStringResource = "Open the Records tab."
     static let openAppWhenRun = true
     
     @MainActor
@@ -52,8 +52,8 @@ struct GoRecordsAppIntent: AppIntent {
 #endif
 
 struct AddInsulinAppIntent: AppIntent {
-    static var title: LocalizedStringResource = "Record Insulin"
-    static var description: LocalizedStringResource = "Records some insulin units."
+    static let title: LocalizedStringResource = "Record Insulin"
+    static let description: LocalizedStringResource = "Records some insulin units."
 
     // We provide two parameters, one used only for AppShortcuts with a limited value of options,
     // and an open value that can be used programatically with Shortcuts and also on the times that
@@ -134,8 +134,8 @@ struct AddInsulinShotAppIntent: AppIntent {
 
 
 struct AddSnoozedLowAppIntent: AppIntent {
-    static var title: LocalizedStringResource = "Snooze Sugar"
-    static var description: LocalizedStringResource = "Snooze low."
+    static let title: LocalizedStringResource = "Snooze Sugar"
+    static let description: LocalizedStringResource = "Snooze low."
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog & ShowsSnippetView {
@@ -154,8 +154,8 @@ struct AddSnoozedLowAppIntent: AppIntent {
 }
 
 struct AddLowAppIntent: AppIntent {
-    static var title: LocalizedStringResource = "Record Sugar"
-    static var description: LocalizedStringResource = "Records some sugar."
+    static let title: LocalizedStringResource = "Record Sugar"
+    static let description: LocalizedStringResource = "Records some sugar."
 
     // We provide two parameters, one used only for AppShortcuts with a limited value of options,
     // and an open value that can be used programatically with Shortcuts and also on the times that
@@ -196,8 +196,8 @@ struct AddLowAppIntent: AppIntent {
 }
 
 struct DeleteLastInsulinAppIntent: ForegroundContinuableIntent {
-    static var title: LocalizedStringResource = "Delete Last Insulin"
-    static var description: LocalizedStringResource = "Delete the last insulin unit."
+    static let title: LocalizedStringResource = "Delete Last Insulin"
+    static let description: LocalizedStringResource = "Delete the last insulin unit."
 
     static var parameterSummary: some ParameterSummary {
         Summary("Delete the last insulin unit.") {
@@ -227,8 +227,8 @@ struct DeleteLastInsulinAppIntent: ForegroundContinuableIntent {
 }
 
 struct DeleteLastLowAppIntent: ForegroundContinuableIntent {
-    static var title: LocalizedStringResource = "Delete Last Sugar"
-    static var description: LocalizedStringResource = "Delete the last sugar."
+    static let title: LocalizedStringResource = "Delete Last Sugar"
+    static let description: LocalizedStringResource = "Delete the last sugar."
 
     static var parameterSummary: some ParameterSummary {
         Summary("Delete the last sugar.") {
@@ -258,8 +258,8 @@ struct DeleteLastLowAppIntent: ForegroundContinuableIntent {
 }
 
 struct GetCurrentBloodGlucoseAppIntent: ForegroundContinuableIntent {
-    static var title: LocalizedStringResource = "Get Current Blood Glucose"
-    static var description: LocalizedStringResource = "Return the current blood glucose."
+    static let title: LocalizedStringResource = "Get Current Blood Glucose"
+    static let description: LocalizedStringResource = "Return the current blood glucose."
 
     static var parameterSummary: some ParameterSummary {
         Summary("Get the current blood glucose.") {

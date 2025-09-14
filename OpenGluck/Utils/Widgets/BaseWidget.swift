@@ -27,6 +27,7 @@ protocol BaseWidgetConfiguration {
     static func getData(forTimelineDate timelineDate: Date, date: Date) async throws -> Data
 }
 
+@MainActor
 class BaseWidgetProvider<Configuration, WidgetView> where Configuration: BaseWidgetConfiguration, WidgetView: View {
     let content: (Entry) -> WidgetView
     
@@ -83,13 +84,13 @@ class BaseWidgetProvider<Configuration, WidgetView> where Configuration: BaseWid
             }
         }
         
-        func getSnapshot(in context: Context, completion: @escaping (Entry) -> Void) {
+        @preconcurrency func getSnapshot(in context: Self.Context, completion: @escaping @Sendable (Self.Entry) -> Void) {
             Task {
                 completion((try await entries).first!)
             }
         }
         
-        func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
+        @preconcurrency func getTimeline(in context: Self.Context, completion: @escaping @Sendable (Timeline<Self.Entry>) -> Void) {
             Task {
                 var refreshTimelineAfter = Configuration.getRefreshTimelineAfter()
 #if !DEBUG

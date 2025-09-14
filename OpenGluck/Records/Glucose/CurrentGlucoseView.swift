@@ -31,6 +31,7 @@ struct CurrentGlucoseView: View {
                     self.graphGeometry = reader.size
                 }
                 GlucoseGraph(
+                    now: now,
                     glucoseRecords: .constant(lastGlucoseRecords
                         .filter {
                             -$0.timestamp.timeIntervalSinceNow < GlucoseGraph.maxLookbehindInterval
@@ -69,7 +70,7 @@ struct CurrentGlucoseView: View {
 
 struct CurrentGlucoseView_Previews: PreviewProvider {
     static var previews: some View {
-        OpenGluckEnvironmentUpdater {
+        OpenGluckEnvironmentUpdaterView {
             Grid {
                 GridRow {
                     CurrentGlucoseView(now: Date(), mode: .graphBrick, showBackground: false, graphGeometry: .constant(CGSize(width: 0, height: 0)))

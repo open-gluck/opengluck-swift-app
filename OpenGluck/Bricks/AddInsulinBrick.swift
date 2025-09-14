@@ -89,9 +89,11 @@ struct AddInsulinBrick: View {
     var body: some View {
         Brick(title: nil, systemImage: nil) {
             HoldButton(label: "Record Insulin", systemImage: "cross.vial")
+#if os(watchOS)
                 .navigationDestination(for: PhoneNavigationData.PathAddInsulin.self) { _ in
                     AddInsulinCustomView(add: { await interactiveAdd(units: $0) })
                 }
+#endif
                 .contextMenu(ContextMenu(menuItems: {
                     NavigationLink("Custom…", value: PhoneNavigationData.PathAddInsulin())
                     Divider()

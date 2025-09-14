@@ -11,24 +11,24 @@ class HTTPSClient
     
     func get(
         url: URL,
-        onComplete: @escaping (HTTPURLResponse, Foundation.Data?) -> Void = HTTPSClient.defaultOnComplete,
-        onError: @escaping (Error) -> Void = HTTPSClient.defaultOnError
+        onComplete: @escaping @Sendable (HTTPURLResponse, Foundation.Data?) -> Void = HTTPSClient.defaultOnComplete,
+        onError: @escaping @Sendable (Error) -> Void = HTTPSClient.defaultOnError
     ) {
         request(url: url, method: "GET", onComplete: onComplete, onError: onError)
     }
 
     func put(
         url: URL, body: Foundation.Data? = nil,
-        onComplete: @escaping (HTTPURLResponse, Foundation.Data?) -> Void = HTTPSClient.defaultOnComplete,
-        onError: @escaping (Error) -> Void = HTTPSClient.defaultOnError
+        onComplete: @escaping @Sendable (HTTPURLResponse, Foundation.Data?) -> Void = HTTPSClient.defaultOnComplete,
+        onError: @escaping @Sendable(Error) -> Void = HTTPSClient.defaultOnError
     ) {
         request(url: url, method: "PUT", body: body, onComplete: onComplete, onError: onError)
     }
     
     func post(
         url: URL, body: Foundation.Data?,
-        onComplete: @escaping (HTTPURLResponse, Foundation.Data?) -> Void = HTTPSClient.defaultOnComplete,
-        onError: @escaping (Error) -> Void = HTTPSClient.defaultOnError
+        onComplete: @escaping @Sendable (HTTPURLResponse, Foundation.Data?) -> Void = HTTPSClient.defaultOnComplete,
+        onError: @escaping @Sendable (Error) -> Void = HTTPSClient.defaultOnError
     ) {
         request(url: url, method: "POST", body: body, onComplete: onComplete, onError: onError)
     }
@@ -36,17 +36,17 @@ class HTTPSClient
     func post(
         url: URL,
         bodyString: String,
-        onComplete: @escaping (HTTPURLResponse, Foundation.Data?) -> Void = HTTPSClient.defaultOnComplete,
-        onError: @escaping (Error) -> Void = HTTPSClient.defaultOnError
+        onComplete: @escaping @Sendable (HTTPURLResponse, Foundation.Data?) -> Void = HTTPSClient.defaultOnComplete,
+        onError: @escaping @Sendable (Error) -> Void = HTTPSClient.defaultOnError
     ) {
         post(url: url, body: bodyString.data(using: .utf8), onComplete: onComplete, onError: onError)
     }
     
-    private static func defaultOnError(_ err: Error) {
+    @Sendable private static func defaultOnError(_ err: Error) {
         print("Got error: \(err)")
     }
     
-    private static func defaultOnComplete(_ response: HTTPURLResponse, _ data: Foundation.Data?) {
+    @Sendable private static func defaultOnComplete(_ response: HTTPURLResponse, _ data: Foundation.Data?) {
         //print("Got response \(response.statusCode)")
         //print("Got headers: \(response.allHeaderFields)")
         if let data = data {
@@ -57,8 +57,8 @@ class HTTPSClient
     func request(
         url: URL, method: String,
         body: Foundation.Data? = nil,
-        onComplete: @escaping (HTTPURLResponse, Foundation.Data?) -> Void = HTTPSClient.defaultOnComplete,
-        onError: @escaping (Error) -> Void = HTTPSClient.defaultOnError
+        onComplete: @escaping @Sendable (HTTPURLResponse, Foundation.Data?) -> Void = HTTPSClient.defaultOnComplete,
+        onError: @escaping @Sendable (Error) -> Void = HTTPSClient.defaultOnError
     ) {
         print("Making \(method) request to \(url)")
         
