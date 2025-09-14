@@ -266,8 +266,6 @@ struct OpenGluckEnvironmentUpdaterRootView<Content: View>: View {
             environment.copy(to: environmentCopy, madeChanges: &madeChanges)
         }
     }
-    @State var debugId: Int = 1
-    @State var debugContentId: String = "\(UUID())"
     var body: some View {
         content()
             .environmentObject(environmentCopy)
