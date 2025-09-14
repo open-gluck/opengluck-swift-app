@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>OPENGLUCK_APPDATA_EXPIRE_AT</key>
+	<string>$(OPENGLUCK_APPDATA_EXPIRE_AT)</string>
+	<key>OPENGLUCK_APPDATA_EXPIRE_MESSAGE</key>
+	<string>$(OPENGLUCK_APPDATA_EXPIRE_MESSAGE)</string>
+	<key>OPENGLUCK_APPDATA_URL</key>
+	<string>$(OPENGLUCK_APPDATA_URL)</string>
+	<key>OPENGLUCK_DEFAULT_TOKEN</key>
+	<string>$(OPENGLUCK_DEFAULT_TOKEN)</string>
+	<key>OPENGLUCK_DEFAULT_URL</key>
+	<string>$(OPENGLUCK_DEFAULT_URL)</string>
+</dict>
+</plist>
