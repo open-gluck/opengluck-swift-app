@@ -44,12 +44,12 @@ struct WatchContentView: View {
                             .safeAreaInset(edge: .bottom) {
                                 let bottomInsetHeight: CGFloat = 20.0
                                 CheckConnectionHasClient {
-                                    HStack(spacing: 0) {
-                                        TimelineView(.everyMinute) { context in
+                                    TimelineView(.everyMinute) { context in
+                                        HStack(spacing: 0) {
                                             let now = context.date
                                             GlucoseTrend(now: now, graphGeometry: graphGeometry)
                                                 .frame(width: 55)
-                                                .offset(x: 10, y: 0)
+                                                .offset(x: -10, y: 0)
                                             Spacer()
                                             CurrentGlucose(now: now)
                                         }
