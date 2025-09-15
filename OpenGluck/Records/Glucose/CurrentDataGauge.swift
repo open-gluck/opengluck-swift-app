@@ -72,13 +72,18 @@ struct CurrentDataGauge: View {
                 }
                 if let string {
                     if string == "?" {
-                        // when text is ? display instead a grayish version of our icon,
-                        // that better conveys we don't have up-to-date data
-                        Image("SmallUnknownAppIcon")
-                            .resizable()
-                            .scaledToFit()
-                            .clipShape(Circle())
-                            .scaleEffect(2)
+                        if true {
+                            // For some reasons this image is not showing on Apple Watch
+                            Text("?")
+                        } else {
+                            // when text is ? display instead a grayish version of our icon,
+                            // that better conveys we don't have up-to-date data
+                            Image("SmallUnknownAppIcon")
+                                .resizable()
+                                .scaledToFit()
+                                .clipShape(Circle())
+                                .scaleEffect(2)
+                        }
                     } else {
                         Text(string)
                             .foregroundStyle(colorText)
