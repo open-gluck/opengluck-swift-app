@@ -6,15 +6,15 @@ import OG
 struct WatchContentView: View {
     @EnvironmentObject var appDelegate: WatchAppDelegate
     @StateObject var sheetStatusOptions: SheetStatusViewOptions = SheetStatusViewOptions()
-
+    
     @AppStorage(WKDataKeys.openglückUrl.keyValue, store: OpenGluckManager.userDefaults) var openglückUrl: String = ""
     @AppStorage(WKDataKeys.openglückToken.keyValue, store: OpenGluckManager.userDefaults) var openglückToken: String = ""
     @State var graphGeometry: CGSize?
     @State var pageNumber: Int = 0
-
+    
     @StateObject var addInsulinButtonData: AddInsulinButtonData = AddInsulinButtonData()
     @StateObject var addLowButtonData: AddLowButtonData = AddLowButtonData()
-
+    
     private enum Page: Int {
         case graph = 0
         case records = 1
@@ -44,12 +44,12 @@ struct WatchContentView: View {
                             .safeAreaInset(edge: .bottom) {
                                 let bottomInsetHeight: CGFloat = 20.0
                                 CheckConnectionHasClient {
-                                    HStack(spacing: 0) {
-                                        TimelineView(.everyMinute) { context in
+                                    TimelineView(.everyMinute) { context in
+                                        HStack(spacing: 0) {
                                             let now = context.date
                                             GlucoseTrend(now: now, graphGeometry: graphGeometry)
                                                 .frame(width: 55)
-                                                .offset(x: 10, y: 0)
+                                                .offset(x: -10, y: 0)
                                             Spacer()
                                             CurrentGlucose(now: now)
                                         }
@@ -68,11 +68,11 @@ struct WatchContentView: View {
                                 .offset(x: 0, y: 10)
                             }
                             .tag(Page.graph.rawValue)
-
+                            
                             CheckConnectionHasClient {
-                                List {
-                                    TimelineView(.everyMinute) { context in
-                                        let now = context.date
+                                TimelineView(.everyMinute) { context in
+                                    let now = context.date
+                                    List {
                                         LastRecordsView(now: now)
                                     }
                                 }
@@ -108,8 +108,10 @@ struct WatchContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        WatchContentView()
-            .environmentObject(WatchAppDelegate())
-            .environmentObject(OpenGluckConnection())
+        OpenGluckEnvironmentUpdaterRootView {
+            WatchContentView()
+        }
+        .environmentObject(WatchAppDelegate())
+        .environmentObject(OpenGluckConnection())
     }
 }
