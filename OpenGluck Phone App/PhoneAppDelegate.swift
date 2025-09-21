@@ -98,9 +98,11 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
                 print("Authorization for notification failed \(error)")
             }
             if granted {
-                self.notificationsGranted = true
-                DispatchQueue.main.async {
-                    application.registerForRemoteNotifications()
+                Task {
+                    await MainActor.run {
+                        self.notificationsGranted = true
+                        application.registerForRemoteNotifications()
+                    }
                 }
             }
         }

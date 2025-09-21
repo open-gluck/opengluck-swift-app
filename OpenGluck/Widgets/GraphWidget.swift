@@ -13,7 +13,7 @@ fileprivate struct GraphWidgetData {
     let state: Status
 }
 
-fileprivate class GraphWidgetConfiguration: BaseWidgetConfiguration {
+fileprivate final class GraphWidgetConfiguration: BaseWidgetConfiguration {
     enum WidgetError: Error {
         case noClientConfiguration
         case noData
