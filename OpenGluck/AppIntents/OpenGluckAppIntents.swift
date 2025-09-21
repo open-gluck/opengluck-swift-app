@@ -195,9 +195,10 @@ struct AddLowAppIntent: AppIntent {
     }
 }
 
-struct DeleteLastInsulinAppIntent: ForegroundContinuableIntent {
+struct DeleteLastInsulinAppIntent: AppIntent {
     static let title: LocalizedStringResource = "Delete Last Insulin"
     static let description: LocalizedStringResource = "Delete the last insulin unit."
+    static let supportedModes: IntentModes = [.background, .foreground(.dynamic)]
 
     static var parameterSummary: some ParameterSummary {
         Summary("Delete the last insulin unit.") {
@@ -217,7 +218,8 @@ struct DeleteLastInsulinAppIntent: ForegroundContinuableIntent {
         }
         let elapsed = lastInsulinRecord.timestamp.timeIntervalSinceNow
         guard -elapsed < 2*60 else {
-            throw needsToContinueInForegroundError("The last insulin record was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)) and needs to be deleted manually.")
+            try await continueInForeground()
+            throw AppIntentError.message("The last insulin record was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)) and needs to be deleted manually.")
         }
 
         let deletedRecord: OpenGluckInsulinRecord = OpenGluckInsulinRecord(id: lastInsulinRecord.id, timestamp: lastInsulinRecord.timestamp, units: lastInsulinRecord.units, deleted: true)
@@ -226,9 +228,10 @@ struct DeleteLastInsulinAppIntent: ForegroundContinuableIntent {
     }
 }
 
-struct DeleteLastLowAppIntent: ForegroundContinuableIntent {
+struct DeleteLastLowAppIntent: AppIntent {
     static let title: LocalizedStringResource = "Delete Last Sugar"
     static let description: LocalizedStringResource = "Delete the last sugar."
+    static let supportedModes: IntentModes = [.background, .foreground(.dynamic)]
 
     static var parameterSummary: some ParameterSummary {
         Summary("Delete the last sugar.") {
@@ -248,7 +251,8 @@ struct DeleteLastLowAppIntent: ForegroundContinuableIntent {
         }
         let elapsed = lastLowRecord.timestamp.timeIntervalSinceNow
         guard -elapsed < 2*60 else {
-            throw needsToContinueInForegroundError("The last sugar was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)) and needs to be deleted manually.")
+            try await continueInForeground()
+            throw AppIntentError.message("The last sugar was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)) and needs to be deleted manually.")
         }
 
         let deletedRecord: OpenGluckLowRecord = OpenGluckLowRecord(id: lastLowRecord.id, timestamp: lastLowRecord.timestamp, sugarInGrams: lastLowRecord.sugarInGrams, deleted: true)
@@ -257,9 +261,10 @@ struct DeleteLastLowAppIntent: ForegroundContinuableIntent {
     }
 }
 
-struct GetCurrentBloodGlucoseAppIntent: ForegroundContinuableIntent {
+struct GetCurrentBloodGlucoseAppIntent: AppIntent {
     static let title: LocalizedStringResource = "Get Current Blood Glucose"
     static let description: LocalizedStringResource = "Return the current blood glucose."
+    static let supportedModes: IntentModes = [.background, .foreground(.dynamic)]
 
     static var parameterSummary: some ParameterSummary {
         Summary("Get the current blood glucose.") {
@@ -278,7 +283,8 @@ struct GetCurrentBloodGlucoseAppIntent: ForegroundContinuableIntent {
         }
         let elapsed = lastGlucoseRecord.timestamp.timeIntervalSinceNow
         guard -elapsed < 10*60 else {
-            throw needsToContinueInForegroundError("I found no recent blood glucose measurement. Last was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)).")
+            try await continueInForeground()
+            throw AppIntentError.message("I found no recent blood glucose measurement. Last was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)).")
         }
 
         let mgDl: Double = Double(lastGlucoseRecord.mgDl)
@@ -296,9 +302,10 @@ struct GetCurrentBloodGlucoseAppIntent: ForegroundContinuableIntent {
     }
 }
 
-struct IncreaseLastInsulinByAppIntent: ForegroundContinuableIntent {
+struct IncreaseLastInsulinByAppIntent: AppIntent {
     static let title: LocalizedStringResource = "Increase Last Insulin"
     static let description: LocalizedStringResource = "Increase the last insulin by some units."
+    static let supportedModes: IntentModes = [.background, .foreground(.dynamic)]
 
     // We provide two parameters, one used only for AppShortcuts with a limited value of options,
     // and an open value that can be used programatically with Shortcuts and also on the times that
@@ -327,7 +334,8 @@ struct IncreaseLastInsulinByAppIntent: ForegroundContinuableIntent {
         }
         let elapsed = lastInsulinRecord.timestamp.timeIntervalSinceNow
         guard -elapsed < 2*60 else {
-            throw needsToContinueInForegroundError("The last insulin record was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)) and needs to be updated manually.")
+            try await continueInForeground()
+            throw AppIntentError.message("The last insulin record was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)) and needs to be updated manually.")
         }
 
         let units = if let value = self.unitsEnum?.rawValue {
@@ -345,9 +353,10 @@ struct IncreaseLastInsulinByAppIntent: ForegroundContinuableIntent {
     }
 }
 
-struct DecreaseLastInsulinByAppIntent: ForegroundContinuableIntent {
+struct DecreaseLastInsulinByAppIntent: AppIntent {
     static let title: LocalizedStringResource = "Decrease Last Insulin"
     static let description: LocalizedStringResource = "Decrease the last insulin by some units."
+    static let supportedModes: IntentModes = [.background, .foreground(.dynamic)]
 
     // We provide two parameters, one used only for AppShortcuts with a limited value of options,
     // and an open value that can be used programatically with Shortcuts and also on the times that
@@ -376,7 +385,8 @@ struct DecreaseLastInsulinByAppIntent: ForegroundContinuableIntent {
         }
         let elapsed = lastInsulinRecord.timestamp.timeIntervalSinceNow
         guard -elapsed < 2*60 else {
-            throw needsToContinueInForegroundError("The last insulin record was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)) and needs to be updated manually.")
+            try await continueInForeground()
+            throw AppIntentError.message("The last insulin record was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)) and needs to be updated manually.")
         }
 
         let units = if let value = self.unitsEnum?.rawValue {

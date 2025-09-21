@@ -36,15 +36,17 @@ class WatchAppDelegate: NSObject, WKApplicationDelegate, WCSessionDelegate, Obse
     func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {
         self.deviceToken = deviceToken
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            print("Got notifications: \(granted)")
-            self.notificationsGranted = granted
-            if let error {
-                print("Got error: \(error)")
-            }
-            if granted {
-                let deviceToken = deviceToken.reduce("") {$0 + String(format: "%02x", $1)}
-                try? WKData.default.set(key: WKDataKeys.watchDeviceToken, value: deviceToken)
-                Task { try? await OpenGluckConnection.client?.register(deviceToken: deviceToken) }
+            Task { @MainActor in
+                print("Got notifications: \(granted)")
+                self.notificationsGranted = granted
+                if let error {
+                    print("Got error: \(error)")
+                }
+                if granted {
+                    let deviceToken = deviceToken.reduce("") {$0 + String(format: "%02x", $1)}
+                    try? WKData.default.set(key: WKDataKeys.watchDeviceToken, value: deviceToken)
+                    Task { try? await OpenGluckConnection.client?.register(deviceToken: deviceToken) }
+                }
             }
         }
     }

@@ -11,7 +11,7 @@ fileprivate struct TimelineDebugWidgetData {
     let alice: String
 }
 
-fileprivate class TimelineDebugWidgetConfiguration: BaseWidgetConfiguration {
+fileprivate final class TimelineDebugWidgetConfiguration: BaseWidgetConfiguration {
     static let kind = WidgetKinds.TimelineDebugWidget.rawValue
     static let supportedWidgetFamilies: [WidgetFamily] = [ .accessoryCorner, .accessoryInline, .accessoryCircular, .accessoryRectangular ]
     static let maximumValidityInterval: TimeInterval? = 10

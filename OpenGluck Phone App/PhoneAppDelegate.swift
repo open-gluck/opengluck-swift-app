@@ -7,6 +7,13 @@ import OG
 import WidgetKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        // Handle shortcut item when the scene connects
+        if let shortcutItem = connectionOptions.shortcutItem {
+            Self.handleShortcutItem(shortcutItem)
+        }
+    }
+    
     func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         Self.handleShortcutItem(shortcutItem)
         completionHandler(true)
@@ -98,9 +105,11 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
                 print("Authorization for notification failed \(error)")
             }
             if granted {
-                self.notificationsGranted = true
-                DispatchQueue.main.async {
-                    application.registerForRemoteNotifications()
+                Task {
+                    await MainActor.run {
+                        self.notificationsGranted = true
+                        application.registerForRemoteNotifications()
+                    }
                 }
             }
         }
@@ -136,10 +145,6 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
         try? WKData.default.syncToOther(key: WKDataKeys.openglückToken)
 
         self.registerDeviceTokenWithOpenGluck()
-        
-        if let shortcutItem = launchOptions?[UIApplication.LaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
-            SceneDelegate.handleShortcutItem(shortcutItem)
-        }
         
 #if OPENGLUCK_CONTACT_TRICK_IS_YES
         if enableContactTrick {

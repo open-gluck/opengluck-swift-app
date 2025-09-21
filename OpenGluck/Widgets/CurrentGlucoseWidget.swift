@@ -13,7 +13,7 @@ fileprivate struct CurrentGlucoseWidgetData {
     let state: Status
 }
 
-fileprivate class CurrentGlucoseWidgetConfiguration: BaseWidgetConfiguration {
+fileprivate final class CurrentGlucoseWidgetConfiguration: BaseWidgetConfiguration {
     enum WidgetError: Error {
         case noClientConfiguration
         case noData

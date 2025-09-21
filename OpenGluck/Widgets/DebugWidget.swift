@@ -8,7 +8,7 @@ fileprivate struct DebugWidgetData {
     let url: String?
 }
 
-fileprivate class DebugWidgetConfiguration: BaseWidgetConfiguration {
+fileprivate final class DebugWidgetConfiguration: BaseWidgetConfiguration {
     static let kind = WidgetKinds.DebugWidget.rawValue
 #if os(watchOS)
     static let supportedWidgetFamilies: [WidgetFamily] = [

@@ -9,8 +9,8 @@ import OG
 // at a certain point of time.
 // See the TimelineDebugWidget implementation for more ifno.
 
-protocol BaseWidgetConfiguration {
-    associatedtype Data
+protocol BaseWidgetConfiguration: Sendable {
+    associatedtype Data: Sendable
     
     static var kind: String { get }
     static var supportedWidgetFamilies: [WidgetFamily] { get }
@@ -28,7 +28,7 @@ protocol BaseWidgetConfiguration {
 }
 
 @MainActor
-class BaseWidgetProvider<Configuration, WidgetView> where Configuration: BaseWidgetConfiguration, WidgetView: View {
+class BaseWidgetProvider<Configuration, WidgetView> where Configuration: BaseWidgetConfiguration & SendableMetatype, WidgetView: View & Sendable {
     let content: (Entry) -> WidgetView
     
     init(content: @escaping (Entry) -> WidgetView) {
@@ -111,7 +111,7 @@ class BaseWidgetProvider<Configuration, WidgetView> where Configuration: BaseWid
         }
     }
     
-    struct Entry: TimelineEntry {
+    struct Entry: TimelineEntry, Sendable {
         let entryType: EntryType
         let timelineDate: Date
         let startingDate: Date?
