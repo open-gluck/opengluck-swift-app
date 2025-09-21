@@ -961,7 +961,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1620;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					9D22687D2AF29B2700437FAC = {
 						CreatedOnToolsVersion = 15.0.1;
@@ -1315,7 +1315,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OpenGluck tvOS App/Preview Content\"";
-				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1352,7 +1351,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OpenGluck tvOS App/Preview Content\"";
-				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1417,6 +1415,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1442,6 +1441,7 @@
 				OPENGLUCK_APPDATA_EXPIRE_AT = "2027-09-21T00:00:00Z";
 				OPENGLUCK_APPDATA_EXPIRE_MESSAGE = "This version of OpenGlück has expired. Please update to the latest version to continue using it.";
 				OTHER_SWIFT_FLAGS = "";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
@@ -1487,6 +1487,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1504,6 +1505,7 @@
 				OPENGLUCK_APPDATA_EXPIRE_AT = "2027-09-21T00:00:00Z";
 				OPENGLUCK_APPDATA_EXPIRE_MESSAGE = "This version of OpenGlück has expired. Please update to the latest version to continue using it.";
 				OTHER_SWIFT_FLAGS = "";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 6.0;
@@ -1523,7 +1525,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OpenGluck Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Watch App/OpenGluck-Watch-Info.plist";
@@ -1560,7 +1561,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OpenGluck Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Watch App/OpenGluck-Watch-Info.plist";
@@ -1598,8 +1598,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OpenGluck Phone App/Preview Content\"";
-				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Phone App/OpenGluck-Phone-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OpenGlück";
@@ -1643,8 +1645,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OpenGluck Phone App/Preview Content\"";
-				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Phone App/OpenGluck-Phone-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OpenGlück";
@@ -1688,7 +1692,6 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Watch Extension/OpenGluck-Watch-Widget-Extension-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OpenGluck Watch Widget Extension";
@@ -1724,7 +1727,6 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Watch Extension/OpenGluck-Watch-Widget-Extension-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OpenGluck Watch Widget Extension";
@@ -1761,7 +1763,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Phone Widget Extension/OpenGluck-Phone-Widget-Extension-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OpenGluck Phone Widget Extension";
@@ -1797,7 +1800,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Phone Widget Extension/OpenGluck-Phone-Widget-Extension-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OpenGluck Phone Widget Extension";
