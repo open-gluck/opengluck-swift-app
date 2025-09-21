@@ -55,11 +55,11 @@ fileprivate actor AppDataAutoFetcher {
     @AppStorage("AppDataAutoFetch.cachedContext") var cachedAppDataContextData: Foundation.Data = Foundation.Data()
     private var preventRefreshUntil: Date? = nil
 
-    private static let dateFormatter: ISO8601DateFormatter = ISO8601DateFormatter()
+    @MainActor private static let dateFormatter: ISO8601DateFormatter = ISO8601DateFormatter()
     private static let jsonEncoder: JSONEncoder = JSONEncoder()
 
-    func read() -> Foundation.Data? {
-        return { () -> Foundation.Data? in
+    func read() async -> Foundation.Data? {
+        return await { () -> Foundation.Data? in
             if let preventRefreshUntil, Date() < preventRefreshUntil {
                 return nil
             }
@@ -69,7 +69,7 @@ fileprivate actor AppDataAutoFetcher {
             // check if build expired
             if let appDataExpireAt: String = infoDictionary["OPENGLUCK_APPDATA_EXPIRE_AT"] as? String, !appDataExpireAt.isEmpty,
                let appDataExpireMessage: String = infoDictionary["OPENGLUCK_APPDATA_EXPIRE_MESSAGE"] as? String, !appDataExpireMessage.isEmpty {
-                let expireAt: Date = Self.dateFormatter.date(from: appDataExpireAt)!
+                let expireAt: Date = await MainActor.run { Self.dateFormatter.date(from: appDataExpireAt)! }
                 if Date() > expireAt {
                     let message = AppDataContext(redirect: AppDataContext.Redirect(title: "App Expired", message: appDataExpireMessage, button: "Close", url: "https://www.opengluck.com"))
                     return try! Self.jsonEncoder.encode(message)
@@ -99,15 +99,10 @@ struct AppDataAutoFetch<Content>: View where Content: View {
     @State var appDataContext: AppDataContext? = nil
     
     private func refreshAppDataContext() {
-        Task.detached {
+        Task {
             if let appDataContextData = await AppDataAutoFetcher.default.read() {
-                await MainActor.run {
-                    //                        cachedAppDataContextData = appDataContextData
-                }
                 let appDataContext = try AppDataContext.read(fromData: appDataContextData)
-                await MainActor.run {
-                    self.appDataContext = appDataContext
-                }
+                self.appDataContext = appDataContext
             }
         }
     }
