@@ -166,7 +166,7 @@ struct GraphWidget: Widget {
                             GlucoseGraphImpl(
                                 now: entry.date,
                                 glucoseRecords: lastData.glucoseRecords ?? [],
-                                insulinRecords: lastData.insulinRecords ?? [],
+                                insulinRecords: (lastData.insulinRecords ?? []).filter { !$0.deleted },
                                 lowRecords: lastData.lowRecords ?? [],
                                 style: style,
                                 colorScheme: .dark,
