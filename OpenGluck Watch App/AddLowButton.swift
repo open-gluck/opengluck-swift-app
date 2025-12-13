@@ -147,7 +147,8 @@ struct AddLowButtonInterface: View {
     var body: some View {
         DigiTextView(placeholder: addLowButtonData.formatValue?("0") ?? "", //addLowButtonData.getSugarFromValue?(0.0)),
                      text: $addLowButtonData.valueString,
-                     confirmLabel: "Add Sugar",
+                     confirmLabel: "✓",
+//                     confirmSystemImage: "takeoutbag.and.cup.and.straw",
                      labelMacro: addLowButtonData.formatValue?("%") ?? "",
                      presentingModal: $addLowButtonData.isShown,
                      style: .decimal,
