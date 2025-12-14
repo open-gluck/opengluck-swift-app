@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,7 @@
 		9D0B4BB92B002F4700D2C773 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D0B4BB62B002F4700D2C773 /* Media.xcassets */; };
 		9D0B4BBA2B002F4700D2C773 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D0B4BB62B002F4700D2C773 /* Media.xcassets */; };
 		9D0B4BBB2B002F4700D2C773 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D0B4BB62B002F4700D2C773 /* Media.xcassets */; };
+		9D1356142EEE98D400F6E164 /* OG Notification Service.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9D13560B2EEE98AD00F6E164 /* OG Notification Service.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9D192C8C29C8EAD00047E40E /* PhoneContactUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D192C8B29C8EAD00047E40E /* PhoneContactUpdater.swift */; };
 		9D192C8E29C8EFF00047E40E /* NumberImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D192C8D29C8EFF00047E40E /* NumberImageView.swift */; };
 		9D1B2CB529DCBC71004C6311 /* AppLauncherWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B2CB429DCBC71004C6311 /* AppLauncherWidget.swift */; };
@@ -232,6 +233,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		9D1356152EEE98D400F6E164 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9D50EB9F29C79E2300CF69E6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9D13560A2EEE98AD00F6E164;
+			remoteInfo = "OG Notification Service";
+		};
 		9D50EBB929C79E2400CF69E6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9D50EB9F29C79E2300CF69E6 /* Project object */;
@@ -285,6 +293,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				9D8C668B29E3386900EB40E4 /* OG Phone Widget Extension.appex in Embed Foundation Extensions */,
+				9D1356142EEE98D400F6E164 /* OG Notification Service.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,6 +307,7 @@
 		9D0B4BA52AFFF07100D2C773 /* Production.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		9D0B4BB02AFFF21000D2C773 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		9D0B4BB62B002F4700D2C773 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		9D13560B2EEE98AD00F6E164 /* OG Notification Service.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "OG Notification Service.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D192C8B29C8EAD00047E40E /* PhoneContactUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneContactUpdater.swift; sourceTree = "<group>"; };
 		9D192C8D29C8EFF00047E40E /* NumberImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberImageView.swift; sourceTree = "<group>"; };
 		9D1B2CB429DCBC71004C6311 /* AppLauncherWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLauncherWidget.swift; sourceTree = "<group>"; };
@@ -414,7 +424,28 @@
 		9DF375E129D256740043CAA6 /* LastRecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastRecordsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9D1356122EEE98AD00F6E164 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 9D13560A2EEE98AD00F6E164 /* OG Notification Service */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		9D13560C2EEE98AD00F6E164 /* OG Notification Service */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (9D1356122EEE98AD00F6E164 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "OG Notification Service"; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
+		9D1356082EEE98AD00F6E164 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9D22687B2AF29B2700437FAC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -555,6 +586,7 @@
 				9D50EBBB29C79E2400CF69E6 /* Watch */,
 				9D50EBE929C7BC8D00CF69E6 /* Watch Widget Extension */,
 				9D22687F2AF29B2700437FAC /* TV */,
+				9D13560C2EEE98AD00F6E164 /* OG Notification Service */,
 				9D50EBE429C7BC8D00CF69E6 /* Frameworks */,
 				9D50EBA829C79E2300CF69E6 /* Products */,
 			);
@@ -568,6 +600,7 @@
 				9D50EBE329C7BC8D00CF69E6 /* OG Watch Widget Extension.appex */,
 				9D8C667E29E3386800EB40E4 /* OG Phone Widget Extension.appex */,
 				9D22687E2AF29B2700437FAC /* OG TV.app */,
+				9D13560B2EEE98AD00F6E164 /* OG Notification Service.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -842,6 +875,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		9D13560A2EEE98AD00F6E164 /* OG Notification Service */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9D1356132EEE98AD00F6E164 /* Build configuration list for PBXNativeTarget "OG Notification Service" */;
+			buildPhases = (
+				9D1356072EEE98AD00F6E164 /* Sources */,
+				9D1356082EEE98AD00F6E164 /* Frameworks */,
+				9D1356092EEE98AD00F6E164 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				9D13560C2EEE98AD00F6E164 /* OG Notification Service */,
+			);
+			name = "OG Notification Service";
+			packageProductDependencies = (
+			);
+			productName = "OG Notification Service";
+			productReference = 9D13560B2EEE98AD00F6E164 /* OG Notification Service.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		9D22687D2AF29B2700437FAC /* OG TV */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9D22688B2AF29B2800437FAC /* Build configuration list for PBXNativeTarget "OG TV" */;
@@ -878,6 +933,7 @@
 			dependencies = (
 				9D50EBBA29C79E2400CF69E6 /* PBXTargetDependency */,
 				9D8C668A29E3386900EB40E4 /* PBXTargetDependency */,
+				9D1356162EEE98D400F6E164 /* PBXTargetDependency */,
 			);
 			name = "OG Phone";
 			packageProductDependencies = (
@@ -960,9 +1016,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1620;
+				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
+					9D13560A2EEE98AD00F6E164 = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
 					9D22687D2AF29B2700437FAC = {
 						CreatedOnToolsVersion = 15.0.1;
 					};
@@ -1001,11 +1060,19 @@
 				9D50EBB629C79E2400CF69E6 /* OG Watch */,
 				9D50EBE229C7BC8D00CF69E6 /* OG Watch Widget Extension */,
 				9D22687D2AF29B2700437FAC /* OG TV */,
+				9D13560A2EEE98AD00F6E164 /* OG Notification Service */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		9D1356092EEE98AD00F6E164 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9D22687C2AF29B2700437FAC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1057,6 +1124,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		9D1356072EEE98AD00F6E164 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9D22687A2AF29B2700437FAC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1287,6 +1361,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		9D1356162EEE98D400F6E164 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9D13560A2EEE98AD00F6E164 /* OG Notification Service */;
+			targetProxy = 9D1356152EEE98D400F6E164 /* PBXContainerItemProxy */;
+		};
 		9D50EBBA29C79E2400CF69E6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			platformFilter = ios;
@@ -1306,6 +1385,73 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		9D1356102EEE98AD00F6E164 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DBCR64H97V;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "OG Notification Service/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "OG Notification Service";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "open-gluck.github.io.ios.OG-Notification-Service";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		9D1356112EEE98AD00F6E164 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DBCR64H97V;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "OG Notification Service/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "OG Notification Service";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "open-gluck.github.io.ios.OG-Notification-Service";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		9D2268892AF29B2800437FAC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9D0B4BA42AFFF07100D2C773 /* Development.xcconfig */;
@@ -1831,6 +1977,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9D1356132EEE98AD00F6E164 /* Build configuration list for PBXNativeTarget "OG Notification Service" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9D1356102EEE98AD00F6E164 /* Debug */,
+				9D1356112EEE98AD00F6E164 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9D22688B2AF29B2800437FAC /* Build configuration list for PBXNativeTarget "OG TV" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
