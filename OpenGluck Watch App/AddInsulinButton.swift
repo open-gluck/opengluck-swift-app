@@ -56,7 +56,8 @@ struct AddInsulinButton: View {
         var body: some View {
             DigiTextView(placeholder: "0 IU",
                          text: $addInsulinButtonData.unitsString,
-                         confirmLabel: "Add Insulin",
+                         confirmLabel: "✓",
+//                         confirmSystemImage: "cross.vial",
                          labelMacro: "% IU",
                          presentingModal: $addInsulinButtonData.isShown, onClose: {
             }, onConfirm: {

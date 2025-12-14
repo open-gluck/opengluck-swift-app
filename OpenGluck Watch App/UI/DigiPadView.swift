@@ -113,15 +113,15 @@ public enum KeyboardStyle {
 #if DEBUG && os(watchOS)
 struct EnteredTextKeys_Previews: PreviewProvider {
     static var previews: some View {
-        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers, confirmLabel: "Add", labelMacro: "%")
+        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers, confirmLabel: "Add", confirmSystemImage: nil, labelMacro: "%")
         Group {
-            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%")
-            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%")
+            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", confirmSystemImage: nil, labelMacro: "%")
+            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", confirmSystemImage: nil, labelMacro: "%")
                 .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
         }
-        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%").previewDevice("Apple Watch Series 6 - 40mm")
-        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers, confirmLabel: "Add", labelMacro: "%").previewDevice("Apple Watch Series 3 - 38mm")
-        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%").previewDevice("Apple Watch Series 3 - 42mm")
+        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", confirmSystemImage: nil, labelMacro: "%").previewDevice("Apple Watch Series 6 - 40mm")
+        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers, confirmLabel: "Add", confirmSystemImage: nil, labelMacro: "%").previewDevice("Apple Watch Series 3 - 38mm")
+        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", confirmSystemImage: nil, labelMacro: "%").previewDevice("Apple Watch Series 3 - 42mm")
     }
 }
 #endif
@@ -145,7 +145,8 @@ public struct DigiTextView: View {
     private var locale: Locale
     var style: KeyboardStyle
     var placeholder: String
-    let confirmLabel: String
+    let confirmLabel: String?
+    let confirmSystemImage: String?
     let labelMacro: String
     @Binding public var text: String
     let onClose: () -> Void
@@ -153,12 +154,13 @@ public struct DigiTextView: View {
     @Binding public var presentingModal: Bool
     
     var align: TextViewAlignment
-    public init( placeholder: String, text: Binding<String>, confirmLabel: String, labelMacro: String, presentingModal: Binding<Bool>, alignment: TextViewAlignment = .center,style: KeyboardStyle = .numbers, locale: Locale = .current, onClose: @escaping () -> Void = {}, onConfirm: @escaping () -> Void = {}) {
+    public init( placeholder: String, text: Binding<String>, confirmLabel: String? = nil, confirmSystemImage: String? = nil, labelMacro: String, presentingModal: Binding<Bool>, alignment: TextViewAlignment = .center,style: KeyboardStyle = .numbers, locale: Locale = .current, onClose: @escaping () -> Void = {}, onConfirm: @escaping () -> Void = {}) {
         _text = text
         _presentingModal = presentingModal
         self.align = alignment
         self.placeholder = placeholder
         self.confirmLabel = confirmLabel
+        self.confirmSystemImage = confirmSystemImage
         self.labelMacro = labelMacro
         self.style = style
         self.locale = locale
@@ -170,7 +172,7 @@ public struct DigiTextView: View {
         ZStack {
         }.buttonStyle(TextViewStyle(alignment: align))
             .sheet(isPresented: $presentingModal, content: {
-                EnteredText(text: $text, presentedAsModal: $presentingModal, style: self.style, confirmLabel: confirmLabel, placeholder: placeholder, labelMacro: labelMacro, locale: locale, onClose: onClose, onConfirm: onConfirm)
+                EnteredText(text: $text, presentedAsModal: $presentingModal, style: self.style, confirmLabel: confirmLabel, confirmSystemImage: confirmSystemImage, placeholder: placeholder, labelMacro: labelMacro, locale: locale, onClose: onClose, onConfirm: onConfirm)
             })
     }
 }
@@ -183,7 +185,8 @@ public struct EnteredText: View {
     @Binding var text:String
     @Binding var presentedAsModal: Bool
     var style: KeyboardStyle
-    let confirmLabel: String
+    let confirmLabel: String?
+    let confirmSystemImage: String?
     let placeholder: String
     let labelMacro: String
     var watchOSDimensions: CGRect?
@@ -192,11 +195,13 @@ public struct EnteredText: View {
     let onConfirm: () -> Void
 
     public init(text: Binding<String>, presentedAsModal:
-                Binding<Bool>, style: KeyboardStyle, confirmLabel: String, placeholder: String = "", labelMacro: String, locale: Locale = .current, onClose: @escaping () -> Void = {}, onConfirm: @escaping () -> Void = {}){
+                Binding<Bool>, style: KeyboardStyle, confirmLabel: String?, confirmSystemImage: String?, placeholder: String = "", labelMacro: String, locale: Locale = .current, onClose: @escaping () -> Void = {}, onConfirm: @escaping () -> Void = {}){
         _text = text
         _presentedAsModal = presentedAsModal
         self.style = style
+        assert (confirmLabel != nil && confirmSystemImage == nil || confirmLabel == nil && confirmSystemImage != nil, "EnteredText: You must provide either a confirmLabel or a confirmSystemImage")
         self.confirmLabel = confirmLabel
+        self.confirmSystemImage = confirmSystemImage
         self.placeholder = placeholder
         self.labelMacro = labelMacro
         self.locale = locale
@@ -229,7 +234,12 @@ public struct EnteredText: View {
                     presentedAsModal = false
                     onConfirm()
                 } label: {
-                    Text(confirmLabel)
+                    if let confirmLabel {
+                        Text(confirmLabel)
+                    }
+                    if let confirmSystemImage {
+                        Image(systemName: confirmSystemImage)
+                    }
                 }
                 .padding()
                 .foregroundColor(.blue)
@@ -396,22 +406,22 @@ struct TextViewStyle: ButtonStyle {
 #if DEBUG && os(watchOS)
 struct EnteredText_Previews: PreviewProvider {
     static var previews: some View {
-        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers, confirmLabel: "Add", labelMacro: "%")
+        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers, confirmLabel: "Add", confirmSystemImage: nil, labelMacro: "%")
         Group {
-            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%")
-            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%")
+            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", confirmSystemImage: nil, labelMacro: "%")
+            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", confirmSystemImage: nil, labelMacro: "%")
                 .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
-            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%")
+            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", confirmSystemImage: nil, labelMacro: "%")
                 .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
                 .accessibilityElement(children: /*@START_MENU_TOKEN@*/.contain/*@END_MENU_TOKEN@*/)
             
         }
-        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%").previewDevice("Apple Watch Series 6 - 40mm")
+        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", confirmSystemImage: nil, labelMacro: "%").previewDevice("Apple Watch Series 6 - 40mm")
         Group {
-            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers, confirmLabel: "Add", labelMacro: "%").previewDevice("Apple Watch Series 3 - 38mm")
-            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers, confirmLabel: "Add", labelMacro: "%").environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge).previewDevice("Apple Watch Series 3 - 38mm")
+            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers, confirmLabel: "Add", confirmSystemImage: nil, labelMacro: "%").previewDevice("Apple Watch Series 3 - 38mm")
+            EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .numbers, confirmLabel: "Add", confirmSystemImage: nil, labelMacro: "%").environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge).previewDevice("Apple Watch Series 3 - 38mm")
         }
-        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", labelMacro: "%").previewDevice("Apple Watch Series 3 - 42mm")
+        EnteredText( text: .constant(""), presentedAsModal: .constant(true), style: .decimal, confirmLabel: "Add", confirmSystemImage: nil, labelMacro: "%").previewDevice("Apple Watch Series 3 - 42mm")
     }
 }
 
@@ -419,7 +429,7 @@ struct Content_View_Previews: PreviewProvider {
     static var previews: some View{
         ScrollView {
             ForEach(0 ..< 4) { item in
-                DigiTextView(placeholder: "Placeholder", text: .constant(""), confirmLabel: "Add", labelMacro: "%", presentingModal: .constant(false), alignment: .leading)
+                DigiTextView(placeholder: "Placeholder", text: .constant(""), confirmLabel: "Add", confirmSystemImage: nil, labelMacro: "%", presentingModal: .constant(false), alignment: .leading)
             }
             Button(action: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/{}/*@END_MENU_TOKEN@*/) {
                 /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Content@*/Text("Button")/*@END_MENU_TOKEN@*/
