@@ -26,7 +26,7 @@ class NotificationService: UNNotificationServiceExtension {
         let sender = INPerson(
             personHandle: handle,
             nameComponents: nil,
-            displayName: displayName,
+            displayName: bestAttemptContent.title,
             image: nil,
             contactIdentifier: nil,
             customIdentifier: nil
