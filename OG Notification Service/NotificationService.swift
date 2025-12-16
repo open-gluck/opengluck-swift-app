@@ -16,7 +16,6 @@ class NotificationService: UNNotificationServiceExtension {
         }
 
         let senderEmail: String = "notifications@opengluck.com"
-        let displayName: String = "OpenGlück Notification"
         let conversationIdentifier: String? = nil
 
         // Create the sender identity
