@@ -1465,6 +1465,7 @@
 		9D1356102EEE98AD00F6E164 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "OG Notification Service/OG Notification Service.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DBCR64H97V;
@@ -1499,6 +1500,7 @@
 		9D1356112EEE98AD00F6E164 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "OG Notification Service/OG Notification Service.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DBCR64H97V;
