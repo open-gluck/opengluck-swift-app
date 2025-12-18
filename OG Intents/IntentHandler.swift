@@ -49,21 +49,21 @@ class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandlin
 class SendMessageIntentHandler: NSObject, INSendMessageIntentHandling {
 
     func handle(intent: INSendMessageIntent, completion: @escaping (INSendMessageIntentResponse) -> Void) {
-        // We don't actually send messages - this handler exists to enable CarPlay notification support
-        // Return success to satisfy the system requirement
-        let response = INSendMessageIntentResponse(code: .success, userActivity: nil)
+        // This handler exists solely to enable CarPlay notification support.
+        // We don't send messages - notifications are incoming only.
+        // Return failure to indicate this app doesn't support sending messages,
+        // but the intent declaration enables CarPlay to display our incoming notifications.
+        let response = INSendMessageIntentResponse(code: .failureRequiringAppLaunch, userActivity: nil)
         completion(response)
     }
 
     func resolveRecipients(for intent: INSendMessageIntent, with completion: @escaping ([INSendMessageRecipientResolutionResult]) -> Void) {
+        // No recipients needed - we only receive notifications
         completion([])
     }
 
     func resolveContent(for intent: INSendMessageIntent, with completion: @escaping (INStringResolutionResult) -> Void) {
-        if let content = intent.content {
-            completion(.success(with: content))
-        } else {
-            completion(.notRequired())
-        }
+        // No content resolution needed
+        completion(.notRequired())
     }
 }
