@@ -219,6 +219,8 @@
 		9DDD579F2A0AF1B20063F704 /* OG in Frameworks */ = {isa = PBXBuildFile; productRef = 9DDD579E2A0AF1B20063F704 /* OG */; };
 		9DDD57A32A0AF1BA0063F704 /* OG in Frameworks */ = {isa = PBXBuildFile; productRef = 9DDD57A22A0AF1BA0063F704 /* OG */; };
 		9DDD57A92A0AF1C60063F704 /* OG in Frameworks */ = {isa = PBXBuildFile; productRef = 9DDD57A82A0AF1C60063F704 /* OG */; };
+		9DE34A352EF463A10048A95B /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE34A342EF463A10048A95B /* Intents.framework */; };
+		9DE34A3C2EF463A10048A95B /* OG Intents.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9DE34A332EF463A10048A95B /* OG Intents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9DE374812C05094B00AA04DF /* LowIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE374802C05094B00AA04DF /* LowIcon.swift */; };
 		9DE374822C05094B00AA04DF /* LowIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE374802C05094B00AA04DF /* LowIcon.swift */; };
 		9DE374832C0509DD00AA04DF /* LowIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE374802C05094B00AA04DF /* LowIcon.swift */; };
@@ -261,6 +263,13 @@
 			remoteGlobalIDString = 9D8C667D29E3386800EB40E4;
 			remoteInfo = WidgetExtension;
 		};
+		9DE34A3A2EF463A10048A95B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9D50EB9F29C79E2300CF69E6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9DE34A322EF463A10048A95B;
+			remoteInfo = "OG Intents";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -292,6 +301,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				9DE34A3C2EF463A10048A95B /* OG Intents.appex in Embed Foundation Extensions */,
 				9D8C668B29E3386900EB40E4 /* OG Phone Widget Extension.appex in Embed Foundation Extensions */,
 				9D1356142EEE98D400F6E164 /* OG Notification Service.appex in Embed Foundation Extensions */,
 			);
@@ -418,6 +428,8 @@
 		9DDA74DA2A4391BD00451DF6 /* CurrentGlucoseLargeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentGlucoseLargeWidget.swift; sourceTree = "<group>"; };
 		9DDB12902B3879FE00015F17 /* PhoneNavigationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNavigationData.swift; sourceTree = "<group>"; };
 		9DDB12922B38885900015F17 /* OpenGluckAppIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGluckAppIntents.swift; sourceTree = "<group>"; };
+		9DE34A332EF463A10048A95B /* OG Intents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "OG Intents.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DE34A342EF463A10048A95B /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		9DE374802C05094B00AA04DF /* LowIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LowIcon.swift; sourceTree = "<group>"; };
 		9DF375DA29D254360043CAA6 /* GlucoseRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseRecordView.swift; sourceTree = "<group>"; };
 		9DF375DE29D254990043CAA6 /* OpenGluckManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGluckManager.swift; sourceTree = "<group>"; };
@@ -432,10 +444,18 @@
 			);
 			target = 9D13560A2EEE98AD00F6E164 /* OG Notification Service */;
 		};
+		9DE34A3D2EF463A10048A95B /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 9DE34A322EF463A10048A95B /* OG Intents */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9D13560C2EEE98AD00F6E164 /* OG Notification Service */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (9D1356122EEE98AD00F6E164 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "OG Notification Service"; sourceTree = "<group>"; };
+		9DE34A362EF463A10048A95B /* OG Intents */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (9DE34A3D2EF463A10048A95B /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "OG Intents"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -492,6 +512,14 @@
 				9D8C668029E3386800EB40E4 /* SwiftUI.framework in Frameworks */,
 				9D1EEE482AEF92D3009EA2AB /* OGUI in Frameworks */,
 				9D8C667F29E3386800EB40E4 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DE34A302EF463A10048A95B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DE34A352EF463A10048A95B /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,6 +615,7 @@
 				9D50EBE929C7BC8D00CF69E6 /* Watch Widget Extension */,
 				9D22687F2AF29B2700437FAC /* TV */,
 				9D13560C2EEE98AD00F6E164 /* OG Notification Service */,
+				9DE34A362EF463A10048A95B /* OG Intents */,
 				9D50EBE429C7BC8D00CF69E6 /* Frameworks */,
 				9D50EBA829C79E2300CF69E6 /* Products */,
 			);
@@ -601,6 +630,7 @@
 				9D8C667E29E3386800EB40E4 /* OG Phone Widget Extension.appex */,
 				9D22687E2AF29B2700437FAC /* OG TV.app */,
 				9D13560B2EEE98AD00F6E164 /* OG Notification Service.appex */,
+				9DE34A332EF463A10048A95B /* OG Intents.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -665,6 +695,7 @@
 			children = (
 				9D50EBE529C7BC8D00CF69E6 /* WidgetKit.framework */,
 				9D50EBE729C7BC8D00CF69E6 /* SwiftUI.framework */,
+				9DE34A342EF463A10048A95B /* Intents.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -934,6 +965,7 @@
 				9D50EBBA29C79E2400CF69E6 /* PBXTargetDependency */,
 				9D8C668A29E3386900EB40E4 /* PBXTargetDependency */,
 				9D1356162EEE98D400F6E164 /* PBXTargetDependency */,
+				9DE34A3B2EF463A10048A95B /* PBXTargetDependency */,
 			);
 			name = "OG Phone";
 			packageProductDependencies = (
@@ -1009,6 +1041,28 @@
 			productReference = 9D8C667E29E3386800EB40E4 /* OG Phone Widget Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		9DE34A322EF463A10048A95B /* OG Intents */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9DE34A3E2EF463A10048A95B /* Build configuration list for PBXNativeTarget "OG Intents" */;
+			buildPhases = (
+				9DE34A2F2EF463A10048A95B /* Sources */,
+				9DE34A302EF463A10048A95B /* Frameworks */,
+				9DE34A312EF463A10048A95B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				9DE34A362EF463A10048A95B /* OG Intents */,
+			);
+			name = "OG Intents";
+			packageProductDependencies = (
+			);
+			productName = "OG Intents";
+			productReference = 9DE34A332EF463A10048A95B /* OG Intents.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1037,6 +1091,9 @@
 					9D8C667D29E3386800EB40E4 = {
 						CreatedOnToolsVersion = 14.3;
 					};
+					9DE34A322EF463A10048A95B = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
 				};
 			};
 			buildConfigurationList = 9D50EBA229C79E2300CF69E6 /* Build configuration list for PBXProject "OpenGluck" */;
@@ -1061,6 +1118,7 @@
 				9D50EBE229C7BC8D00CF69E6 /* OG Watch Widget Extension */,
 				9D22687D2AF29B2700437FAC /* OG TV */,
 				9D13560A2EEE98AD00F6E164 /* OG Notification Service */,
+				9DE34A322EF463A10048A95B /* OG Intents */,
 			);
 		};
 /* End PBXProject section */
@@ -1118,6 +1176,13 @@
 			files = (
 				9D0B4BB82B002F4700D2C773 /* Media.xcassets in Resources */,
 				9DB1DD2E2B0562B0007ED12B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DE34A312EF463A10048A95B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1358,6 +1423,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9DE34A2F2EF463A10048A95B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1382,12 +1454,19 @@
 			target = 9D8C667D29E3386800EB40E4 /* OG Phone Widget Extension */;
 			targetProxy = 9D8C668929E3386900EB40E4 /* PBXContainerItemProxy */;
 		};
+		9DE34A3B2EF463A10048A95B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9DE34A322EF463A10048A95B /* OG Intents */;
+			targetProxy = 9DE34A3A2EF463A10048A95B /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		9D1356102EEE98AD00F6E164 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "OG Notification Service/OG Notification Service.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DBCR64H97V;
@@ -1397,16 +1476,17 @@
 				INFOPLIST_FILE = "OG Notification Service/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OG Notification Service";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "open-gluck.github.io.ios.OG-Notification-Service";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -1422,6 +1502,8 @@
 		9D1356112EEE98AD00F6E164 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "OG Notification Service/OG Notification Service.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DBCR64H97V;
@@ -1431,16 +1513,17 @@
 				INFOPLIST_FILE = "OG Notification Service/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OG Notification Service";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "open-gluck.github.io.ios.OG-Notification-Service";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -1561,7 +1644,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
+				DEVELOPMENT_TEAM = DBCR64H97V;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1633,7 +1716,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
+				DEVELOPMENT_TEAM = DBCR64H97V;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1744,6 +1827,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OpenGluck Phone App/Preview Content\"";
+				DEVELOPMENT_TEAM = DBCR64H97V;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1791,6 +1875,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OpenGluck Phone App/Preview Content\"";
+				DEVELOPMENT_TEAM = DBCR64H97V;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1974,6 +2059,78 @@
 			};
 			name = Release;
 		};
+		9DE34A3F2EF463A10048A95B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "OG Intents/OG Intents.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DBCR64H97V;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "OG Intents/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "OG Intents";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "open-gluck.github.io.ios.OG-Intents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9DE34A402EF463A10048A95B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "OG Intents/OG Intents.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DBCR64H97V;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "OG Intents/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "OG Intents";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "open-gluck.github.io.ios.OG-Intents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2036,6 +2193,15 @@
 			buildConfigurations = (
 				9D8C668C29E3386900EB40E4 /* Debug */,
 				9D8C668D29E3386900EB40E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9DE34A3E2EF463A10048A95B /* Build configuration list for PBXNativeTarget "OG Intents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9DE34A3F2EF463A10048A95B /* Debug */,
+				9DE34A402EF463A10048A95B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

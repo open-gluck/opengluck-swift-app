@@ -5,6 +5,7 @@ import WatchConnectivity
 import os
 import OG
 import WidgetKit
+import Intents
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -100,7 +101,7 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
         let center = UNUserNotificationCenter.current()
         center.delegate = self
 
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+        center.requestAuthorization(options: [.alert, .sound, .badge, .carPlay]) { granted, error in
             if let error = error {
                 print("Authorization for notification failed \(error)")
             }
@@ -302,16 +303,21 @@ extension PhoneAppDelegate {
     private func setupNotificationActions() {
         let center = UNUserNotificationCenter.current()
 
+        let defaultCategory = UNNotificationCategory(identifier: "DEFAULT",
+                                                     actions: [],
+                                                     intentIdentifiers: [INSendMessageIntentIdentifier],
+                                                     options: [.allowInCarPlay])
+
         let snoozeLowAction = UNNotificationAction(identifier: NotificationActions.SNOOZE_LOW_ACTION.rawValue,
                                                    title: "Snooze Low",
                                                    options: [])
         let lowCategory = UNNotificationCategory(identifier: "LOW",
                                                  actions: [snoozeLowAction],
-                                                 intentIdentifiers: [],
+                                                 intentIdentifiers: [INSendMessageIntentIdentifier],
                                                  hiddenPreviewsBodyPlaceholder: "",
-                                                 options: [])
-        
-        center.setNotificationCategories([lowCategory])
+                                                 options: [.allowInCarPlay])
+
+        center.setNotificationCategories([defaultCategory, lowCategory])
     }
     
     private func reportErrorUsingNotification(title: String, error: Error) async {

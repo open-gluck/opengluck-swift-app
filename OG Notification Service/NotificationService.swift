@@ -15,6 +15,11 @@ class NotificationService: UNNotificationServiceExtension {
             return
         }
 
+        // Set category for CarPlay support
+        if bestAttemptContent.categoryIdentifier.isEmpty {
+            bestAttemptContent.categoryIdentifier = "DEFAULT"
+        }
+
         let senderEmail: String = "notifications@opengluck.com"
         let conversationIdentifier: String? = nil
 
