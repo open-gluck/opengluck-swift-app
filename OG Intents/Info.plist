@@ -11,6 +11,7 @@
 			<key>IntentsSupported</key>
 			<array>
 				<string>INSearchForMessagesIntent</string>
+				<string>INSendMessageIntent</string>
 			</array>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>
