@@ -305,7 +305,7 @@ extension PhoneAppDelegate {
 
         let defaultCategory = UNNotificationCategory(identifier: "DEFAULT",
                                                      actions: [],
-                                                     intentIdentifiers: [INSearchForMessagesIntentIdentifier],
+                                                     intentIdentifiers: [INSendMessageIntentIdentifier],
                                                      options: [.allowInCarPlay])
 
         let snoozeLowAction = UNNotificationAction(identifier: NotificationActions.SNOOZE_LOW_ACTION.rawValue,
@@ -313,7 +313,7 @@ extension PhoneAppDelegate {
                                                    options: [])
         let lowCategory = UNNotificationCategory(identifier: "LOW",
                                                  actions: [snoozeLowAction],
-                                                 intentIdentifiers: [INSearchForMessagesIntentIdentifier],
+                                                 intentIdentifiers: [INSendMessageIntentIdentifier],
                                                  hiddenPreviewsBodyPlaceholder: "",
                                                  options: [.allowInCarPlay])
 
