@@ -200,6 +200,9 @@
 		9DB783682B3B79810039C578 /* InsulinUnitEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB783672B3B79810039C578 /* InsulinUnitEnum.swift */; };
 		9DB7836A2B3B79E00039C578 /* AppsShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB783692B3B79E00039C578 /* AppsShortcuts.swift */; };
 		9DB7836C2B3B83CB0039C578 /* SugarInGramsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7836B2B3B83CB0039C578 /* SugarInGramsEnum.swift */; };
+		9DB8CA782EF52726005797BF /* CarPlayDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB8CA772EF52726005797BF /* CarPlayDataManager.swift */; };
+		9DB8CA7A2EF52746005797BF /* CarPlaySceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB8CA792EF52746005797BF /* CarPlaySceneDelegate.swift */; };
+		9DB8CA7C2EF527B6005797BF /* CarPlay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB8CA7B2EF527B6005797BF /* CarPlay.framework */; };
 		9DC4DF3E2B2F443500BAF7C5 /* SheetStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */; };
 		9DC4DF402B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF3F2B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift */; };
 		9DC4DF422B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF412B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift */; };
@@ -416,6 +419,9 @@
 		9DB783672B3B79810039C578 /* InsulinUnitEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinUnitEnum.swift; sourceTree = "<group>"; };
 		9DB783692B3B79E00039C578 /* AppsShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsShortcuts.swift; sourceTree = "<group>"; };
 		9DB7836B2B3B83CB0039C578 /* SugarInGramsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SugarInGramsEnum.swift; sourceTree = "<group>"; };
+		9DB8CA772EF52726005797BF /* CarPlayDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPlayDataManager.swift; sourceTree = "<group>"; };
+		9DB8CA792EF52746005797BF /* CarPlaySceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPlaySceneDelegate.swift; sourceTree = "<group>"; };
+		9DB8CA7B2EF527B6005797BF /* CarPlay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CarPlay.framework; path = System/iOSSupport/System/Library/Frameworks/CarPlay.framework; sourceTree = SDKROOT; };
 		9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetStatusView.swift; sourceTree = "<group>"; };
 		9DC4DF3F2B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseTrendBrick.swift; sourceTree = "<group>"; };
 		9DC4DF412B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentGlucoseBrick.swift; sourceTree = "<group>"; };
@@ -481,6 +487,7 @@
 			files = (
 				9DDD579D2A0AE1930063F704 /* OG in Frameworks */,
 				9D1EEE462AEF92CA009EA2AB /* OGUI in Frameworks */,
+				9DB8CA7C2EF527B6005797BF /* CarPlay.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -642,6 +649,7 @@
 				9D3BE9F229C87E5700B49643 /* OpenGluck Phone.entitlements */,
 				9D50EBAA29C79E2300CF69E6 /* OpenGluckPhoneApp.swift */,
 				9D50EBAE29C79E2400CF69E6 /* Assets.xcassets */,
+				9DB8CA762EF52697005797BF /* CarPlay */,
 				9D50EBB029C79E2400CF69E6 /* Preview Content */,
 				9D50EBAC29C79E2300CF69E6 /* PhoneContentView.swift */,
 				9D2DFED629D0EF1000545193 /* PhoneAppTabs.swift */,
@@ -693,6 +701,7 @@
 		9D50EBE429C7BC8D00CF69E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9DB8CA7B2EF527B6005797BF /* CarPlay.framework */,
 				9D50EBE529C7BC8D00CF69E6 /* WidgetKit.framework */,
 				9D50EBE729C7BC8D00CF69E6 /* SwiftUI.framework */,
 				9DE34A342EF463A10048A95B /* Intents.framework */,
@@ -881,6 +890,15 @@
 				9DDB12922B38885900015F17 /* OpenGluckAppIntents.swift */,
 			);
 			path = AppIntents;
+			sourceTree = "<group>";
+		};
+		9DB8CA762EF52697005797BF /* CarPlay */ = {
+			isa = PBXGroup;
+			children = (
+				9DB8CA772EF52726005797BF /* CarPlayDataManager.swift */,
+				9DB8CA792EF52746005797BF /* CarPlaySceneDelegate.swift */,
+			);
+			path = CarPlay;
 			sourceTree = "<group>";
 		};
 		9DD99DE72B30F48C003194B7 /* UI */ = {
@@ -1248,6 +1266,7 @@
 				9D9443E42B52DF7C0088ACD8 /* GlucoseRecordSnippet.swift in Sources */,
 				9D9031FA2C036883006130E3 /* OpenGluckEnvironmentUpdater.swift in Sources */,
 				9D2F2FAA2A3075140025A3D3 /* TimestampView.swift in Sources */,
+				9DB8CA782EF52726005797BF /* CarPlayDataManager.swift in Sources */,
 				9DAD39232AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */,
 				9D332E2929D6130B002613F6 /* WKData.swift in Sources */,
 				9D657A1429DABD9800791926 /* PhoneAppDelegate.swift in Sources */,
@@ -1258,6 +1277,7 @@
 				9DA328822DACFA63006DD9F5 /* RobustTimelineView.swift in Sources */,
 				9DCAE26729CCED0F005973F8 /* OpenGluckCredentials.swift in Sources */,
 				9DB783682B3B79810039C578 /* InsulinUnitEnum.swift in Sources */,
+				9DB8CA7A2EF52746005797BF /* CarPlaySceneDelegate.swift in Sources */,
 				9D8AD5FB2A3CB058006FEAE0 /* WidgetKinds.swift in Sources */,
 				9DC4DF3E2B2F443500BAF7C5 /* SheetStatusView.swift in Sources */,
 				9DB1DD312B07CD3E007ED12B /* BloodGlucose.swift in Sources */,
@@ -1832,12 +1852,16 @@
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_RESOURCE_ACCESS_CONTACTS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/System/iOSSupport/System/Library/Frameworks",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Phone App/OpenGluck-Phone-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OpenGlück";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Update contacts with glucose information.";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = NO;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1880,12 +1904,16 @@
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_RESOURCE_ACCESS_CONTACTS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/System/iOSSupport/System/Library/Frameworks",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Phone App/OpenGluck-Phone-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OpenGlück";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Update contacts with glucose information.";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = NO;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -2079,7 +2107,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "open-gluck.github.io.ios.OG-Intents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2115,7 +2143,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "open-gluck.github.io.ios.OG-Intents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

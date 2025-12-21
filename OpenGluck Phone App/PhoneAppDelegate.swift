@@ -6,6 +6,7 @@ import os
 import OG
 import WidgetKit
 import Intents
+import CarPlay
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -161,6 +162,11 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
     }
     
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        if connectingSceneSession.role == .carTemplateApplication {
+            let sceneConfig = UISceneConfiguration(name: "CarPlay", sessionRole: connectingSceneSession.role)
+            sceneConfig.delegateClass = CarPlaySceneDelegate.self
+            return sceneConfig
+        }
         let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
         sceneConfig.delegateClass = SceneDelegate.self
         return sceneConfig
