@@ -20,6 +20,12 @@ class NotificationService: UNNotificationServiceExtension {
             bestAttemptContent.categoryIdentifier = "DEFAULT"
         }
 
+        // Set time-sensitive to break through Focus modes (including Driving)
+        bestAttemptContent.interruptionLevel = .timeSensitive
+
+        // Play custom alert sound
+        bestAttemptContent.sound = UNNotificationSound(named: UNNotificationSoundName("alert_sound.caf"))
+
         let senderEmail: String = "notifications@opengluck.com"
         let conversationIdentifier: String? = nil
 
@@ -54,6 +60,13 @@ class NotificationService: UNNotificationServiceExtension {
             if let error = error {
                 print("Intent donation failed: \(error)")
             }
+        }
+
+        // Store notification content for Siri to read via IntentHandler
+        if let defaults = UserDefaults(suiteName: "group.open-gluck.github.io.ios") {
+            defaults.set(bestAttemptContent.body, forKey: "lastNotificationBody")
+            defaults.set(bestAttemptContent.title, forKey: "lastNotificationSender")
+            defaults.set(Date(), forKey: "lastNotificationDate")
         }
 
         // Update the notification with the intent

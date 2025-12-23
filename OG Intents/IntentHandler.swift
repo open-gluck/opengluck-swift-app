@@ -25,10 +25,43 @@ class IntentHandler: INExtension {
 class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandling {
 
     func handle(intent: INSearchForMessagesIntent, completion: @escaping (INSearchForMessagesIntentResponse) -> Void) {
-        // Return empty results - we only support receiving notifications, not searching messages
         let response = INSearchForMessagesIntentResponse(code: .success, userActivity: nil)
-        response.messages = []
+
+        // Return the last notification as a message for Siri to read
+        if let lastMessage = getLastMessage() {
+            response.messages = [lastMessage]
+        } else {
+            response.messages = []
+        }
         completion(response)
+    }
+
+    // Read the last notification from shared storage for Siri to read
+    private func getLastMessage() -> INMessage? {
+        guard let defaults = UserDefaults(suiteName: "group.open-gluck.github.io.ios"),
+              let body = defaults.string(forKey: "lastNotificationBody"),
+              let sender = defaults.string(forKey: "lastNotificationSender"),
+              let date = defaults.object(forKey: "lastNotificationDate") as? Date else {
+            return nil
+        }
+
+        let handle = INPersonHandle(value: "notifications@opengluck.com", type: .emailAddress)
+        let senderPerson = INPerson(
+            personHandle: handle,
+            nameComponents: nil,
+            displayName: sender,
+            image: nil,
+            contactIdentifier: nil,
+            customIdentifier: nil
+        )
+
+        return INMessage(
+            identifier: UUID().uuidString,
+            content: body,
+            dateSent: date,
+            sender: senderPerson,
+            recipients: nil
+        )
     }
 
     func resolveRecipients(for intent: INSearchForMessagesIntent, with completion: @escaping ([INPersonResolutionResult]) -> Void) {

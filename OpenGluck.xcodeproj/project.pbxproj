@@ -203,6 +203,7 @@
 		9DB8CA782EF52726005797BF /* CarPlayDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB8CA772EF52726005797BF /* CarPlayDataManager.swift */; };
 		9DB8CA7A2EF52746005797BF /* CarPlaySceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB8CA792EF52746005797BF /* CarPlaySceneDelegate.swift */; };
 		9DB8CA7C2EF527B6005797BF /* CarPlay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB8CA7B2EF527B6005797BF /* CarPlay.framework */; };
+		9DB8CA7E2EF86D35005797BF /* alert_sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9DB8CA7D2EF86D35005797BF /* alert_sound.caf */; };
 		9DC4DF3E2B2F443500BAF7C5 /* SheetStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */; };
 		9DC4DF402B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF3F2B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift */; };
 		9DC4DF422B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF412B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift */; };
@@ -422,6 +423,7 @@
 		9DB8CA772EF52726005797BF /* CarPlayDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPlayDataManager.swift; sourceTree = "<group>"; };
 		9DB8CA792EF52746005797BF /* CarPlaySceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPlaySceneDelegate.swift; sourceTree = "<group>"; };
 		9DB8CA7B2EF527B6005797BF /* CarPlay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CarPlay.framework; path = System/iOSSupport/System/Library/Frameworks/CarPlay.framework; sourceTree = SDKROOT; };
+		9DB8CA7D2EF86D35005797BF /* alert_sound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = alert_sound.caf; sourceTree = "<group>"; };
 		9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetStatusView.swift; sourceTree = "<group>"; };
 		9DC4DF3F2B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseTrendBrick.swift; sourceTree = "<group>"; };
 		9DC4DF412B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentGlucoseBrick.swift; sourceTree = "<group>"; };
@@ -646,6 +648,7 @@
 			isa = PBXGroup;
 			children = (
 				9D027CF42AF41EFF00B46980 /* OpenGluck-Phone-Info.plist */,
+				9DB8CA7D2EF86D35005797BF /* alert_sound.caf */,
 				9D3BE9F229C87E5700B49643 /* OpenGluck Phone.entitlements */,
 				9D50EBAA29C79E2300CF69E6 /* OpenGluckPhoneApp.swift */,
 				9D50EBAE29C79E2400CF69E6 /* Assets.xcassets */,
@@ -1166,6 +1169,7 @@
 				9D0B4BB72B002F4700D2C773 /* Media.xcassets in Resources */,
 				9D50EBB229C79E2400CF69E6 /* Preview Assets.xcassets in Resources */,
 				9D50EBAF29C79E2400CF69E6 /* Assets.xcassets in Resources */,
+				9DB8CA7E2EF86D35005797BF /* alert_sound.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
