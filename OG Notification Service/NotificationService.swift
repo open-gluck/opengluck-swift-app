@@ -26,32 +26,48 @@ class NotificationService: UNNotificationServiceExtension {
 
         // Set time-sensitive to break through Focus modes (including Driving)
         bestAttemptContent.interruptionLevel = .timeSensitive
-
+        
         // Play custom alert sound
         bestAttemptContent.sound = UNNotificationSound(named: UNNotificationSoundName("alert_sound.caf"))
 
         let senderEmail: String = "notifications@opengluck.com"
-        let conversationIdentifier: String? = nil
+        let toMeEmail: String = "me@opengluck.com"
+        let openGluckName: String = "Open Glück"
 
-        // Create the sender identity
-        let handle = INPersonHandle(value: senderEmail, type: .emailAddress)
+        let senderHandle = INPersonHandle(value: senderEmail, type: .emailAddress)
+        let toMeHandle = INPersonHandle(value: toMeEmail, type: .emailAddress)
 
-        // Create sender - iOS should match the email to whitelisted contacts
+        // Use PersonNameComponents as shown in the reference gist
+        var senderNameComponents = PersonNameComponents()
+        senderNameComponents.nickname = bestAttemptContent.title
+
         let sender = INPerson(
-            personHandle: handle,
-            nameComponents: nil,
+            personHandle: senderHandle,
+            nameComponents: senderNameComponents,
             displayName: bestAttemptContent.title,
             image: nil,
             contactIdentifier: nil,
-            customIdentifier: nil
+            customIdentifier: "opengluck-sender",
+            isMe: false,
+            suggestionType: .none
+        )
+        let toMe = INPerson(
+            personHandle: toMeHandle,
+            nameComponents: nil,
+            displayName: nil,
+            image: nil,
+            contactIdentifier: nil,
+            customIdentifier: "opengluck-me",
+            isMe: true,
+            suggestionType: .none
         )
 
         let intent = INSendMessageIntent(
-            recipients: nil,
+            recipients: [toMe],
             outgoingMessageType: .outgoingMessageText,
             content: request.content.body,
-            speakableGroupName: nil,
-            conversationIdentifier: conversationIdentifier,
+            speakableGroupName: INSpeakableString(spokenPhrase: openGluckName),
+            conversationIdentifier: "opengluck-notifications",
             serviceName: nil,
             sender: sender,
             attachments: nil

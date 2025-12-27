@@ -309,9 +309,12 @@ extension PhoneAppDelegate {
     private func setupNotificationActions() {
         let center = UNUserNotificationCenter.current()
 
+        let messageIntents: [String] = [
+        ]
+
         let defaultCategory = UNNotificationCategory(identifier: "DEFAULT",
                                                      actions: [],
-                                                     intentIdentifiers: [INSendMessageIntentIdentifier],
+                                                     intentIdentifiers: messageIntents,
                                                      options: [.allowInCarPlay])
 
         let snoozeLowAction = UNNotificationAction(identifier: NotificationActions.SNOOZE_LOW_ACTION.rawValue,
@@ -319,7 +322,7 @@ extension PhoneAppDelegate {
                                                    options: [])
         let lowCategory = UNNotificationCategory(identifier: "LOW",
                                                  actions: [snoozeLowAction],
-                                                 intentIdentifiers: [INSendMessageIntentIdentifier],
+                                                 intentIdentifiers: messageIntents,
                                                  hiddenPreviewsBodyPlaceholder: "",
                                                  options: [.allowInCarPlay])
 

@@ -5,20 +5,50 @@
 //  Created by Christopher Allène on 18/12/2025.
 //
 
+// ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+// ┃                                                                             ┃
+// ┃   ⚠️  IMPORTANT: SIRI PERMISSION REQUIRED FOR CARPLAY TO WORK  ⚠️           ┃
+// ┃                                                                             ┃
+// ┃   Open Glück MUST be allowed to work with Siri before CarPlay               ┃
+// ┃   notifications will function properly.                                     ┃
+// ┃                                                                             ┃
+// ┃   To enable this, the user must do ONE of the following:                    ┃
+// ┃                                                                             ┃
+// ┃   1. Ask Siri: "Hey Siri, open Open Glück"                                  ┃
+// ┃      - OR -                                                                 ┃
+// ┃   2. Ask Siri: "Hey Siri, read my messages in Open Glück"                   ┃
+// ┃                                                                             ┃
+// ┃   This grants Siri permission to interact with the app.                     ┃
+// ┃                                                                             ┃
+// ┃   UNTIL THIS IS DONE:                                                       ┃
+// ┃   - Clicking notifications in CarPlay will say "Something went wrong"       ┃
+// ┃   - The intent handlers below will never be called                          ┃
+// ┃                                                                             ┃
+// ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
 import Intents
+import os.log
+
+private let logger = Logger(subsystem: "open-gluck.github.io.ios.OG-Intents", category: "IntentHandler")
 
 class IntentHandler: INExtension {
 
     override func handler(for intent: INIntent) -> Any {
+        logger.info("handler(for:) called with intent type: \(type(of: intent))")
+
         if intent is INSearchForMessagesIntent {
+            logger.info("Returning SearchForMessagesIntentHandler")
             return SearchForMessagesIntentHandler()
         }
         if intent is INSendMessageIntent {
+            logger.info("Returning SendMessageIntentHandler")
             return SendMessageIntentHandler()
         }
         if intent is INSetMessageAttributeIntent {
+            logger.info("Returning SetMessageAttributeIntentHandler")
             return SetMessageAttributeIntentHandler()
         }
+        logger.warning("No matching handler for intent type: \(type(of: intent))")
         return self
     }
 }
@@ -28,12 +58,16 @@ class IntentHandler: INExtension {
 class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandling {
 
     func handle(intent: INSearchForMessagesIntent, completion: @escaping (INSearchForMessagesIntentResponse) -> Void) {
+        logger.info("SearchForMessagesIntentHandler.handle() called")
+
         let response = INSearchForMessagesIntentResponse(code: .success, userActivity: nil)
 
         // Return the last notification as a message for Siri to read
         if let lastMessage = getLastMessage() {
+            logger.info("Returning message with content: \(lastMessage.content ?? "nil")")
             response.messages = [lastMessage]
         } else {
+            logger.info("getLastMessage() returned nil - no message to read")
             response.messages = []
         }
         completion(response)
@@ -43,7 +77,7 @@ class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandlin
     private func getLastMessage() -> INMessage? {
         // Debug: verify app group entitlement is applied
         let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.open-gluck.github.io.ios")
-        print("IntentHandler: App group container URL:", containerURL?.path ?? "nil (ENTITLEMENT NOT APPLIED)")
+        logger.info("App group container URL: \(containerURL?.path ?? "nil (ENTITLEMENT NOT APPLIED)")")
 
         let defaults = UserDefaults(suiteName: "group.open-gluck.github.io.ios")
         let body = defaults?.string(forKey: "lastNotificationBody")
@@ -51,11 +85,10 @@ class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandlin
         let date = defaults?.object(forKey: "lastNotificationDate") as? Date
 
         // Debug logging
-        print("IntentHandler: suite exists:", defaults != nil)
-        print("IntentHandler: body:", body ?? "nil", "sender:", sender ?? "nil", "date:", date ?? "nil")
+        logger.info("suite exists: \(defaults != nil), body: \(body ?? "nil"), sender: \(sender ?? "nil"), date: \(String(describing: date))")
 
         guard let defaults, let body, let sender, let date else {
-            print("IntentHandler: returning nil - missing data")
+            logger.info("returning nil - missing data")
             return nil
         }
 
@@ -96,11 +129,10 @@ class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandlin
 class SendMessageIntentHandler: NSObject, INSendMessageIntentHandling {
 
     func handle(intent: INSendMessageIntent, completion: @escaping (INSendMessageIntentResponse) -> Void) {
-        // This handler exists solely to enable CarPlay notification support.
-        // We don't send messages - notifications are incoming only.
-        // Return failure to indicate this app doesn't support sending messages,
-        // but the intent declaration enables CarPlay to display our incoming notifications.
-        let response = INSendMessageIntentResponse(code: .failureRequiringAppLaunch, userActivity: nil)
+        logger.info("SendMessageIntentHandler.handle() called - returning success")
+        // Return success to prevent "something went wrong" when user taps notification in CarPlay.
+        // We don't actually send messages, but returning success allows the interaction to complete gracefully.
+        let response = INSendMessageIntentResponse(code: .success, userActivity: nil)
         completion(response)
     }
 

@@ -33,7 +33,7 @@ struct CurrentBloodGlucoseProvider: TimelineProvider {
                 currentData = try await openGlückConnection.getCurrentData(becauseUpdateOf: "CurrentBloodGlucoseProvider.getTimeline")
                 print("Got current: \(currentData!)")
             } catch {
-                Self.logger.error("Could not get current glucose record from widget: \(error)")
+                Self.logger.info("Could not get current glucose record from widget: \(error)")
                 currentData = nil
             }
             let entries: [CurrentBloodGlucoseTimelineEntry] = [
