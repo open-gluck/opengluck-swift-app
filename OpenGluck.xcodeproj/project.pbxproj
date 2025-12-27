@@ -107,6 +107,7 @@
 		9D6D72062B36180D00F89F4C /* AddLowBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D72052B36180D00F89F4C /* AddLowBrick.swift */; };
 		9D6D72082B36DA4500F89F4C /* CheckConnectionHasClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D72072B36DA4500F89F4C /* CheckConnectionHasClient.swift */; };
 		9D6D72092B36DA5000F89F4C /* CheckConnectionHasClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D72072B36DA4500F89F4C /* CheckConnectionHasClient.swift */; };
+		9D7616C32EFE869900A28766 /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D7616C22EFE869900A28766 /* AppIntentVocabulary.plist */; };
 		9D786CBF29CE3542008F9270 /* GlucoseGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D786CBE29CE3542008F9270 /* GlucoseGraph.swift */; };
 		9D786CC029CE3542008F9270 /* GlucoseGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D786CBE29CE3542008F9270 /* GlucoseGraph.swift */; };
 		9D8AD5EB2A39C14D006FEAE0 /* TimelineDebugWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8AD5EA2A39C14D006FEAE0 /* TimelineDebugWidget.swift */; };
@@ -378,6 +379,7 @@
 		9D657A2429DB680200791926 /* WatchAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAppDelegate.swift; sourceTree = "<group>"; };
 		9D6D72052B36180D00F89F4C /* AddLowBrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLowBrick.swift; sourceTree = "<group>"; };
 		9D6D72072B36DA4500F89F4C /* CheckConnectionHasClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckConnectionHasClient.swift; sourceTree = "<group>"; };
+		9D7616C12EFE869900A28766 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
 		9D786CBE29CE3542008F9270 /* GlucoseGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseGraph.swift; sourceTree = "<group>"; };
 		9D8AD5EA2A39C14D006FEAE0 /* TimelineDebugWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineDebugWidget.swift; sourceTree = "<group>"; };
 		9D8AD5ED2A3B1054006FEAE0 /* WidgetPreviewEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetPreviewEnvironment.swift; sourceTree = "<group>"; };
@@ -662,6 +664,7 @@
 				9D93A23F2A1A09E900F644B2 /* GlucoseNumbersView.swift */,
 				9D1EEE4D2AEF9F58009EA2AB /* DisplayPreferencesView.swift */,
 				9DDB12902B3879FE00015F17 /* PhoneNavigationData.swift */,
+				9D7616C22EFE869900A28766 /* AppIntentVocabulary.plist */,
 			);
 			name = Phone;
 			path = "OpenGluck Phone App";
@@ -1167,6 +1170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D0B4BB72B002F4700D2C773 /* Media.xcassets in Resources */,
+				9D7616C32EFE869900A28766 /* AppIntentVocabulary.plist in Resources */,
 				9D50EBB229C79E2400CF69E6 /* Preview Assets.xcassets in Resources */,
 				9D50EBAF29C79E2400CF69E6 /* Assets.xcassets in Resources */,
 				9DB8CA7E2EF86D35005797BF /* alert_sound.caf in Resources */,
@@ -1485,6 +1489,17 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		9D7616C22EFE869900A28766 /* AppIntentVocabulary.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9D7616C12EFE869900A28766 /* en */,
+			);
+			name = AppIntentVocabulary.plist;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		9D1356102EEE98AD00F6E164 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1514,12 +1529,14 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1551,11 +1568,13 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -2118,6 +2137,8 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2154,6 +2175,8 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;

@@ -10,6 +10,10 @@ class NotificationService: UNNotificationServiceExtension {
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
 
+        // Debug: verify app group entitlement is applied
+        let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.open-gluck.github.io.ios")
+        print("NotificationService: App group container URL:", containerURL?.path ?? "nil (ENTITLEMENT NOT APPLIED)")
+
         guard let bestAttemptContent else {
             contentHandler(request.content)
             return
@@ -58,7 +62,9 @@ class NotificationService: UNNotificationServiceExtension {
         interaction.direction = .incoming
         interaction.donate { error in
             if let error = error {
-                print("Intent donation failed: \(error)")
+                print("NotificationService: Intent donation FAILED: \(error)")
+            } else {
+                print("NotificationService: Intent donation succeeded")
             }
         }
 
@@ -67,6 +73,14 @@ class NotificationService: UNNotificationServiceExtension {
             defaults.set(bestAttemptContent.body, forKey: "lastNotificationBody")
             defaults.set(bestAttemptContent.title, forKey: "lastNotificationSender")
             defaults.set(Date(), forKey: "lastNotificationDate")
+
+            // Debug: verify write
+            print("NotificationService wrote:",
+                  "sender:", defaults.string(forKey: "lastNotificationSender") ?? "nil",
+                  "body:", defaults.string(forKey: "lastNotificationBody") ?? "nil",
+                  "date:", defaults.object(forKey: "lastNotificationDate") ?? "nil")
+        } else {
+            print("NotificationService: ERROR - Could not access app group UserDefaults")
         }
 
         // Update the notification with the intent

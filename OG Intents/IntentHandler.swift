@@ -16,6 +16,9 @@ class IntentHandler: INExtension {
         if intent is INSendMessageIntent {
             return SendMessageIntentHandler()
         }
+        if intent is INSetMessageAttributeIntent {
+            return SetMessageAttributeIntentHandler()
+        }
         return self
     }
 }
@@ -38,10 +41,21 @@ class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandlin
 
     // Read the last notification from shared storage for Siri to read
     private func getLastMessage() -> INMessage? {
-        guard let defaults = UserDefaults(suiteName: "group.open-gluck.github.io.ios"),
-              let body = defaults.string(forKey: "lastNotificationBody"),
-              let sender = defaults.string(forKey: "lastNotificationSender"),
-              let date = defaults.object(forKey: "lastNotificationDate") as? Date else {
+        // Debug: verify app group entitlement is applied
+        let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.open-gluck.github.io.ios")
+        print("IntentHandler: App group container URL:", containerURL?.path ?? "nil (ENTITLEMENT NOT APPLIED)")
+
+        let defaults = UserDefaults(suiteName: "group.open-gluck.github.io.ios")
+        let body = defaults?.string(forKey: "lastNotificationBody")
+        let sender = defaults?.string(forKey: "lastNotificationSender")
+        let date = defaults?.object(forKey: "lastNotificationDate") as? Date
+
+        // Debug logging
+        print("IntentHandler: suite exists:", defaults != nil)
+        print("IntentHandler: body:", body ?? "nil", "sender:", sender ?? "nil", "date:", date ?? "nil")
+
+        guard let defaults, let body, let sender, let date else {
+            print("IntentHandler: returning nil - missing data")
             return nil
         }
 
@@ -98,5 +112,17 @@ class SendMessageIntentHandler: NSObject, INSendMessageIntentHandling {
     func resolveContent(for intent: INSendMessageIntent, with completion: @escaping (INStringResolutionResult) -> Void) {
         // No content resolution needed
         completion(.notRequired())
+    }
+}
+
+// MARK: - INSetMessageAttributeIntentHandling
+
+class SetMessageAttributeIntentHandler: NSObject, INSetMessageAttributeIntentHandling {
+
+    func handle(intent: INSetMessageAttributeIntent, completion: @escaping (INSetMessageAttributeIntentResponse) -> Void) {
+        // After Siri reads a message, it calls this to mark it as read.
+        // We don't track read state, so just return success.
+        let response = INSetMessageAttributeIntentResponse(code: .success, userActivity: nil)
+        completion(response)
     }
 }

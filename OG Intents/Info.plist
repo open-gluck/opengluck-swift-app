@@ -12,6 +12,7 @@
 			<array>
 				<string>INSearchForMessagesIntent</string>
 				<string>INSendMessageIntent</string>
+				<string>INSetMessageAttributeIntent</string>
 			</array>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>
