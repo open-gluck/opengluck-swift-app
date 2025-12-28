@@ -131,7 +131,7 @@ class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandlin
         // Debug logging
         logger.info("suite exists: \(defaults != nil), body: \(body ?? "nil"), sender: \(sender ?? "nil"), date: \(String(describing: date))")
 
-        guard let defaults, let body, let sender, let date else {
+        guard defaults != nil, let body, let sender, let date else {
             logger.info("returning nil - missing data")
             return nil
         }
