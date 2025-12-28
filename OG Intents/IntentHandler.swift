@@ -72,6 +72,50 @@ class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandlin
         }
         completion(response)
     }
+    
+    // Prepares notification text for Siri TTS:
+    // - Removes the glucose unit “mg/dL” (case-insensitive, allows spaces around the slash)
+    //   to avoid awkward pronunciation (e.g., “em gee slash dee ell”).
+    // - Strips emoji and common emoji modifiers/variation selectors so the spoken output
+    //   focuses on the meaningful content.
+    // - Normalizes whitespace after removals so the final string sounds natural.
+    private func improveMessageBodyForTTS(_ body: String) -> String {
+        // Remove emojis and common emoji modifiers/variation selectors
+        func stripEmoji(from s: String) -> String {
+            var scalars = String.UnicodeScalarView()
+            scalars.reserveCapacity(s.unicodeScalars.count)
+            for scalar in s.unicodeScalars {
+                switch scalar.value {
+                case 0xFE0E, 0xFE0F: // variation selectors
+                    continue
+                case 0x1F3FB...0x1F3FF: // skin tone modifiers
+                    continue
+                case 0x1F000...0x1FFFF, // many emoji blocks
+                     0x2600...0x27BF:   // misc symbols/dingbats
+                    continue
+                default:
+                    scalars.append(scalar)
+                }
+            }
+            return String(scalars)
+        }
+        
+        // Remove mg/dL (case-insensitive, optional spaces around slash)
+        func stripMgDl(_ s: String) -> String {
+            let pattern = #"(?i)\bmg\s*/\s*dL\b"#
+            return s.replacingOccurrences(of: pattern, with: "", options: .regularExpression)
+        }
+        
+        // Collapse extra whitespace
+        func cleanSpaces(_ s: String) -> String {
+            let squashed = s.replacingOccurrences(of: #"\s+"#, with: " ", options: .regularExpression)
+            return squashed.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        
+        let noEmoji = stripEmoji(from: body)
+        let noUnits = stripMgDl(noEmoji)
+        return cleanSpaces(noUnits)
+    }
 
     // Read the last notification from shared storage for Siri to read
     private func getLastMessage() -> INMessage? {
@@ -96,7 +140,7 @@ class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandlin
         let senderPerson = INPerson(
             personHandle: handle,
             nameComponents: nil,
-            displayName: sender,
+            displayName: "OG",
             image: nil,
             contactIdentifier: nil,
             customIdentifier: nil
@@ -104,7 +148,7 @@ class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandlin
 
         return INMessage(
             identifier: UUID().uuidString,
-            content: body,
+            content: improveMessageBodyForTTS("\(sender); \(body)"),
             dateSent: date,
             sender: senderPerson,
             recipients: nil
