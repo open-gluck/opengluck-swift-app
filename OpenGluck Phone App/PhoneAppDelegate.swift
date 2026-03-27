@@ -5,6 +5,8 @@ import WatchConnectivity
 import os
 import OG
 import WidgetKit
+import Intents
+import CarPlay
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -100,7 +102,7 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
         let center = UNUserNotificationCenter.current()
         center.delegate = self
 
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+        center.requestAuthorization(options: [.alert, .sound, .badge, .carPlay]) { granted, error in
             if let error = error {
                 print("Authorization for notification failed \(error)")
             }
@@ -160,6 +162,11 @@ class PhoneAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate, O
     }
     
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        if connectingSceneSession.role == .carTemplateApplication {
+            let sceneConfig = UISceneConfiguration(name: "CarPlay", sessionRole: connectingSceneSession.role)
+            sceneConfig.delegateClass = CarPlaySceneDelegate.self
+            return sceneConfig
+        }
         let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
         sceneConfig.delegateClass = SceneDelegate.self
         return sceneConfig
@@ -302,16 +309,24 @@ extension PhoneAppDelegate {
     private func setupNotificationActions() {
         let center = UNUserNotificationCenter.current()
 
+        let messageIntents: [String] = [
+        ]
+
+        let defaultCategory = UNNotificationCategory(identifier: "DEFAULT",
+                                                     actions: [],
+                                                     intentIdentifiers: messageIntents,
+                                                     options: [.allowInCarPlay])
+
         let snoozeLowAction = UNNotificationAction(identifier: NotificationActions.SNOOZE_LOW_ACTION.rawValue,
                                                    title: "Snooze Low",
                                                    options: [])
         let lowCategory = UNNotificationCategory(identifier: "LOW",
                                                  actions: [snoozeLowAction],
-                                                 intentIdentifiers: [],
+                                                 intentIdentifiers: messageIntents,
                                                  hiddenPreviewsBodyPlaceholder: "",
-                                                 options: [])
-        
-        center.setNotificationCategories([lowCategory])
+                                                 options: [.allowInCarPlay])
+
+        center.setNotificationCategories([defaultCategory, lowCategory])
     }
     
     private func reportErrorUsingNotification(title: String, error: Error) async {

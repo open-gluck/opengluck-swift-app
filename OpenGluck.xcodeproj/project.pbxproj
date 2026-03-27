@@ -107,6 +107,7 @@
 		9D6D72062B36180D00F89F4C /* AddLowBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D72052B36180D00F89F4C /* AddLowBrick.swift */; };
 		9D6D72082B36DA4500F89F4C /* CheckConnectionHasClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D72072B36DA4500F89F4C /* CheckConnectionHasClient.swift */; };
 		9D6D72092B36DA5000F89F4C /* CheckConnectionHasClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6D72072B36DA4500F89F4C /* CheckConnectionHasClient.swift */; };
+		9D7616C32EFE869900A28766 /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D7616C22EFE869900A28766 /* AppIntentVocabulary.plist */; };
 		9D786CBF29CE3542008F9270 /* GlucoseGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D786CBE29CE3542008F9270 /* GlucoseGraph.swift */; };
 		9D786CC029CE3542008F9270 /* GlucoseGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D786CBE29CE3542008F9270 /* GlucoseGraph.swift */; };
 		9D8AD5EB2A39C14D006FEAE0 /* TimelineDebugWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8AD5EA2A39C14D006FEAE0 /* TimelineDebugWidget.swift */; };
@@ -200,6 +201,10 @@
 		9DB783682B3B79810039C578 /* InsulinUnitEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB783672B3B79810039C578 /* InsulinUnitEnum.swift */; };
 		9DB7836A2B3B79E00039C578 /* AppsShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB783692B3B79E00039C578 /* AppsShortcuts.swift */; };
 		9DB7836C2B3B83CB0039C578 /* SugarInGramsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7836B2B3B83CB0039C578 /* SugarInGramsEnum.swift */; };
+		9DB8CA782EF52726005797BF /* CarPlayDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB8CA772EF52726005797BF /* CarPlayDataManager.swift */; };
+		9DB8CA7A2EF52746005797BF /* CarPlaySceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB8CA792EF52746005797BF /* CarPlaySceneDelegate.swift */; };
+		9DB8CA7C2EF527B6005797BF /* CarPlay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB8CA7B2EF527B6005797BF /* CarPlay.framework */; };
+		9DB8CA7E2EF86D35005797BF /* alert_sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9DB8CA7D2EF86D35005797BF /* alert_sound.caf */; };
 		9DC4DF3E2B2F443500BAF7C5 /* SheetStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */; };
 		9DC4DF402B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF3F2B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift */; };
 		9DC4DF422B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF412B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift */; };
@@ -219,6 +224,8 @@
 		9DDD579F2A0AF1B20063F704 /* OG in Frameworks */ = {isa = PBXBuildFile; productRef = 9DDD579E2A0AF1B20063F704 /* OG */; };
 		9DDD57A32A0AF1BA0063F704 /* OG in Frameworks */ = {isa = PBXBuildFile; productRef = 9DDD57A22A0AF1BA0063F704 /* OG */; };
 		9DDD57A92A0AF1C60063F704 /* OG in Frameworks */ = {isa = PBXBuildFile; productRef = 9DDD57A82A0AF1C60063F704 /* OG */; };
+		9DE34A352EF463A10048A95B /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE34A342EF463A10048A95B /* Intents.framework */; };
+		9DE34A3C2EF463A10048A95B /* OG Intents.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9DE34A332EF463A10048A95B /* OG Intents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9DE374812C05094B00AA04DF /* LowIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE374802C05094B00AA04DF /* LowIcon.swift */; };
 		9DE374822C05094B00AA04DF /* LowIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE374802C05094B00AA04DF /* LowIcon.swift */; };
 		9DE374832C0509DD00AA04DF /* LowIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE374802C05094B00AA04DF /* LowIcon.swift */; };
@@ -261,6 +268,13 @@
 			remoteGlobalIDString = 9D8C667D29E3386800EB40E4;
 			remoteInfo = WidgetExtension;
 		};
+		9DE34A3A2EF463A10048A95B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9D50EB9F29C79E2300CF69E6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9DE34A322EF463A10048A95B;
+			remoteInfo = "OG Intents";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -292,6 +306,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				9DE34A3C2EF463A10048A95B /* OG Intents.appex in Embed Foundation Extensions */,
 				9D8C668B29E3386900EB40E4 /* OG Phone Widget Extension.appex in Embed Foundation Extensions */,
 				9D1356142EEE98D400F6E164 /* OG Notification Service.appex in Embed Foundation Extensions */,
 			);
@@ -364,6 +379,7 @@
 		9D657A2429DB680200791926 /* WatchAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAppDelegate.swift; sourceTree = "<group>"; };
 		9D6D72052B36180D00F89F4C /* AddLowBrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLowBrick.swift; sourceTree = "<group>"; };
 		9D6D72072B36DA4500F89F4C /* CheckConnectionHasClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckConnectionHasClient.swift; sourceTree = "<group>"; };
+		9D7616C12EFE869900A28766 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
 		9D786CBE29CE3542008F9270 /* GlucoseGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseGraph.swift; sourceTree = "<group>"; };
 		9D8AD5EA2A39C14D006FEAE0 /* TimelineDebugWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineDebugWidget.swift; sourceTree = "<group>"; };
 		9D8AD5ED2A3B1054006FEAE0 /* WidgetPreviewEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetPreviewEnvironment.swift; sourceTree = "<group>"; };
@@ -406,6 +422,10 @@
 		9DB783672B3B79810039C578 /* InsulinUnitEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinUnitEnum.swift; sourceTree = "<group>"; };
 		9DB783692B3B79E00039C578 /* AppsShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsShortcuts.swift; sourceTree = "<group>"; };
 		9DB7836B2B3B83CB0039C578 /* SugarInGramsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SugarInGramsEnum.swift; sourceTree = "<group>"; };
+		9DB8CA772EF52726005797BF /* CarPlayDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPlayDataManager.swift; sourceTree = "<group>"; };
+		9DB8CA792EF52746005797BF /* CarPlaySceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPlaySceneDelegate.swift; sourceTree = "<group>"; };
+		9DB8CA7B2EF527B6005797BF /* CarPlay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CarPlay.framework; path = System/iOSSupport/System/Library/Frameworks/CarPlay.framework; sourceTree = SDKROOT; };
+		9DB8CA7D2EF86D35005797BF /* alert_sound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = alert_sound.caf; sourceTree = "<group>"; };
 		9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetStatusView.swift; sourceTree = "<group>"; };
 		9DC4DF3F2B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseTrendBrick.swift; sourceTree = "<group>"; };
 		9DC4DF412B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentGlucoseBrick.swift; sourceTree = "<group>"; };
@@ -418,6 +438,8 @@
 		9DDA74DA2A4391BD00451DF6 /* CurrentGlucoseLargeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentGlucoseLargeWidget.swift; sourceTree = "<group>"; };
 		9DDB12902B3879FE00015F17 /* PhoneNavigationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNavigationData.swift; sourceTree = "<group>"; };
 		9DDB12922B38885900015F17 /* OpenGluckAppIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGluckAppIntents.swift; sourceTree = "<group>"; };
+		9DE34A332EF463A10048A95B /* OG Intents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "OG Intents.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DE34A342EF463A10048A95B /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		9DE374802C05094B00AA04DF /* LowIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LowIcon.swift; sourceTree = "<group>"; };
 		9DF375DA29D254360043CAA6 /* GlucoseRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseRecordView.swift; sourceTree = "<group>"; };
 		9DF375DE29D254990043CAA6 /* OpenGluckManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGluckManager.swift; sourceTree = "<group>"; };
@@ -432,10 +454,18 @@
 			);
 			target = 9D13560A2EEE98AD00F6E164 /* OG Notification Service */;
 		};
+		9DE34A3D2EF463A10048A95B /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 9DE34A322EF463A10048A95B /* OG Intents */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9D13560C2EEE98AD00F6E164 /* OG Notification Service */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (9D1356122EEE98AD00F6E164 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "OG Notification Service"; sourceTree = "<group>"; };
+		9DE34A362EF463A10048A95B /* OG Intents */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (9DE34A3D2EF463A10048A95B /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "OG Intents"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -461,6 +491,7 @@
 			files = (
 				9DDD579D2A0AE1930063F704 /* OG in Frameworks */,
 				9D1EEE462AEF92CA009EA2AB /* OGUI in Frameworks */,
+				9DB8CA7C2EF527B6005797BF /* CarPlay.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,6 +523,14 @@
 				9D8C668029E3386800EB40E4 /* SwiftUI.framework in Frameworks */,
 				9D1EEE482AEF92D3009EA2AB /* OGUI in Frameworks */,
 				9D8C667F29E3386800EB40E4 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DE34A302EF463A10048A95B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DE34A352EF463A10048A95B /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,6 +626,7 @@
 				9D50EBE929C7BC8D00CF69E6 /* Watch Widget Extension */,
 				9D22687F2AF29B2700437FAC /* TV */,
 				9D13560C2EEE98AD00F6E164 /* OG Notification Service */,
+				9DE34A362EF463A10048A95B /* OG Intents */,
 				9D50EBE429C7BC8D00CF69E6 /* Frameworks */,
 				9D50EBA829C79E2300CF69E6 /* Products */,
 			);
@@ -601,6 +641,7 @@
 				9D8C667E29E3386800EB40E4 /* OG Phone Widget Extension.appex */,
 				9D22687E2AF29B2700437FAC /* OG TV.app */,
 				9D13560B2EEE98AD00F6E164 /* OG Notification Service.appex */,
+				9DE34A332EF463A10048A95B /* OG Intents.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -609,9 +650,11 @@
 			isa = PBXGroup;
 			children = (
 				9D027CF42AF41EFF00B46980 /* OpenGluck-Phone-Info.plist */,
+				9DB8CA7D2EF86D35005797BF /* alert_sound.caf */,
 				9D3BE9F229C87E5700B49643 /* OpenGluck Phone.entitlements */,
 				9D50EBAA29C79E2300CF69E6 /* OpenGluckPhoneApp.swift */,
 				9D50EBAE29C79E2400CF69E6 /* Assets.xcassets */,
+				9DB8CA762EF52697005797BF /* CarPlay */,
 				9D50EBB029C79E2400CF69E6 /* Preview Content */,
 				9D50EBAC29C79E2300CF69E6 /* PhoneContentView.swift */,
 				9D2DFED629D0EF1000545193 /* PhoneAppTabs.swift */,
@@ -621,6 +664,7 @@
 				9D93A23F2A1A09E900F644B2 /* GlucoseNumbersView.swift */,
 				9D1EEE4D2AEF9F58009EA2AB /* DisplayPreferencesView.swift */,
 				9DDB12902B3879FE00015F17 /* PhoneNavigationData.swift */,
+				9D7616C22EFE869900A28766 /* AppIntentVocabulary.plist */,
 			);
 			name = Phone;
 			path = "OpenGluck Phone App";
@@ -663,8 +707,10 @@
 		9D50EBE429C7BC8D00CF69E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9DB8CA7B2EF527B6005797BF /* CarPlay.framework */,
 				9D50EBE529C7BC8D00CF69E6 /* WidgetKit.framework */,
 				9D50EBE729C7BC8D00CF69E6 /* SwiftUI.framework */,
+				9DE34A342EF463A10048A95B /* Intents.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -852,6 +898,15 @@
 			path = AppIntents;
 			sourceTree = "<group>";
 		};
+		9DB8CA762EF52697005797BF /* CarPlay */ = {
+			isa = PBXGroup;
+			children = (
+				9DB8CA772EF52726005797BF /* CarPlayDataManager.swift */,
+				9DB8CA792EF52746005797BF /* CarPlaySceneDelegate.swift */,
+			);
+			path = CarPlay;
+			sourceTree = "<group>";
+		};
 		9DD99DE72B30F48C003194B7 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -934,6 +989,7 @@
 				9D50EBBA29C79E2400CF69E6 /* PBXTargetDependency */,
 				9D8C668A29E3386900EB40E4 /* PBXTargetDependency */,
 				9D1356162EEE98D400F6E164 /* PBXTargetDependency */,
+				9DE34A3B2EF463A10048A95B /* PBXTargetDependency */,
 			);
 			name = "OG Phone";
 			packageProductDependencies = (
@@ -1009,6 +1065,28 @@
 			productReference = 9D8C667E29E3386800EB40E4 /* OG Phone Widget Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		9DE34A322EF463A10048A95B /* OG Intents */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9DE34A3E2EF463A10048A95B /* Build configuration list for PBXNativeTarget "OG Intents" */;
+			buildPhases = (
+				9DE34A2F2EF463A10048A95B /* Sources */,
+				9DE34A302EF463A10048A95B /* Frameworks */,
+				9DE34A312EF463A10048A95B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				9DE34A362EF463A10048A95B /* OG Intents */,
+			);
+			name = "OG Intents";
+			packageProductDependencies = (
+			);
+			productName = "OG Intents";
+			productReference = 9DE34A332EF463A10048A95B /* OG Intents.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1037,6 +1115,9 @@
 					9D8C667D29E3386800EB40E4 = {
 						CreatedOnToolsVersion = 14.3;
 					};
+					9DE34A322EF463A10048A95B = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
 				};
 			};
 			buildConfigurationList = 9D50EBA229C79E2300CF69E6 /* Build configuration list for PBXProject "OpenGluck" */;
@@ -1061,6 +1142,7 @@
 				9D50EBE229C7BC8D00CF69E6 /* OG Watch Widget Extension */,
 				9D22687D2AF29B2700437FAC /* OG TV */,
 				9D13560A2EEE98AD00F6E164 /* OG Notification Service */,
+				9DE34A322EF463A10048A95B /* OG Intents */,
 			);
 		};
 /* End PBXProject section */
@@ -1088,8 +1170,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D0B4BB72B002F4700D2C773 /* Media.xcassets in Resources */,
+				9D7616C32EFE869900A28766 /* AppIntentVocabulary.plist in Resources */,
 				9D50EBB229C79E2400CF69E6 /* Preview Assets.xcassets in Resources */,
 				9D50EBAF29C79E2400CF69E6 /* Assets.xcassets in Resources */,
+				9DB8CA7E2EF86D35005797BF /* alert_sound.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1118,6 +1202,13 @@
 			files = (
 				9D0B4BB82B002F4700D2C773 /* Media.xcassets in Resources */,
 				9DB1DD2E2B0562B0007ED12B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DE34A312EF463A10048A95B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1183,6 +1274,7 @@
 				9D9443E42B52DF7C0088ACD8 /* GlucoseRecordSnippet.swift in Sources */,
 				9D9031FA2C036883006130E3 /* OpenGluckEnvironmentUpdater.swift in Sources */,
 				9D2F2FAA2A3075140025A3D3 /* TimestampView.swift in Sources */,
+				9DB8CA782EF52726005797BF /* CarPlayDataManager.swift in Sources */,
 				9DAD39232AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */,
 				9D332E2929D6130B002613F6 /* WKData.swift in Sources */,
 				9D657A1429DABD9800791926 /* PhoneAppDelegate.swift in Sources */,
@@ -1193,6 +1285,7 @@
 				9DA328822DACFA63006DD9F5 /* RobustTimelineView.swift in Sources */,
 				9DCAE26729CCED0F005973F8 /* OpenGluckCredentials.swift in Sources */,
 				9DB783682B3B79810039C578 /* InsulinUnitEnum.swift in Sources */,
+				9DB8CA7A2EF52746005797BF /* CarPlaySceneDelegate.swift in Sources */,
 				9D8AD5FB2A3CB058006FEAE0 /* WidgetKinds.swift in Sources */,
 				9DC4DF3E2B2F443500BAF7C5 /* SheetStatusView.swift in Sources */,
 				9DB1DD312B07CD3E007ED12B /* BloodGlucose.swift in Sources */,
@@ -1358,6 +1451,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9DE34A2F2EF463A10048A95B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1382,12 +1482,30 @@
 			target = 9D8C667D29E3386800EB40E4 /* OG Phone Widget Extension */;
 			targetProxy = 9D8C668929E3386900EB40E4 /* PBXContainerItemProxy */;
 		};
+		9DE34A3B2EF463A10048A95B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9DE34A322EF463A10048A95B /* OG Intents */;
+			targetProxy = 9DE34A3A2EF463A10048A95B /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9D7616C22EFE869900A28766 /* AppIntentVocabulary.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9D7616C12EFE869900A28766 /* en */,
+			);
+			name = AppIntentVocabulary.plist;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		9D1356102EEE98AD00F6E164 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "OG Notification Service/OG Notification Service.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DBCR64H97V;
@@ -1397,31 +1515,36 @@
 				INFOPLIST_FILE = "OG Notification Service/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OG Notification Service";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "open-gluck.github.io.ios.OG-Notification-Service";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		9D1356112EEE98AD00F6E164 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "OG Notification Service/OG Notification Service.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DBCR64H97V;
@@ -1431,24 +1554,27 @@
 				INFOPLIST_FILE = "OG Notification Service/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OG Notification Service";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "open-gluck.github.io.ios.OG-Notification-Service";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1561,7 +1687,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
+				DEVELOPMENT_TEAM = DBCR64H97V;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1633,7 +1759,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "$(OPENGLUCK_DEVELOPMENT_TEAM)";
+				DEVELOPMENT_TEAM = DBCR64H97V;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1744,16 +1870,21 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OpenGluck Phone App/Preview Content\"";
+				DEVELOPMENT_TEAM = DBCR64H97V;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_RESOURCE_ACCESS_CONTACTS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/System/iOSSupport/System/Library/Frameworks",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Phone App/OpenGluck-Phone-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OpenGlück";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Update contacts with glucose information.";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = NO;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1791,16 +1922,21 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OpenGluck Phone App/Preview Content\"";
+				DEVELOPMENT_TEAM = DBCR64H97V;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_RESOURCE_ACCESS_CONTACTS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/System/iOSSupport/System/Library/Frameworks",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Phone App/OpenGluck-Phone-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "OpenGlück";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Update contacts with glucose information.";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = NO;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1974,6 +2110,82 @@
 			};
 			name = Release;
 		};
+		9DE34A3F2EF463A10048A95B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "OG Intents/OG Intents.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DBCR64H97V;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "OG Intents/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "OG Intents";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "open-gluck.github.io.ios.OG-Intents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9DE34A402EF463A10048A95B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "OG Intents/OG Intents.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DBCR64H97V;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "OG Intents/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "OG Intents";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "open-gluck.github.io.ios.OG-Intents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2036,6 +2248,15 @@
 			buildConfigurations = (
 				9D8C668C29E3386900EB40E4 /* Debug */,
 				9D8C668D29E3386900EB40E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9DE34A3E2EF463A10048A95B /* Build configuration list for PBXNativeTarget "OG Intents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9DE34A3F2EF463A10048A95B /* Debug */,
+				9DE34A402EF463A10048A95B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
