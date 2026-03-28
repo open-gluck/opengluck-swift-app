@@ -241,9 +241,7 @@ public struct EnteredText: View {
                         Image(systemName: confirmSystemImage)
                     }
                 }
-                .padding()
                 .foregroundColor(.blue)
-                .buttonStyle(PlainButtonStyle())
                 .background(Color.secondary)
                 .clipShape(Capsule())
             }
