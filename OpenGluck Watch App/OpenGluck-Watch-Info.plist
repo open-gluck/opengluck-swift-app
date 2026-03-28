@@ -6,9 +6,13 @@
 	<array>
 		<dict>
 			<key>INAlternativeAppName</key>
-			<string>OpenGlück</string>
-			<key>INAlternativeAppNamePronunciationHint</key>
+			<string>OG</string>
+		</dict>
+		<dict>
+			<key>INAlternativeAppName</key>
 			<string>open click</string>
+			<key>INAlternativeAppNamePronunciationHint</key>
+			<string>Open Glück</string>
 		</dict>
 		<dict>
 			<key>INAlternativeAppName</key>
@@ -16,13 +20,7 @@
 			<key>INAlternativeAppNamePronunciationHint</key>
 			<string>gluck</string>
 		</dict>
-		<dict>
-			<key>INAlternativeAppName</key>
-			<string>OG</string>
-		</dict>
 	</array>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>OPENGLUCK_DEFAULT_TOKEN</key>
 	<string>$(OPENGLUCK_DEFAULT_TOKEN)</string>
 	<key>OPENGLUCK_DEFAULT_URL</key>
