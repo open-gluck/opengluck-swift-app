@@ -174,8 +174,8 @@ struct AddLowAppIntent: AppIntent {
         guard let client = connection.getClient() else {
             throw AppIntentError.message("Could not get a client, have you configured a valid OpenGlück server and token in the app?")
         }
-        let sugarInGrams = if let value = self.sugarInGramsEnum?.rawValue {
-            Double(value)!
+        let sugarInGrams = if let sugarInGramsEnum {
+            Double(sugarInGramsEnum.rawValue)
         } else if let sugarInGramsDouble {
             sugarInGramsDouble
         } else {
