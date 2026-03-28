@@ -76,6 +76,7 @@ class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandlin
     // Prepares notification text for Siri TTS:
     // - Removes the glucose unit “mg/dL” (case-insensitive, allows spaces around the slash)
     //   to avoid awkward pronunciation (e.g., “em gee slash dee ell”).
+    // - Expands "42m" → "42 min" so Siri says "minutes" instead of "meters".
     // - Strips emoji and common emoji modifiers/variation selectors so the spoken output
     //   focuses on the meaningful content.
     // - Normalizes whitespace after removals so the final string sounds natural.
@@ -106,6 +107,12 @@ class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandlin
             return s.replacingOccurrences(of: pattern, with: "", options: .regularExpression)
         }
         
+        // Expand "42m" → "42 min" so Siri says "minutes" instead of "meters"
+        func expandMinutes(_ s: String) -> String {
+            let pattern = #"(\d)m\b"#
+            return s.replacingOccurrences(of: pattern, with: "$1 min", options: .regularExpression)
+        }
+        
         // Collapse extra whitespace
         func cleanSpaces(_ s: String) -> String {
             let squashed = s.replacingOccurrences(of: #"\s+"#, with: " ", options: .regularExpression)
@@ -114,7 +121,8 @@ class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandlin
         
         let noEmoji = stripEmoji(from: body)
         let noUnits = stripMgDl(noEmoji)
-        return cleanSpaces(noUnits)
+        let expandedMinutes = expandMinutes(noUnits)
+        return cleanSpaces(expandedMinutes)
     }
 
     // Read the last notification from shared storage for Siri to read
