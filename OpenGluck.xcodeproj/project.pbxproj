@@ -24,7 +24,6 @@
 		9D1B2CB929DCC163004C6311 /* ComplicationDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B2CB829DCC163004C6311 /* ComplicationDebugView.swift */; };
 		9D1B2CBB29DCC3DF004C6311 /* WidgetKinds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B2CBA29DCC3DF004C6311 /* WidgetKinds.swift */; };
 		9D1B2CBC29DCC3DF004C6311 /* WidgetKinds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B2CBA29DCC3DF004C6311 /* WidgetKinds.swift */; };
-		9D1B2D0829DCD3BF004C6311 /* WatchAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D657A2429DB680200791926 /* WatchAppDelegate.swift */; };
 		9D1EEE462AEF92CA009EA2AB /* OGUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9D1EEE452AEF92CA009EA2AB /* OGUI */; };
 		9D1EEE482AEF92D3009EA2AB /* OGUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9D1EEE472AEF92D3009EA2AB /* OGUI */; };
 		9D1EEE4A2AEF92DE009EA2AB /* OGUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9D1EEE492AEF92DE009EA2AB /* OGUI */; };
@@ -1381,7 +1380,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D9032022C036883006130E3 /* OpenGluckThresholdsDelegate.swift in Sources */,
-				9D1B2D0829DCD3BF004C6311 /* WatchAppDelegate.swift in Sources */,
 				9D50EBF029C7BC8E00CF69E6 /* WatchExtension.intentdefinition in Sources */,
 				9D8AD5F92A3CAE52006FEAE0 /* CurrentGlucoseWidget.swift in Sources */,
 				9DAD39262AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */,
@@ -1800,9 +1798,10 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Watch App/OpenGluck-Watch-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "$(OPENGLUCK_TARGET_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "OpenGlück";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(OPENGLUCK_BUNDLE_IDENTIFIER)";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "open-gluck.github.io.ios";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1836,9 +1835,10 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OpenGluck Watch App/OpenGluck-Watch-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "$(OPENGLUCK_TARGET_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "OpenGlück";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(OPENGLUCK_BUNDLE_IDENTIFIER)";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "open-gluck.github.io.ios";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

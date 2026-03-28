@@ -5,6 +5,7 @@ import AppIntents
  FIXME: seems this is broken in iOS 17.4 and watchOS 10.4 :/
  */
 
+#if true
 enum InsulinUnitEnum: String, Codable, Sendable {
     case value1 = "1"
     case value2 = "2"
@@ -105,7 +106,7 @@ extension InsulinUnitEnum: AppEnum {
     ]
 }
 
-#if false
+#else
 /// the same hack, with AppEntity
 /// doesn't work on watchOS 10.4
 
@@ -115,8 +116,8 @@ struct InsulinAppEntity: Identifiable {
 }
 
 extension InsulinAppEntity: AppEntity {
-    static var defaultQuery = InsulinAppEntityQuery()
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Insulin units"
+    static let defaultQuery = InsulinAppEntityQuery()
+    static let typeDisplayRepresentation: TypeDisplayRepresentation = "Insulin units"
     var displayRepresentation: DisplayRepresentation {
         DisplayRepresentation(title: "\(units)")
     }
