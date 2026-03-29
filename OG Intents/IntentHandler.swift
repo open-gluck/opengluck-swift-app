@@ -107,10 +107,16 @@ class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandlin
             return s.replacingOccurrences(of: pattern, with: "", options: .regularExpression)
         }
         
-        // Expand "42m" → "42 min" so Siri says "minutes" instead of "meters"
+        // Expand "42m" → "42 minutes" so Siri says "minutes" instead of "meters"
         func expandMinutes(_ s: String) -> String {
             let pattern = #"(\d)m\b"#
-            return s.replacingOccurrences(of: pattern, with: "$1 min", options: .regularExpression)
+            return s.replacingOccurrences(of: pattern, with: "$1 minutes", options: .regularExpression)
+        }
+
+        // Expand "1h" → "1 hour", "2h" → "2 hours"
+        func expandHours(_ s: String) -> String {
+            let s = s.replacingOccurrences(of: #"\b1h\b"#, with: "1 hour", options: .regularExpression)
+            return s.replacingOccurrences(of: #"(\d)h\b"#, with: "$1 hours", options: .regularExpression)
         }
         
         // Collapse extra whitespace
@@ -122,7 +128,8 @@ class SearchForMessagesIntentHandler: NSObject, INSearchForMessagesIntentHandlin
         let noEmoji = stripEmoji(from: body)
         let noUnits = stripMgDl(noEmoji)
         let expandedMinutes = expandMinutes(noUnits)
-        return cleanSpaces(expandedMinutes)
+        let expandedHours = expandHours(expandedMinutes)
+        return cleanSpaces(expandedHours)
     }
 
     // Read the last notification from shared storage for Siri to read
