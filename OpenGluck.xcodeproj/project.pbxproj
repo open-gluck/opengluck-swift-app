@@ -650,7 +650,6 @@
 			isa = PBXGroup;
 			children = (
 				9D027CF42AF41EFF00B46980 /* OpenGluck-Phone-Info.plist */,
-				9DB8CA7D2EF86D35005797BF /* alert_sound.caf */,
 				9D3BE9F229C87E5700B49643 /* OpenGluck Phone.entitlements */,
 				9D50EBAA29C79E2300CF69E6 /* OpenGluckPhoneApp.swift */,
 				9D50EBAE29C79E2400CF69E6 /* Assets.xcassets */,
@@ -732,6 +731,7 @@
 		9D657A1129DABD3B00791926 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				9DB8CA7D2EF86D35005797BF /* alert_sound.caf */,
 				9DB783642B3B79570039C578 /* AppIntents */,
 				9DB1DD2F2B07CD0A007ED12B /* UI */,
 				9D9EB06929E1D984005FCD1C /* OpenGluck */,
