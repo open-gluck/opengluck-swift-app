@@ -24,7 +24,6 @@
 		9D1B2CB929DCC163004C6311 /* ComplicationDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B2CB829DCC163004C6311 /* ComplicationDebugView.swift */; };
 		9D1B2CBB29DCC3DF004C6311 /* WidgetKinds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B2CBA29DCC3DF004C6311 /* WidgetKinds.swift */; };
 		9D1B2CBC29DCC3DF004C6311 /* WidgetKinds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B2CBA29DCC3DF004C6311 /* WidgetKinds.swift */; };
-		9D1B2D0829DCD3BF004C6311 /* WatchAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D657A2429DB680200791926 /* WatchAppDelegate.swift */; };
 		9D1EEE462AEF92CA009EA2AB /* OGUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9D1EEE452AEF92CA009EA2AB /* OGUI */; };
 		9D1EEE482AEF92D3009EA2AB /* OGUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9D1EEE472AEF92D3009EA2AB /* OGUI */; };
 		9D1EEE4A2AEF92DE009EA2AB /* OGUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9D1EEE492AEF92DE009EA2AB /* OGUI */; };
@@ -205,6 +204,7 @@
 		9DB8CA7A2EF52746005797BF /* CarPlaySceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB8CA792EF52746005797BF /* CarPlaySceneDelegate.swift */; };
 		9DB8CA7C2EF527B6005797BF /* CarPlay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB8CA7B2EF527B6005797BF /* CarPlay.framework */; };
 		9DB8CA7E2EF86D35005797BF /* alert_sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9DB8CA7D2EF86D35005797BF /* alert_sound.caf */; };
+		9DB8CA7F2EF86D35005797BF /* alert_sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9DB8CA7D2EF86D35005797BF /* alert_sound.caf */; };
 		9DC4DF3E2B2F443500BAF7C5 /* SheetStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF3D2B2F443500BAF7C5 /* SheetStatusView.swift */; };
 		9DC4DF402B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF3F2B2F62FC00BAF7C5 /* GlucoseTrendBrick.swift */; };
 		9DC4DF422B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4DF412B2F64A500BAF7C5 /* CurrentGlucoseBrick.swift */; };
@@ -1184,6 +1184,7 @@
 				9D0B4BB92B002F4700D2C773 /* Media.xcassets in Resources */,
 				9D50EBC429C79E2500CF69E6 /* Preview Assets.xcassets in Resources */,
 				9D50EBC129C79E2500CF69E6 /* Assets.xcassets in Resources */,
+				9DB8CA7F2EF86D35005797BF /* alert_sound.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1381,7 +1382,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D9032022C036883006130E3 /* OpenGluckThresholdsDelegate.swift in Sources */,
-				9D1B2D0829DCD3BF004C6311 /* WatchAppDelegate.swift in Sources */,
 				9D50EBF029C7BC8E00CF69E6 /* WatchExtension.intentdefinition in Sources */,
 				9D8AD5F92A3CAE52006FEAE0 /* CurrentGlucoseWidget.swift in Sources */,
 				9DAD39262AF5AD4700C1304F /* OpenGluckConnection.swift in Sources */,
