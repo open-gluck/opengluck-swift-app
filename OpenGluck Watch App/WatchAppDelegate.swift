@@ -2,6 +2,7 @@ import WatchConnectivity
 import UserNotifications
 import SwiftUI
 import WidgetKit
+import AppIntents
 
 class WatchAppDelegate: NSObject, WKApplicationDelegate, WCSessionDelegate, ObservableObject, UNUserNotificationCenterDelegate {
     private var deviceToken: Data? = nil
@@ -25,6 +26,8 @@ class WatchAppDelegate: NSObject, WKApplicationDelegate, WCSessionDelegate, Obse
         let session = WCSession.default
         session.delegate = self
         session.activate()
+        
+        AppsShortcuts.updateAppShortcutParameters()
     }
     
     // Conform to UNUserNotificationCenterDelegate to show local notification in foreground

@@ -7,7 +7,9 @@ struct AppsShortcuts: AppShortcutsProvider {
             intent: DeleteLastInsulinAppIntent(),
             phrases: [
                 "\(.applicationName) delete last insulin",
+                "\(.applicationName) delete last insulin record",
                 "Delete the last insulin in \(.applicationName)",
+                "Delete the last insulin record in \(.applicationName)",
             ],
             shortTitle: "Delete Last Insulin",
             systemImageName: "trash.circle"
@@ -24,29 +26,28 @@ struct AppsShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: AddInsulinAppIntent(),
             phrases: [
+                "\(.applicationName) unit",
                 "\(.applicationName) record insulin",
-                "\(.applicationName) note insulin",
-                "\(.applicationName) add insulin",
-                "\(\.$unitsEnum) insulin units in \(.applicationName)",
+            ],
+            shortTitle: "Record insulin",
+            systemImageName: "cross.vial"
+        )
+        AppShortcut(
+            intent: AddInsulinAppIntent(),
+            phrases: [
                 "\(.applicationName) \(\.$unitsEnum) unit",
                 "\(.applicationName) \(\.$unitsEnum) units",
-                "\(\.$unitsEnum) unit \(.applicationName)",
-                "\(\.$unitsEnum) units \(.applicationName)",
             ],
-            shortTitle: "Add insulin",
+            shortTitle: "Record some unit of insulin",
             systemImageName: "cross.vial"
         )
         AppShortcut(
             intent: IncreaseLastInsulinByAppIntent(),
             phrases: [
                 "\(.applicationName) add \(\.$unitsEnum)",
-                "\(.applicationName) augment \(\.$unitsEnum)",
                 "\(.applicationName) increase \(\.$unitsEnum)",
-                "\(.applicationName) add \(\.$unitsEnum) units",
-                "\(.applicationName) augment \(\.$unitsEnum) units",
-                "\(.applicationName) increase \(\.$unitsEnum) units",
             ],
-            shortTitle: "Increase last insulin",
+            shortTitle: "Increase last insulin by some units",
             systemImageName: "cross.vial"
         )
         AppShortcut(
@@ -54,10 +55,8 @@ struct AppsShortcuts: AppShortcutsProvider {
             phrases: [
                 "\(.applicationName) remove \(\.$unitsEnum)",
                 "\(.applicationName) decrease \(\.$unitsEnum)",
-                "\(.applicationName) remove \(\.$unitsEnum) units",
-                "\(.applicationName) decrease \(\.$unitsEnum) units",
             ],
-            shortTitle: "Decrease last insulin",
+            shortTitle: "Decrease last insulin by some units",
             systemImageName: "cross.vial"
         )
 
@@ -82,15 +81,13 @@ struct AppsShortcuts: AppShortcutsProvider {
             intent: AddLowAppIntent(),
             phrases: [
                 "\(.applicationName) record sugar",
-                "\(.applicationName) note sugar",
-                "\(.applicationName) add sugar",
                 "\(\.$sugarInGramsEnum) grams of sugar in \(.applicationName)",
                 "\(.applicationName) \(\.$sugarInGramsEnum) gram",
                 "\(.applicationName) \(\.$sugarInGramsEnum) grams",
                 "\(\.$sugarInGramsEnum) gram \(.applicationName)",
                 "\(\.$sugarInGramsEnum) grams \(.applicationName)",
             ],
-            shortTitle: "Add sugar",
+            shortTitle: "Record sugar",
             systemImageName: "teddybear"
         )
         AppShortcut(
