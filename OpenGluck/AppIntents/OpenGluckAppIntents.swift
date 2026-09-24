@@ -55,17 +55,14 @@ struct AddInsulinAppIntent: AppIntent {
     static let title: LocalizedStringResource = "Record Insulin"
     static let description: LocalizedStringResource = "Records some insulin units."
 
-    // We provide two parameters, one used only for AppShortcuts with a limited value of options,
-    // and an open value that can be used programatically with Shortcuts and also on the times that
-    // Siri fails to understand a value, to ask the user for something more precise.
-    @Parameter(title: "Units", description: "How many insulin units?", requestValueDialog: "How much insulin?")
+    @Parameter(title: "Units", description: "How many insulin units?")
     var unitsEnum: InsulinUnitEnum?
 
     @Parameter(title: "Units", description: "How many insulin units?")
-    var unitsInt: Int?
+    var units: Int?
 
     static var parameterSummary: some ParameterSummary {
-        Summary("Record \(\.$unitsInt) units of insulin") {
+        Summary("Record \(\.$units) units of insulin") {
         }
     }
     
@@ -75,12 +72,12 @@ struct AddInsulinAppIntent: AppIntent {
         guard let client = connection.getClient() else {
             throw AppIntentError.message("Could not get a client, have you configured a valid OpenGlück server and token in the app?")
         }
-        let units = if let value = self.unitsEnum?.rawValue {
-            Int(value)!
-        } else if let unitsInt {
-            unitsInt
+        let units = if let unitsEnum {
+            unitsEnum.rawValue
+        } else if let units {
+            units
         } else {
-            try await self.$unitsInt.requestValue("How many insulin units?")
+            try await self.$units.requestValue("How many insulin units?")
         }
 
         let insulinRecord = OpenGluckInsulinRecord(id: UUID(), timestamp: Date(), units: units, deleted: false)
@@ -177,8 +174,8 @@ struct AddLowAppIntent: AppIntent {
         guard let client = connection.getClient() else {
             throw AppIntentError.message("Could not get a client, have you configured a valid OpenGlück server and token in the app?")
         }
-        let sugarInGrams = if let value = self.sugarInGramsEnum?.rawValue {
-            Double(value)!
+        let sugarInGrams = if let sugarInGramsEnum {
+            Double(sugarInGramsEnum.rawValue)
         } else if let sugarInGramsDouble {
             sugarInGramsDouble
         } else {
@@ -307,17 +304,14 @@ struct IncreaseLastInsulinByAppIntent: AppIntent {
     static let description: LocalizedStringResource = "Increase the last insulin by some units."
     static let supportedModes: IntentModes = [.background, .foreground(.dynamic)]
 
-    // We provide two parameters, one used only for AppShortcuts with a limited value of options,
-    // and an open value that can be used programatically with Shortcuts and also on the times that
-    // Siri fails to understand a value, to ask the user for something more precise.
-    @Parameter(title: "Units", description: "How many insulin to add?", requestValueDialog: "How much insulin?")
+    @Parameter(title: "Units", description: "How many insulin units?")
     var unitsEnum: InsulinUnitEnum?
 
     @Parameter(title: "Units", description: "How many insulin to add?")
-    var unitsInt: Int?
+    var units: Int?
 
     static var parameterSummary: some ParameterSummary {
-        Summary("Add \(\.$unitsInt) units of insulin to the last record.") {
+        Summary("Add \(\.$units) units of insulin to the last record.") {
         }
     }
     
@@ -338,12 +332,12 @@ struct IncreaseLastInsulinByAppIntent: AppIntent {
             throw AppIntentError.message("The last insulin record was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)) and needs to be updated manually.")
         }
 
-        let units = if let value = self.unitsEnum?.rawValue {
-            Int(value)!
-        } else if let unitsInt {
-            unitsInt
+        let units = if let unitsEnum {
+            unitsEnum.rawValue
+        } else if let units {
+            units
         } else {
-            try await self.$unitsInt.requestValue("How many insulin units?")
+            try await self.$units.requestValue("How many insulin units?")
         }
 
         let newUnits = lastInsulinRecord.units + units
@@ -358,17 +352,14 @@ struct DecreaseLastInsulinByAppIntent: AppIntent {
     static let description: LocalizedStringResource = "Decrease the last insulin by some units."
     static let supportedModes: IntentModes = [.background, .foreground(.dynamic)]
 
-    // We provide two parameters, one used only for AppShortcuts with a limited value of options,
-    // and an open value that can be used programatically with Shortcuts and also on the times that
-    // Siri fails to understand a value, to ask the user for something more precise.
-    @Parameter(title: "Units", description: "How many insulin to remove?", requestValueDialog: "How much insulin?")
+    @Parameter(title: "Units", description: "How many insulin units?")
     var unitsEnum: InsulinUnitEnum?
 
     @Parameter(title: "Units", description: "How many insulin to remove?")
-    var unitsInt: Int?
+    var units: Int?
 
     static var parameterSummary: some ParameterSummary {
-        Summary("Remove \(\.$unitsInt) units of insulin from the last record.") {
+        Summary("Remove \(\.$units) units of insulin from the last record.") {
         }
     }
     
@@ -389,12 +380,12 @@ struct DecreaseLastInsulinByAppIntent: AppIntent {
             throw AppIntentError.message("The last insulin record was recorded \(OpenGluckManager.secondsToTextAgo(elapsed)) and needs to be updated manually.")
         }
 
-        let units = if let value = self.unitsEnum?.rawValue {
-            Int(value)!
-        } else if let unitsInt {
-            unitsInt
+        let units = if let unitsEnum {
+            unitsEnum.rawValue
+        } else if let units {
+            units
         } else {
-            try await self.$unitsInt.requestValue("How many insulin units?")
+            try await self.$units.requestValue("How many insulin units?")
         }
 
         let newUnits = lastInsulinRecord.units - units

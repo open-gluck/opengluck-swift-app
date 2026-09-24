@@ -349,19 +349,21 @@ extension PhoneAppDelegate {
 
     }
 
-    private nonisolated func handleAction(response: UNNotificationResponse) async {
+    nonisolated private func handleAction(response: UNNotificationResponse) async {
         let action: NotificationActions? = NotificationActions(rawValue: response.actionIdentifier)
         guard let action else {
             return
         }
-        switch action {
-        case NotificationActions.SNOOZE_LOW_ACTION:
-            let intent = AddSnoozedLowAppIntent()
-            do {
-                let _ = try await intent.perform()
-            } catch {
-                await reportErrorUsingNotification(title: "Could Not Snooze Low", error: error)
+        await { @MainActor in
+            switch action {
+            case NotificationActions.SNOOZE_LOW_ACTION:
+                let intent = AddSnoozedLowAppIntent()
+                do {
+                    let _ = try await intent.perform()
+                } catch {
+                    await reportErrorUsingNotification(title: "Could Not Snooze Low", error: error)
+                }
             }
-        }
+        }()
     }
 }

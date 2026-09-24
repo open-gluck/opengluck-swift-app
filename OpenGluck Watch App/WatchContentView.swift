@@ -2,6 +2,7 @@ import SwiftUI
 import UserNotifications
 import WatchKit
 import OG
+import AppIntents
 
 struct WatchContentView: View {
     @EnvironmentObject var appDelegate: WatchAppDelegate
@@ -74,6 +75,9 @@ struct WatchContentView: View {
                                     let now = context.date
                                     List {
                                         LastRecordsView(now: now)
+                                        Section {
+                                            SiriTipView(intent: AddInsulinAppIntent())
+                                        }
                                     }
                                 }
                             }
