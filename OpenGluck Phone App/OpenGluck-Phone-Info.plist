@@ -40,6 +40,11 @@
 	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>INSearchForMessagesIntent</string>
+		<string>INSendMessageIntent</string>
+	</array>
 	<key>OPENGLUCK_APPDATA_EXPIRE_AT</key>
 	<string>$(OPENGLUCK_APPDATA_EXPIRE_AT)</string>
 	<key>OPENGLUCK_APPDATA_EXPIRE_MESSAGE</key>
@@ -50,6 +55,25 @@
 	<string>$(OPENGLUCK_DEFAULT_TOKEN)</string>
 	<key>OPENGLUCK_DEFAULT_URL</key>
 	<string>$(OPENGLUCK_DEFAULT_URL)</string>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<true/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>CPTemplateApplicationSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneClassName</key>
+					<string>CPTemplateApplicationScene</string>
+					<key>UISceneConfigurationName</key>
+					<string>CarPlay</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).CarPlaySceneDelegate</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
@@ -75,28 +99,5 @@
 		<string>processing</string>
 		<string>remote-notification</string>
 	</array>
-	<key>NSUserActivityTypes</key>
-	<array>
-		<string>INSearchForMessagesIntent</string>
-	</array>
-	<key>UIApplicationSceneManifest</key>
-	<dict>
-		<key>UIApplicationSupportsMultipleScenes</key>
-		<true/>
-		<key>UISceneConfigurations</key>
-		<dict>
-			<key>CPTemplateApplicationSceneSessionRoleApplication</key>
-			<array>
-				<dict>
-					<key>UISceneClassName</key>
-					<string>CPTemplateApplicationScene</string>
-					<key>UISceneConfigurationName</key>
-					<string>CarPlay</string>
-					<key>UISceneDelegateClassName</key>
-					<string>$(PRODUCT_MODULE_NAME).CarPlaySceneDelegate</string>
-				</dict>
-			</array>
-		</dict>
-	</dict>
 </dict>
 </plist>
